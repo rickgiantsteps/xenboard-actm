@@ -1,6 +1,6 @@
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-  <XenBoard msg="Welcome to Your Vue.js App"/>
+  <XenBoard/>
 </template>
 
 <script>

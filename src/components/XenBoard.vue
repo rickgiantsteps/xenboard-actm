@@ -7,37 +7,42 @@
       type="number"
       id="hexnum"
       name="hexnum"
+      v-model.number = "hexNumber"
       min="1"
-      max="100"
-      v-on:change="drawHex()"
-  />
-  <div class="grid" id='hexgrid'>
-    <div class="block">0</div>
+      max="100" />
 
+  <div class="grid" id='hexgrid'>
+    <HexagonKey v-bind:key="n" v-text="n-1" v-bind:id="n" v-for="n in hexNumber"></HexagonKey>
   </div>
 
   <p>ACTM Project - a.a. 2022/2023</p>
 </template>
 
 <script>
+import HexagonKey from './hex.vue'
+
+//@Component({ components: { hexagonKey } })
+
 export default {
-  name: 'XenBoard',
-  props: {
-    msg: String,
+  data() {
+    return {
+      hexNumber: '',
+    };
   },
 
-  methods: {
-    drawHex() {
-      document.getElementById('hexgrid').innerHTML = "";
-      for (let i = 0; i < document.getElementById('hexnum').value; i++) {
-        var hex = document.createElement("div");
-        hex.classList.add("block");
-        hex.id="block"+i;
-        hex.innerHTML =i.toString();
-        document.getElementById('hexgrid').appendChild(hex);
-      }
-    }
-  }
+  beforeMount: function() {
+    this.hexNumber = 12;
+  },
+
+  name: 'XenBoard',
+  props: {
+  },
+
+components: {
+    HexagonKey
+}
+
+
 }
 </script>
 
