@@ -21,7 +21,7 @@
          v-model.number = "rootn" min="2" max="5" v-on:change="createOsc(hexNumber, octaves, centerfreq, rootn)"/>
 
   <div class="grid" id='hexgrid'>
-    <HexagonKey @click="playOscillator(n-1)" v-bind:key="n" v-text="n-1" v-bind:id="n" v-for="n in hexNumber*octaves"/>
+    <HexagonKey @mousedown="playOscillator(n-1)" v-bind:key="n" v-text="n-1" v-bind:id="n" v-for="n in hexNumber*octaves"/>
   </div>
 
   <p>ACTM Project - a.a. 2022/2023</p>
@@ -35,11 +35,13 @@ import HexagonKey from './hex.vue'
 
 let synth = new Array(12)
 let note = new Array(12)
-let octave = 0;
+let synthn = 0;
+//let keyboard = [q,w,e,r,t,y,u,i,o,p,a,s,d,f,g,h,j,k,l,z,x,c,v,b,n,m,1,2,3,4,5,6,7,8,9,0]
 
-for (let i=0; i<=12; i++) {
+for (let i=0; i<12; i++) {
   synth[i] = new Tone.Synth().toDestination();
-  note[i] = 440 * 2 ** ((i + (octave * 12)) / 12)
+  console.log(synth)
+  note[i] = 440 * 2 ** (i / 12)
 }
 
 export default {
@@ -57,10 +59,8 @@ export default {
   methods: {
     createOsc(hexNumber, octaves, freq, root) {
     for (let j=0; j<octaves; j++) {
-      synth.length = hexNumber * octaves
       note.length = hexNumber * octaves
         for (let i = hexNumber * j ; i<hexNumber*(j+1); i++) {
-          synth[i] = new Tone.Synth().toDestination();
           note[i] = (freq * root**j) * root**((i%hexNumber)/hexNumber)
         }
         console.log(note)
@@ -68,7 +68,9 @@ export default {
     },
 
     playOscillator(n) {
-      synth[n].triggerAttackRelease(note[n], "8n");
+      synth[synthn].triggerAttackRelease(note[n], "8n");
+      synthn = (synthn + 1) % 12
+      console.log(synthn)
     }
   },
 
