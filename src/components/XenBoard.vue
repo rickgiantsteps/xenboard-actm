@@ -45,6 +45,8 @@ let synth = new Array(12)
 let note = new Array(12)
 let synthon = 0;
 let synthoff = 0;
+let synthonkeyboard = 0;
+let synthoffkeyboard = 0;
 let keymouseon = new Array(12).fill(false);
 let keyboardon = new Array(12).fill(false);
 let keyboard = ["q","w","e","r","t","y","u","i","o","p","è","+","ù","a","s","d","f","g","h","j","k","l","ò","à",
@@ -89,7 +91,7 @@ export default {
     },
 
     playOscillator(n, polyphony) {
-      if ((keymouseon[n] === false && keyboardon[n] === false) || isNaN(keymouseon[n])) {
+      if ((keymouseon[n] === false || isNaN(keymouseon[n])) && keyboardon[n] !== true) {
         keymouseon[n] = true
         synth[synthon % polyphony].triggerAttack(note[n], Tone.now());
         synthon = (synthon + 1) % polyphony
@@ -97,7 +99,7 @@ export default {
     },
 
     stopOscillator(n, polyphony) {
-      if (keymouseon[n] === true) {
+      if (keymouseon[n] === true && keyboardon[n] !== true) {
         keymouseon[n] = false
         synth[synthoff % polyphony].triggerRelease(Tone.now());
         synthoff = (synthoff + 1) % polyphony
@@ -109,26 +111,29 @@ export default {
   created() {
 
     //ADD: hex color change when note is played
-    //FIX: if a note is clicked while another is held down on the keyboard it keeps playing until that key is released
-    //rarely it plays two notes at the same time IDK why (maybe fixed now)
+    //FIX: notes are turned off out of correct order now (mainly with low polyphony numbers)
+    //a fix could be to create a secondary set of oscillators just for the keyboard
+    // (mono and low poly would still create inconsistencies: fix needed, change synthon/off system)
 
     window.addEventListener("keydown", e => {
       const key = e.key;
       const index = keyboard.indexOf(key);
-      if (!isNaN(index) && index <= this.hexNumber*this.octaves && keymouseon[index] === false && keyboardon[index] === false) {
+      if (!isNaN(index) && index <= this.hexNumber*this.octaves && (isNaN(keyboardon[index])||keyboardon[index]===false)
+          && keymouseon[index] !== true) {
         keyboardon[index] = true
-        synth[synthon % this.poly].triggerAttack(note[index], Tone.now());
-        synthon = (synthon + 1) % this.poly;
+        synth[synthonkeyboard % this.poly].triggerAttack(note[index], Tone.now());
+        synthonkeyboard = (synthonkeyboard + 1) % this.poly;
       }
     });
 
     window.addEventListener("keyup", e => {
       const key = e.key;
       const index = keyboard.indexOf(key);
-      if (!isNaN(index) && index <= this.hexNumber*this.octaves && keymouseon[index] === true) {
+      if (!isNaN(index) && index <= this.hexNumber*this.octaves
+          && (keymouseon[index] === true || keyboardon[index] === true)) {
         keyboardon[index] = false
-        synth[synthoff % this.poly].triggerRelease(Tone.now());
-        synthoff = (synthoff + 1) % this.poly;
+        synth[synthoffkeyboard % this.poly].triggerRelease(Tone.now());
+        synthoffkeyboard = (synthoffkeyboard + 1) % this.poly;
       }
     });
   },
