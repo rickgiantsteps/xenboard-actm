@@ -45,7 +45,8 @@ let synth = new Array(12)
 let note = new Array(12)
 let synthon = 0;
 let synthoff = 0;
-let keyon = new Array(12).fill(false);
+let keymouseon = new Array(12).fill(false);
+let keyboardon = new Array(12).fill(false);
 let keyboard = ["q","w","e","r","t","y","u","i","o","p","è","+","ù","a","s","d","f","g","h","j","k","l","ò","à",
                 "z","x","c","v","b","n","m",",",".","-","1","2","3","4","5","6","7","8","9","0"]
 
@@ -88,16 +89,16 @@ export default {
     },
 
     playOscillator(n, polyphony) {
-      if (keyon[n] === false || isNaN(keyon[n])) {
-        keyon[n] = true
+      if ((keymouseon[n] === false && keyboardon[n] === false) || isNaN(keymouseon[n])) {
+        keymouseon[n] = true
         synth[synthon % polyphony].triggerAttack(note[n], Tone.now());
         synthon = (synthon + 1) % polyphony
       }
     },
 
     stopOscillator(n, polyphony) {
-      if (keyon[n] === true) {
-        keyon[n] = false
+      if (keymouseon[n] === true) {
+        keymouseon[n] = false
         synth[synthoff % polyphony].triggerRelease(Tone.now());
         synthoff = (synthoff + 1) % polyphony
       }
@@ -108,16 +109,14 @@ export default {
   created() {
 
     //ADD: hex color change when note is played
-    //FIX: if a note is clicked while another is held down on the keyboard it keeps playing until they key is released
-    //FIX: if a key is held down the note plays again on mouseup and mouse leave events (in the last case even without a click)
+    //FIX: if a note is clicked while another is held down on the keyboard it keeps playing until that key is released
     //rarely it plays two notes at the same time IDK why (maybe fixed now)
 
     window.addEventListener("keydown", e => {
       const key = e.key;
       const index = keyboard.indexOf(key);
-      if (!isNaN(index) && index <= this.hexNumber*this.octaves && keyon[index] === false) {
-        keyon[index] = true
-        console.log(keyon)
+      if (!isNaN(index) && index <= this.hexNumber*this.octaves && keymouseon[index] === false && keyboardon[index] === false) {
+        keyboardon[index] = true
         synth[synthon % this.poly].triggerAttack(note[index], Tone.now());
         synthon = (synthon + 1) % this.poly;
       }
@@ -126,8 +125,8 @@ export default {
     window.addEventListener("keyup", e => {
       const key = e.key;
       const index = keyboard.indexOf(key);
-      if (!isNaN(index) && index <= this.hexNumber*this.octaves && keyon[index] === true) {
-        keyon[index] = false
+      if (!isNaN(index) && index <= this.hexNumber*this.octaves && keymouseon[index] === true) {
+        keyboardon[index] = false
         synth[synthoff % this.poly].triggerRelease(Tone.now());
         synthoff = (synthoff + 1) % this.poly;
       }
