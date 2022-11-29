@@ -45,7 +45,7 @@ let synth = new Array(12)
 let note = new Array(12)
 let synthon = 0;
 let synthoff = 0;
-let keyon = new Array(12)
+let keyon = new Array(12).fill(false);
 let keyboard = ["q","w","e","r","t","y","u","i","o","p","è","+","ù","a","s","d","f","g","h","j","k","l","ò","à",
                 "z","x","c","v","b","n","m",",",".","-","1","2","3","4","5","6","7","8","9","0"]
 
@@ -88,9 +88,11 @@ export default {
     },
 
     playOscillator(n, polyphony) {
-      keyon[n] = true
-      synth[synthon % polyphony].triggerAttack(note[n], Tone.now());
-      synthon = (synthon + 1) % polyphony
+      if (keyon[n] === false || isNaN(keyon[n])) {
+        keyon[n] = true
+        synth[synthon % polyphony].triggerAttack(note[n], Tone.now());
+        synthon = (synthon + 1) % polyphony
+      }
     },
 
     stopOscillator(n, polyphony) {
@@ -105,17 +107,18 @@ export default {
 
   created() {
 
-    //FIX: when the key is played both with keyboard and mouse it glitches
-    //FIX: when you hold down a key it loops the note (check solution by Jesus)
-    //rarely it plays two notes at the same time IDK why
+    //ADD: hex color change when note is played
+    //FIX: if a note is clicked while another is held down on the keyboard it keeps playing until they key is released
+    //FIX: if a key is held down the note plays again on mouseup and mouse leave events (in the last case even without a click)
+    //rarely it plays two notes at the same time IDK why (maybe fixed now)
 
     window.addEventListener("keydown", e => {
       const key = e.key;
       const index = keyboard.indexOf(key);
-      if (!isNaN(index) && index <= this.hexNumber*this.octaves) {
+      if (!isNaN(index) && index <= this.hexNumber*this.octaves && keyon[index] === false) {
         keyon[index] = true
         console.log(keyon)
-        synth[index % this.poly].triggerAttack(note[index], Tone.now());
+        synth[synthon % this.poly].triggerAttack(note[index], Tone.now());
         synthon = (synthon + 1) % this.poly;
       }
     });
@@ -125,7 +128,7 @@ export default {
       const index = keyboard.indexOf(key);
       if (!isNaN(index) && index <= this.hexNumber*this.octaves && keyon[index] === true) {
         keyon[index] = false
-        synth[index % this.poly].triggerRelease(Tone.now());
+        synth[synthoff % this.poly].triggerRelease(Tone.now());
         synthoff = (synthoff + 1) % this.poly;
       }
     });
