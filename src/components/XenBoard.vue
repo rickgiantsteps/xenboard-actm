@@ -26,7 +26,6 @@
            v-model.number = "poly" min="1" max="50" v-on:change="createOsc(poly)"/>
   </div>
 
-
   <div class="grid" id='hexgrid'>
     <HexagonKey @mousedown="playOscillator(n-1, poly)" @mouseup="stopOscillator(n-1, poly)"
                 @mouseleave="stopOscillator(n-1, poly)" v-bind:key="n" v-text="n-1" v-bind:id="n"
@@ -47,12 +46,14 @@ let note = new Array(12)
 let synthon = 0;
 let synthoff = 0;
 let keyon = new Array(12)
-//let keyboard = [q,w,e,r,t,y,u,i,o,p,a,s,d,f,g,h,j,k,l,z,x,c,v,b,n,m,1,2,3,4,5,6,7,8,9,0]
+let keyboard = ["q","w","e","r","t","y","u","i","o","p","è","+","ù","a","s","d","f","g","h","j","k","l","ò","à",
+                "z","x","c","v","b","n","m",",",".","-","1","2","3","4","5","6","7","8","9","0"]
+
+Tone.start()
 
 for (let i=0; i<12; i++) {
   synth[i] = new Tone.Synth().toDestination();
   note[i] = 440 * 2 ** (i / 12)
-  keyon[i] = false
 }
 
 export default {
@@ -99,9 +100,38 @@ export default {
         synthoff = (synthoff + 1) % polyphony
       }
     },
+
   },
 
-  props: {
+  created() {
+
+    //FIX: when the key is played both with keyboard and mouse it glitches
+    //FIX: when you hold down a key it loops the note (check solution by Jesus)
+    //rarely it plays two notes at the same time IDK why
+
+    window.addEventListener("keydown", e => {
+      const key = e.key;
+      const index = keyboard.indexOf(key);
+      if (!isNaN(index) && index <= this.hexNumber*this.octaves) {
+        keyon[index] = true
+        console.log(keyon)
+        synth[index % this.poly].triggerAttack(note[index], Tone.now());
+        synthon = (synthon + 1) % this.poly;
+      }
+    });
+
+    window.addEventListener("keyup", e => {
+      const key = e.key;
+      const index = keyboard.indexOf(key);
+      if (!isNaN(index) && index <= this.hexNumber*this.octaves && keyon[index] === true) {
+        keyon[index] = false
+        synth[index % this.poly].triggerRelease(Tone.now());
+        synthoff = (synthoff + 1) % this.poly;
+      }
+    });
+  },
+
+  props:{
   },
 
   components: {
