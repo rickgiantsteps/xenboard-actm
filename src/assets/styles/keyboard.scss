@@ -57,6 +57,14 @@ body::-webkit-scrollbar-thumb {
   }
 }
 
+.gold {
+  background-color: gold;
+}
+
+.beige {
+  background-color: beige;
+}
+
 @media screen and (max-width: #{3 * $block-size - 1 + $scrollbar-size}px) {
   .grid {
     grid-template-columns: repeat(auto-fit, $block-size + px);
