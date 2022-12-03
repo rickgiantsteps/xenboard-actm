@@ -75,6 +75,7 @@ export default {
   },
 
   methods: {
+
     createNotes(hexNumber, octaves, freq, root) {
       for (let j = 0; j < octaves; j++) {
         note.length = hexNumber * octaves
@@ -87,14 +88,17 @@ export default {
 
     createOsc() {
       for (let i = 0; i < synth.length; i++) {
-        synth[i].dispose()
+        if (synth[i] !== null) {
+          synth[i].dispose()
+        }
       }
       synth.length = this.hexNumber * this.octaves;
       ageofsynth.length = this.hexNumber * this.octaves;
       ageofsynth.fill(0);
-      for (let i = 0; i < this.hexNumber * this.octaves; i++) {
+      synth.fill(null)
+      /*for (let i = 0; i < this.hexNumber * this.octaves; i++) {
         synth[i] = new Tone.Synth().toDestination();
-      }
+      }*/
     },
 
     playOscillator(n) {
@@ -103,6 +107,9 @@ export default {
         played++
         ageofsynth[n] = played
         this.pauseOldOscillator()
+        if (synth[n]===null) {
+          synth[n] = new Tone.Synth().toDestination();
+        }
         synth[n].triggerAttack(note[n], Tone.now());
       }
     },
@@ -143,6 +150,9 @@ export default {
         played++
         ageofsynth[index] = played
         this.pauseOldOscillator()
+        if (synth[index]===null) {
+          synth[index] = new Tone.Synth().toDestination();
+        }
         synth[index].triggerAttack(note[index], Tone.now());
       }
     });
