@@ -47,6 +47,7 @@ let synthon = 0;
 let synthoff = 0;
 let synthonkeyboard = 0;
 let synthoffkeyboard = 0;
+let ageofsynth = new Array(12)
 let keymouseon = new Array(12).fill(false);
 let keyboardon = new Array(12).fill(false);
 let keyboard = ["q","w","e","r","t","y","u","i","o","p","è","+","ù","a","s","d","f","g","h","j","k","l","ò","à",
@@ -85,6 +86,7 @@ export default {
     createOsc(polyphony) {
       synth.length = 0;
       synth.length = polyphony;
+      ageofsynth.fill(0);
       for (let i = 0; i < polyphony; i++) {
         synth[i] = new Tone.Synth().toDestination();
       }
