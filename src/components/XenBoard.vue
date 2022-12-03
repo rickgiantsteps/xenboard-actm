@@ -23,12 +23,12 @@
 
     <label>Polyphony (n of oscillators): </label>
     <input type="number" id="root" name="root"
-           v-model.number = "poly" min="1" max="50" v-on:change="createOsc(poly)"/>
+           v-model.number = "poly" min="1" max="50" v-on:change="createOsc()"/>
   </div>
 
   <div class="grid" id='hexgrid'>
-    <HexagonKey @mousedown="playOscillator(n-1, poly)" @mouseup="stopOscillator(n-1, poly)"
-                @mouseleave="stopOscillator(n-1, poly)" v-bind:key="n" v-text="n-1" v-bind:id="n"
+    <HexagonKey @mousedown="playOscillator(n-1)" @mouseup="stopOscillator(n-1)"
+                @mouseleave="stopOscillator(n-1)" v-bind:key="n" v-text="n-1" v-bind:id="n"
                 v-for="n in hexNumber*octaves"/>
   </div>
 
@@ -38,6 +38,9 @@
 
 
 <script>
+
+//everything works (LOW performance with many notes + octaves)
+
 import * as Tone from 'tone'
 import HexagonKey from './hex.vue'
 
@@ -79,52 +82,56 @@ export default {
           note[i] = (freq * root ** j) * root ** ((i % hexNumber) / hexNumber)
         }
       }
+      this.createOsc()
     },
 
-    createOsc(polyphony) {
-      synth.length = 0;
-      synth.length = polyphony;
-      ageofsynth.length = polyphony
+    createOsc() {
+      for (let i = 0; i < synth.length; i++) {
+        synth[i].dispose()
+      }
+      synth.length = this.hexNumber * this.octaves;
+      ageofsynth.length = this.hexNumber * this.octaves;
       ageofsynth.fill(0);
-      for (let i = 0; i < polyphony; i++) {
+      for (let i = 0; i < this.hexNumber * this.octaves; i++) {
         synth[i] = new Tone.Synth().toDestination();
       }
     },
 
-    playOscillator(n, polyphony) {
+    playOscillator(n) {
       if ((keymouseon[n] === false || isNaN(keymouseon[n])) && keyboardon[n] !== true) {
         keymouseon[n] = true
         played++
-        ageofsynth[n % this.poly] = played
+        ageofsynth[n] = played
         this.pauseOldOscillator()
-        console.log("poly:"+n % polyphony)
-        synth[n % polyphony].triggerAttack(note[n], Tone.now());
+        synth[n].triggerAttack(note[n], Tone.now());
       }
     },
 
-    stopOscillator(n, polyphony) {
+    stopOscillator(n) {
       if (keymouseon[n] === true && keyboardon[n] !== true) {
         keymouseon[n] = false
-        synth[n % polyphony].triggerRelease(Tone.now());
+        synth[n].triggerRelease(Tone.now());
       }
     },
 
     pauseOldOscillator() {
-      let min, num;
-      min = Math.min(... ageofsynth)
-      num = ageofsynth.indexOf(min)
-      console.log(ageofsynth)
-      console.log(num)
-      synth[num].triggerRelease(Tone.now());
+
+      const count = ageofsynth.filter(ageofsynth => {
+        return ageofsynth !== 0;
+      }).length;
+
+      if (count > this.poly) {
+        let min, num;
+        min = Math.min.apply(null, ageofsynth.filter(Boolean))
+        num = ageofsynth.indexOf(min)
+        synth[num].triggerRelease(Tone.now());
+        ageofsynth[num] = 0;
+      }
     },
 
   },
 
   created() {
-
-    //(mono and low poly still create inconsistencies)
-    //in mono keyup stops any currently playing notes
-    //in low poly any noteUp can stop notes multiple of released key "n"
 
     window.addEventListener("keydown", e => {
       const key = e.key;
@@ -134,9 +141,9 @@ export default {
         document.getElementById((index+1).toString()).classList.toggle("noteOn");
         keyboardon[index] = true
         played++
-        ageofsynth[index % this.poly] = played
+        ageofsynth[index] = played
         this.pauseOldOscillator()
-        synth[index % this.poly].triggerAttack(note[index], Tone.now());
+        synth[index].triggerAttack(note[index], Tone.now());
       }
     });
 
@@ -149,7 +156,7 @@ export default {
         document.getElementById((index+1).toString()).classList.toggle("noteOff");
         document.getElementById((index+1).toString()).classList.toggle("noteOn");
         keyboardon[index] = false
-        synth[index % this.poly].triggerRelease(Tone.now());
+        synth[index].triggerRelease(Tone.now());
       }
     });
   },
