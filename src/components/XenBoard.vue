@@ -112,14 +112,14 @@ export default {
 
     //FIX: notes are turned off out of correct order now (mainly with low polyphony numbers)
     //a fix could be to create a secondary set of oscillators just for the keyboard (or rework synth creation system)
-    // (mono and low poly would still create inconsistencies: fix needed, change synthon/off system)
+    //(mono and low poly would still create inconsistencies: fix needed, change synthon/off system)
 
     window.addEventListener("keydown", e => {
       const key = e.key;
       const index = keyboard.indexOf(key);
       if (!isNaN(index) && (index+1) <= this.hexNumber*this.octaves && (isNaN(keyboardon[index])||keyboardon[index]===false)
           && keymouseon[index] !== true) {
-        document.getElementById((index+1).toString()).classList.toggle("gold")//.backgroundColor = "gold";
+        document.getElementById((index+1).toString()).classList.toggle("noteOn");
         keyboardon[index] = true
         synth[synthonkeyboard % this.poly].triggerAttack(note[index], Tone.now());
         synthonkeyboard = (synthonkeyboard + 1) % this.poly;
@@ -131,9 +131,9 @@ export default {
       const index = keyboard.indexOf(key);
       if (!isNaN(index) && index <= this.hexNumber*this.octaves
           && (keymouseon[index] === true || keyboardon[index] === true)) {
-        document.getElementById((index+1).toString()).classList.toggle("beige");
-        document.getElementById((index+1).toString()).classList.toggle("beige");
-        document.getElementById((index+1).toString()).classList.toggle("gold");
+        document.getElementById((index+1).toString()).classList.toggle("noteOff");
+        document.getElementById((index+1).toString()).classList.toggle("noteOff");
+        document.getElementById((index+1).toString()).classList.toggle("noteOn");
         keyboardon[index] = false
         synth[synthoffkeyboard % this.poly].triggerRelease(Tone.now());
         synthoffkeyboard = (synthoffkeyboard + 1) % this.poly;

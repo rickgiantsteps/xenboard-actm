@@ -57,11 +57,11 @@ body::-webkit-scrollbar-thumb {
   }
 }
 
-.gold {
+.noteOn {
   background-color: gold;
 }
 
-.beige {
+.noteOff {
   background-color: beige;
 }
 
@@ -97,6 +97,7 @@ body::-webkit-scrollbar-thumb {
     }
   }
 }
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
