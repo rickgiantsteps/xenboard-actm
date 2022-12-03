@@ -43,11 +43,8 @@ import HexagonKey from './hex.vue'
 
 let synth = new Array(12)
 let note = new Array(12)
-let synthon = 0;
-let synthoff = 0;
-let synthonkeyboard = 0;
-let synthoffkeyboard = 0;
 let ageofsynth = new Array(12)
+let played = 0
 let keymouseon = new Array(12).fill(false);
 let keyboardon = new Array(12).fill(false);
 let keyboard = ["q","w","e","r","t","y","u","i","o","p","è","+","ù","a","s","d","f","g","h","j","k","l","ò","à",
@@ -58,6 +55,7 @@ Tone.start()
 for (let i=0; i<12; i++) {
   synth[i] = new Tone.Synth().toDestination();
   note[i] = 440 * 2 ** (i / 12)
+  ageofsynth.fill(0);
 }
 
 export default {
@@ -86,6 +84,7 @@ export default {
     createOsc(polyphony) {
       synth.length = 0;
       synth.length = polyphony;
+      ageofsynth.length = polyphony
       ageofsynth.fill(0);
       for (let i = 0; i < polyphony; i++) {
         synth[i] = new Tone.Synth().toDestination();
@@ -95,26 +94,37 @@ export default {
     playOscillator(n, polyphony) {
       if ((keymouseon[n] === false || isNaN(keymouseon[n])) && keyboardon[n] !== true) {
         keymouseon[n] = true
-        synth[synthon % polyphony].triggerAttack(note[n], Tone.now());
-        synthon = (synthon + 1) % polyphony
+        played++
+        ageofsynth[n % this.poly] = played
+        this.pauseOldOscillator()
+        console.log("poly:"+n % polyphony)
+        synth[n % polyphony].triggerAttack(note[n], Tone.now());
       }
     },
 
     stopOscillator(n, polyphony) {
       if (keymouseon[n] === true && keyboardon[n] !== true) {
         keymouseon[n] = false
-        synth[synthoff % polyphony].triggerRelease(Tone.now());
-        synthoff = (synthoff + 1) % polyphony
+        synth[n % polyphony].triggerRelease(Tone.now());
       }
+    },
+
+    pauseOldOscillator() {
+      let min, num;
+      min = Math.min(... ageofsynth)
+      num = ageofsynth.indexOf(min)
+      console.log(ageofsynth)
+      console.log(num)
+      synth[num].triggerRelease(Tone.now());
     },
 
   },
 
   created() {
 
-    //FIX: notes are turned off out of correct order now (mainly with low polyphony numbers)
-    //a fix could be to create a secondary set of oscillators just for the keyboard (or rework synth creation system)
-    //(mono and low poly would still create inconsistencies: fix needed, change synthon/off system)
+    //(mono and low poly still create inconsistencies)
+    //in mono keyup stops any currently playing notes
+    //in low poly any noteUp can stop notes multiple of released key "n"
 
     window.addEventListener("keydown", e => {
       const key = e.key;
@@ -123,8 +133,10 @@ export default {
           && keymouseon[index] !== true) {
         document.getElementById((index+1).toString()).classList.toggle("noteOn");
         keyboardon[index] = true
-        synth[synthonkeyboard % this.poly].triggerAttack(note[index], Tone.now());
-        synthonkeyboard = (synthonkeyboard + 1) % this.poly;
+        played++
+        ageofsynth[index % this.poly] = played
+        this.pauseOldOscillator()
+        synth[index % this.poly].triggerAttack(note[index], Tone.now());
       }
     });
 
@@ -132,13 +144,12 @@ export default {
       const key = e.key;
       const index = keyboard.indexOf(key);
       if (!isNaN(index) && index <= this.hexNumber*this.octaves
-          && (keymouseon[index] === true || keyboardon[index] === true)) {
+          && (keymouseon[index] !== true || keyboardon[index] === true)) {
         document.getElementById((index+1).toString()).classList.toggle("noteOff");
         document.getElementById((index+1).toString()).classList.toggle("noteOff");
         document.getElementById((index+1).toString()).classList.toggle("noteOn");
         keyboardon[index] = false
-        synth[synthoffkeyboard % this.poly].triggerRelease(Tone.now());
-        synthoffkeyboard = (synthoffkeyboard + 1) % this.poly;
+        synth[index % this.poly].triggerRelease(Tone.now());
       }
     });
   },
