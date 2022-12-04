@@ -1,6 +1,14 @@
 <template>
-  <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
+  <header>
+    <h1>XenBoard</h1>
+    <p>Microtonal keyboard test</p>
+  </header>
+
   <XenBoard/>
+
+  <footer>
+    <p>ACTM Project - a.a. 2022/2023</p>
+  </footer>
 </template>
 
 <script>
@@ -14,6 +22,6 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 @import "./assets/styles/styles.scss";
 </style>

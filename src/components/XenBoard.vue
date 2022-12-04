@@ -1,9 +1,4 @@
 <template>
-  <header>
-    <h1>XenBoard</h1>
-    <p>Microtonal keyboard test</p>
-  </header>
-
   <div>
     <label>Central frequency (Hz): </label>
     <input type="number" id="freqhz" name="freqhz"
@@ -31,22 +26,17 @@
                 @mouseleave="stopOscillator(n-1)" v-bind:key="n" v-text="n-1" v-bind:id="n"
                 v-for="n in hexNumber*octaves"/>
   </div>
-
-  <p>ACTM Project - a.a. 2022/2023</p>
 </template>
 
 
 
 <script>
-
-//everything works (LOW performance with many notes + octaves)
-
 import * as Tone from 'tone'
 import HexagonKey from './hex.vue'
 
 let synth = new Array(12)
 let note = new Array(12)
-let ageofsynth = new Array(12)
+let ageofsynth = new Array(12).fill(0);
 let played = 0
 let keymouseon = new Array(12).fill(false);
 let keyboardon = new Array(12).fill(false);
@@ -58,7 +48,6 @@ Tone.start()
 for (let i=0; i<12; i++) {
   synth[i] = new Tone.Synth().toDestination();
   note[i] = 440 * 2 ** (i / 12)
-  ageofsynth.fill(0);
 }
 
 export default {
@@ -96,9 +85,6 @@ export default {
       ageofsynth.length = this.hexNumber * this.octaves;
       ageofsynth.fill(0);
       synth.fill(null)
-      /*for (let i = 0; i < this.hexNumber * this.octaves; i++) {
-        synth[i] = new Tone.Synth().toDestination();
-      }*/
     },
 
     playOscillator(n) {
@@ -141,6 +127,9 @@ export default {
   created() {
 
     window.addEventListener("keydown", e => {
+      if(e.target.type === 'number') {
+        return;
+      }
       const key = e.key;
       const index = keyboard.indexOf(key);
       if (!isNaN(index) && (index+1) <= this.hexNumber*this.octaves && (isNaN(keyboardon[index])||keyboardon[index]===false)
@@ -158,6 +147,9 @@ export default {
     });
 
     window.addEventListener("keyup", e => {
+      if(e.target.type === 'number') {
+        return;
+      }
       const key = e.key;
       const index = keyboard.indexOf(key);
       if (!isNaN(index) && index <= this.hexNumber*this.octaves
@@ -181,7 +173,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
 @import "../assets/styles/styles.scss";
 </style>
