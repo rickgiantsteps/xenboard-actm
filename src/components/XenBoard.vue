@@ -1,23 +1,23 @@
 <template>
   <div>
-    <label>Central frequency (Hz): </label>
-    <input type="number" id="freqhz" name="freqhz"
+    <label class="text-base px-0.5">Central frequency (Hz): </label>
+    <input type="number" id="freqhz" name="freqhz" class="rounded w-20"
            v-model.number = "centerfreq" min="1" v-on:change="createNotes(hexNumber, octaves, centerfreq, rootn)"/>
 
-    <label>Number of notes: </label>
-    <input type="number" id="hexnum" name="hexnum"
+    <label class="text-base px-0.5 pl-5">Number of notes: </label>
+    <input type="number" id="hexnum" name="hexnum" class="rounded w-20"
            v-model.number = "hexNumber" min="1" max="100" v-on:change="createNotes(hexNumber, octaves, centerfreq, rootn)"/>
 
-    <label>Number of octaves: </label>
-    <input type="number" id="octnum" name="octnum"
+    <label class="text-base px-0.5 pl-5">Number of octaves: </label>
+    <input type="number" id="octnum" name="octnum" class="rounded w-20"
            v-model.number = "octaves" min="1" max="10" v-on:change="createNotes(hexNumber, octaves, centerfreq, rootn)"/>
 
-    <label>Root: </label>
-    <input type="number" id="root" name="root"
+    <label class="text-base px-0.5 pl-5">Root: </label>
+    <input type="number" id="root" name="root" class="rounded w-20"
            v-model.number = "rootn" min="2" max="5" v-on:change="createNotes(hexNumber, octaves, centerfreq, rootn)"/>
 
-    <label>Polyphony (n of oscillators): </label>
-    <input type="number" id="root" name="root"
+    <label class="text-base px-0.5 pl-5">Polyphony (n of oscillators): </label>
+    <input type="number" id="root" name="root" class="rounded w-20"
            v-model.number = "poly" min="1" max="50" v-on:change="createOsc()"/>
   </div>
 
@@ -185,7 +185,3 @@ export default {
 
 }
 </script>
-
-<style lang="scss">
-@import "../assets/styles/styles.scss";
-</style>

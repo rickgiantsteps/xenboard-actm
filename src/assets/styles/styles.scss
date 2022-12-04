@@ -1,2 +1,29 @@
-@import "xenboard.scss";
 @import "keyboard.scss";
+
+h3 {
+  margin: 40px 0 0;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  color: #42b983;
+}
+
+/* avoid styling html tags directly, this will cause a huge mess very quickly
+  instead make a class .hex-list and put the li tags inside
+  same goes for h3, a, etc :-D
+  you can try to apply this one */
+.hex-list {
+  list-style-type: none;
+  padding: 0;
+  li {
+    display: inline-block;
+    margin: 0 10px;
+  } /* this will only work for li elements that are inside a .hex-list element so it's safe */
+}

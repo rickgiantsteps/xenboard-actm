@@ -1,13 +1,13 @@
 <template>
   <header>
-    <h1>XenBoard</h1>
-    <p>Microtonal keyboard test</p>
+    <h1 class="font-bold text-6xl py-3">XenBoard</h1>
+    <p class="text-lg py-3">Microtonal keyboard test</p>
   </header>
 
   <XenBoard/>
 
   <footer>
-    <p>ACTM Project - a.a. 2022/2023</p>
+    <p class="text-base p-6">ACTM Project - a.a. 2022/2023</p>
   </footer>
 </template>
 
@@ -23,5 +23,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "./assets/styles/styles.scss";
+@import "assets/styles/styles.scss";
+@import "assets/styles/tailwind.css";
 </style>
