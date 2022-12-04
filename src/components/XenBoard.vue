@@ -119,6 +119,18 @@ export default {
         num = ageofsynth.indexOf(min)
         synth[num].triggerRelease(Tone.now());
         ageofsynth[num] = 0;
+
+        if (keymouseon[num] === true) {
+          keymouseon[num] = false
+          document.getElementById((num+1).toString()).classList.toggle("noteOff");
+          document.getElementById((num+1).toString()).classList.toggle("noteOff");
+          document.getElementById((num+1).toString()).classList.toggle("noteOn");
+        } else if (keyboardon[num] === true) {
+          keyboardon[num] = false
+          document.getElementById((num+1).toString()).classList.toggle("noteOff");
+          document.getElementById((num+1).toString()).classList.toggle("noteOff");
+          document.getElementById((num+1).toString()).classList.toggle("noteOn");
+        }
       }
     },
 
@@ -153,7 +165,8 @@ export default {
       const key = e.key;
       const index = keyboard.indexOf(key);
       if (!isNaN(index) && index <= this.hexNumber*this.octaves
-          && (keymouseon[index] !== true || keyboardon[index] === true)) {
+          && keymouseon[index] !== true && keyboardon[index] === true) {
+        console.log("up!"+index)
         document.getElementById((index+1).toString()).classList.toggle("noteOff");
         document.getElementById((index+1).toString()).classList.toggle("noteOff");
         document.getElementById((index+1).toString()).classList.toggle("noteOn");
