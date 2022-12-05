@@ -142,7 +142,7 @@ export default {
       if(e.target.type === 'number') {
         return;
       }
-      const key = e.key;
+      const key = e.key.toLowerCase();
       const index = keyboard.indexOf(key);
       if (!isNaN(index) && (index+1) <= this.hexNumber*this.octaves && (isNaN(keyboardon[index])||keyboardon[index]===false)
           && keymouseon[index] !== true) {
@@ -162,7 +162,7 @@ export default {
       if(e.target.type === 'number') {
         return;
       }
-      const key = e.key;
+      const key = e.key.toLowerCase();
       const index = keyboard.indexOf(key);
       if (!isNaN(index) && index <= this.hexNumber*this.octaves
           && keymouseon[index] !== true && keyboardon[index] === true) {
