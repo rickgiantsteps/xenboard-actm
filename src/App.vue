@@ -28,14 +28,14 @@
   </div>
 
   <header>
-    <h1 class="font-bold text-6xl py-3">XenBoard</h1>
-    <p class="text-lg py-3">Microtonal keyboard test</p>
+    <h1 class="font-bold text-6xl py-3 dark:text-slate-200">XenBoard</h1>
+    <p class="text-lg py-3 dark:text-slate-200">Microtonal keyboard test</p>
   </header>
 
   <XenBoard/>
 
   <footer>
-    <p class="text-base p-6">ACTM Project - a.a. 2022/2023</p>
+    <p class="text-base p-6 dark:text-slate-200">ACTM Project - a.a. 2022/2023</p>
   </footer>
 
 </template>
@@ -52,7 +52,7 @@ export default {
   methods: {
     darkModeSwitch() {
       document.documentElement.classList.toggle("dark");
-      document.body.classList.toggle("bg-slate-200");
+      document.body.classList.toggle("bg-slate-900");
     },
   }
 
