@@ -1,5 +1,5 @@
 <template>
-  <div class="block"></div>
+  <div class="key"></div>
 </template>
 
 <script>

@@ -36,7 +36,7 @@ body::-webkit-scrollbar-thumb {
   -webkit-clip-path: polygon(50% 0, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
   clip-path: polygon(50% 0, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
 }
-.block {
+.key {
   position: relative;
   height: 2 * $block-size + px;
   background-color: beige;
@@ -90,8 +90,8 @@ body::-webkit-scrollbar-thumb {
     $counter: $i / $block-size;
     @media screen and (min-width: #{($counter) * $block-size + $scrollbar-size}px) and (max-width: #{($counter + 1) * $block-size - 1 + $scrollbar-size}px) {
       $first: floor($counter / 2) + 1;
-      .block:nth-child(#{$first}),
-      .block:nth-child(#{$counter - 1}n + #{$counter + $first - 1}) {
+      .key:nth-child(#{$first}),
+      .key:nth-child(#{$counter - 1}n + #{$counter + $first - 1}) {
         grid-column: 2 / span 2;
       }
     }
