@@ -22,7 +22,7 @@
   </div>
 
   <div class="grid" id='hexgrid'>
-    <HexagonKey class="dark:text-slate-50 dark:hover:bg-sky-700 dark:active:bg-sky-500 dark:shadow dark:shadow-white dark:bg-slate-500" @mousedown="playOscillator(n-1)" @mouseup="stopOscillator(n-1)"
+    <HexagonKey class="dark:text-slate-50 dark:hover:bg-sky-700 !dark:active:bg-sky-500 dark:shadow dark:shadow-white dark:bg-slate-500" @mousedown="playOscillator(n-1)" @mouseup="stopOscillator(n-1)"
                 @mouseleave="stopOscillator(n-1)" v-bind:key="n" v-text="n-1" v-bind:id="n"
                 v-for="n in hexNumber*octaves"/>
   </div>
@@ -123,9 +123,13 @@ export default {
         if (keymouseon[num] === true) {
           keymouseon[num] = false
           if (document.getElementById((num+1).toString()).classList.contains("dark:bg-sky-500")) {
+            document.getElementById((num+1).toString()).classList.toggle("noteOn");
             document.getElementById((num+1).toString()).classList.toggle("dark:bg-sky-500");
-            document.getElementById((num+1).toString()).classList.toggle("dark:bg-slate-500");
+            if (!document.getElementById((num+1).toString()).classList.contains("dark:bg-slate-500")) {
+              document.getElementById((num+1).toString()).classList.toggle("dark:bg-slate-500");
+            }
           } else if (document.getElementById((num+1).toString()).classList.contains("noteOn")) {
+            document.getElementById((num+1).toString()).classList.toggle("dark:bg-sky-500");
             document.getElementById((num+1).toString()).classList.toggle("noteOff");
             document.getElementById((num+1).toString()).classList.toggle("noteOff");
             document.getElementById((num+1).toString()).classList.toggle("noteOn");
@@ -133,9 +137,13 @@ export default {
         } else if (keyboardon[num] === true) {
           keyboardon[num] = false
           if (document.getElementById((num+1).toString()).classList.contains("dark:bg-sky-500")) {
+            document.getElementById((num+1).toString()).classList.toggle("noteOn");
             document.getElementById((num+1).toString()).classList.toggle("dark:bg-sky-500");
-            document.getElementById((num+1).toString()).classList.toggle("dark:bg-slate-500");
+            if (!document.getElementById((num+1).toString()).classList.contains("dark:bg-slate-500")) {
+              document.getElementById((num+1).toString()).classList.toggle("dark:bg-slate-500");
+            }
           } else if (document.getElementById((num+1).toString()).classList.contains("noteOn")) {
+            document.getElementById((num+1).toString()).classList.toggle("dark:bg-sky-500");
             document.getElementById((num+1).toString()).classList.toggle("noteOff");
             document.getElementById((num+1).toString()).classList.toggle("noteOff");
             document.getElementById((num+1).toString()).classList.toggle("noteOn");
@@ -157,9 +165,11 @@ export default {
       if (!isNaN(index) && (index+1) <= this.hexNumber*this.octaves && (isNaN(keyboardon[index])||keyboardon[index]===false)
           && keymouseon[index] !== true) {
         if (document.documentElement.classList.contains("dark")) {
+          document.getElementById((index+1).toString()).classList.toggle("noteOn");
           document.getElementById((index + 1).toString()).classList.toggle("dark:bg-slate-500");
           document.getElementById((index + 1).toString()).classList.toggle("dark:bg-sky-500");
         } else {
+          document.getElementById((index+1).toString()).classList.toggle("dark:bg-sky-500");
           document.getElementById((index + 1).toString()).classList.toggle("noteOn");
         }
         keyboardon[index] = true
@@ -184,9 +194,13 @@ export default {
         console.log("up!"+index)
 
         if (document.getElementById((index+1).toString()).classList.contains("dark:bg-sky-500")) {
+          document.getElementById((index+1).toString()).classList.toggle("noteOn");
           document.getElementById((index+1).toString()).classList.toggle("dark:bg-sky-500");
-          document.getElementById((index+1).toString()).classList.toggle("dark:bg-slate-500");
+          if (!document.getElementById((index+1).toString()).classList.contains("dark:bg-slate-500")) {
+            document.getElementById((index+1).toString()).classList.toggle("dark:bg-slate-500");
+          }
         } else if(document.getElementById((index+1).toString()).classList.contains("noteOn")) {
+          document.getElementById((index+1).toString()).classList.toggle("dark:bg-sky-500");
           document.getElementById((index+1).toString()).classList.toggle("noteOff");
           document.getElementById((index+1).toString()).classList.toggle("noteOff");
           document.getElementById((index+1).toString()).classList.toggle("noteOn");
