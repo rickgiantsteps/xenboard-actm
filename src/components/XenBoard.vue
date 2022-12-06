@@ -108,7 +108,6 @@ export default {
     },
 
     pauseOldOscillator() {
-
       const count = ageofsynth.filter(ageofsynth => {
         return ageofsynth !== 0;
       }).length;
@@ -122,33 +121,37 @@ export default {
 
         if (keymouseon[num] === true) {
           keymouseon[num] = false
-          if (document.getElementById((num+1).toString()).classList.contains("dark:bg-sky-500")) {
-            document.getElementById((num+1).toString()).classList.toggle("noteOn");
-            document.getElementById((num+1).toString()).classList.toggle("dark:bg-sky-500");
-            if (!document.getElementById((num+1).toString()).classList.contains("dark:bg-slate-500")) {
-              document.getElementById((num+1).toString()).classList.toggle("dark:bg-slate-500");
-            }
-          } else if (document.getElementById((num+1).toString()).classList.contains("noteOn")) {
-            document.getElementById((num+1).toString()).classList.toggle("dark:bg-sky-500");
-            document.getElementById((num+1).toString()).classList.toggle("noteOff");
-            document.getElementById((num+1).toString()).classList.toggle("noteOff");
-            document.getElementById((num+1).toString()).classList.toggle("noteOn");
-          }
+          this.keyColorOff(num+1)
         } else if (keyboardon[num] === true) {
           keyboardon[num] = false
-          if (document.getElementById((num+1).toString()).classList.contains("dark:bg-sky-500")) {
-            document.getElementById((num+1).toString()).classList.toggle("noteOn");
-            document.getElementById((num+1).toString()).classList.toggle("dark:bg-sky-500");
-            if (!document.getElementById((num+1).toString()).classList.contains("dark:bg-slate-500")) {
-              document.getElementById((num+1).toString()).classList.toggle("dark:bg-slate-500");
-            }
-          } else if (document.getElementById((num+1).toString()).classList.contains("noteOn")) {
-            document.getElementById((num+1).toString()).classList.toggle("dark:bg-sky-500");
-            document.getElementById((num+1).toString()).classList.toggle("noteOff");
-            document.getElementById((num+1).toString()).classList.toggle("noteOff");
-            document.getElementById((num+1).toString()).classList.toggle("noteOn");
-          }
+          this.keyColorOff(num+1)
         }
+      }
+    },
+
+    keyColorOn(index) {
+      if (document.documentElement.classList.contains("dark")) {
+        document.getElementById((index).toString()).classList.toggle("noteOn");
+        document.getElementById((index).toString()).classList.toggle("dark:bg-slate-500");
+        document.getElementById((index).toString()).classList.toggle("dark:bg-sky-500");
+      } else {
+        document.getElementById((index).toString()).classList.toggle("dark:bg-sky-500");
+        document.getElementById((index).toString()).classList.toggle("noteOn");
+      }
+    },
+
+    keyColorOff(index) {
+      if (document.getElementById((index).toString()).classList.contains("dark:bg-sky-500")) {
+        document.getElementById((index).toString()).classList.toggle("noteOn");
+        document.getElementById((index).toString()).classList.toggle("dark:bg-sky-500");
+        if (!document.getElementById((index).toString()).classList.contains("dark:bg-slate-500")) {
+          document.getElementById((index).toString()).classList.toggle("dark:bg-slate-500");
+        }
+      } else if(document.getElementById((index).toString()).classList.contains("noteOn")) {
+        document.getElementById((index).toString()).classList.toggle("dark:bg-sky-500");
+        document.getElementById((index).toString()).classList.toggle("noteOff");
+        document.getElementById((index).toString()).classList.toggle("noteOff");
+        document.getElementById((index).toString()).classList.toggle("noteOn");
       }
     },
 
@@ -164,14 +167,9 @@ export default {
       const index = keyboard.indexOf(key);
       if (!isNaN(index) && (index+1) <= this.hexNumber*this.octaves && (isNaN(keyboardon[index])||keyboardon[index]===false)
           && keymouseon[index] !== true) {
-        if (document.documentElement.classList.contains("dark")) {
-          document.getElementById((index+1).toString()).classList.toggle("noteOn");
-          document.getElementById((index + 1).toString()).classList.toggle("dark:bg-slate-500");
-          document.getElementById((index + 1).toString()).classList.toggle("dark:bg-sky-500");
-        } else {
-          document.getElementById((index+1).toString()).classList.toggle("dark:bg-sky-500");
-          document.getElementById((index + 1).toString()).classList.toggle("noteOn");
-        }
+
+        this.keyColorOn(index+1);
+
         keyboardon[index] = true
         played++
         ageofsynth[index] = played
@@ -193,18 +191,7 @@ export default {
           && keymouseon[index] !== true && keyboardon[index] === true) {
         console.log("up!"+index)
 
-        if (document.getElementById((index+1).toString()).classList.contains("dark:bg-sky-500")) {
-          document.getElementById((index+1).toString()).classList.toggle("noteOn");
-          document.getElementById((index+1).toString()).classList.toggle("dark:bg-sky-500");
-          if (!document.getElementById((index+1).toString()).classList.contains("dark:bg-slate-500")) {
-            document.getElementById((index+1).toString()).classList.toggle("dark:bg-slate-500");
-          }
-        } else if(document.getElementById((index+1).toString()).classList.contains("noteOn")) {
-          document.getElementById((index+1).toString()).classList.toggle("dark:bg-sky-500");
-          document.getElementById((index+1).toString()).classList.toggle("noteOff");
-          document.getElementById((index+1).toString()).classList.toggle("noteOff");
-          document.getElementById((index+1).toString()).classList.toggle("noteOn");
-        }
+        this.keyColorOff(index+1)
 
         keyboardon[index] = false
         synth[index].triggerRelease(Tone.now());
