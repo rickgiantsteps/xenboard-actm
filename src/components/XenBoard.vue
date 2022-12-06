@@ -22,7 +22,7 @@
   </div>
 
   <div class="grid" id='hexgrid'>
-    <HexagonKey class="dark:text-slate-50 dark:hover:bg-sky-700 !dark:active:bg-sky-500 dark:shadow dark:shadow-white dark:bg-slate-500" @mousedown="playOscillator(n-1)" @mouseup="stopOscillator(n-1)"
+    <HexagonKey class="dark:text-slate-50 dark:hover:bg-sky-700 dark:active:bg-sky-500 dark:shadow dark:shadow-white dark:bg-slate-500" @mousedown="playOscillator(n-1)" @mouseup="stopOscillator(n-1)"
                 @mouseleave="stopOscillator(n-1)" v-bind:key="n" v-text="n-1" v-bind:id="n"
                 v-for="n in hexNumber*octaves"/>
   </div>
