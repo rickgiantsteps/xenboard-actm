@@ -1,23 +1,23 @@
 <template>
   <div class="p-3">
     <label class="text-base px-0.5 dark:text-slate-200">Central frequency (Hz): </label>
-    <input type="number" id="freqhz" name="freqhz" class="rounded w-20 dark:bg-slate-200 dark:text-slate-900"
+    <input type="number" id="freqhz" name="freqhz" class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
            v-model.number = "centerfreq" min="1" v-on:change="createNotes()"/>
 
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Number of notes: </label>
-    <input type="number" id="hexnum" name="hexnum" class="rounded w-20 dark:bg-slate-200 dark:text-slate-900"
+    <input type="number" id="hexnum" name="hexnum" class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
            v-model.number = "hexNumber" min="1" max="100" v-on:change="createNotes()"/>
 
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Number of octaves: </label>
-    <input type="number" id="octnum" name="octnum" class="rounded w-20 dark:bg-slate-200 dark:text-slate-900"
+    <input type="number" id="octnum" name="octnum" class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
            v-model.number = "octaves" min="1" max="10" v-on:change="createNotes()"/>
 
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Root: </label>
-    <input type="number" id="root" name="root" class="rounded w-20 dark:bg-slate-200 dark:text-slate-900"
+    <input type="number" id="root" name="root" class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
            v-model.number = "rootn" min="2" max="5" v-on:change="createNotes()"/>
 
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Polyphony (n of oscillators): </label>
-    <input type="number" id="root" name="root" class="rounded w-20 dark:bg-slate-200 dark:text-slate-900"
+    <input type="number" id="root" name="root" class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
            v-model.number = "poly" min="1" max="50" v-on:change="createOsc()"/>
   </div>
 
@@ -31,13 +31,16 @@
 
 
 <script>
+
+// when starting the app sometimes audio plays only on the second click, problem with
+// Tone.start() "suspended, requires activation from user input"
+
 import * as Tone from 'tone'
 import HexagonKey from './hex.vue'
 
 let synth = new Array(12)
 let note = new Array(12)
 let ageofsynth = new Array(12).fill(0);
-let played = 0
 let keymouseon = new Array(12).fill(false);
 let keyboardon = new Array(12).fill(false);
 let keyboard = ["q","w","e","r","t","y","u","i","o","p","è","+","ù","a","s","d","f","g","h","j","k","l","ò","à",
@@ -55,6 +58,7 @@ export default {
 
   data() {
     return {
+      played: 0,
       hexNumber: 12,
       octaves: 1,
       centerfreq: 440,
@@ -86,14 +90,16 @@ export default {
       synth.length = this.hexNumber * this.octaves;
       ageofsynth.length = this.hexNumber * this.octaves;
       ageofsynth.fill(0);
+      this.played = 0;
       synth.fill(null)
     },
 
     playOscillator(n) {
       if ((keymouseon[n] === false || isNaN(keymouseon[n])) && keyboardon[n] !== true) {
+
         keymouseon[n] = true
-        played++
-        ageofsynth[n] = played
+        this.played++
+        ageofsynth[n] = this.played
         this.pauseOldOscillator()
         if (synth[n]===null) {
           synth[n] = new Tone.Synth().toDestination();
@@ -132,13 +138,8 @@ export default {
     },
 
     keyColorOnOff(index) {
-      if (document.documentElement.classList.contains("dark")) {
         document.getElementById((index).toString()).classList.toggle(this.colorOn);
         document.getElementById((index).toString()).classList.toggle(this.darkColorOn);
-      } else {
-        document.getElementById((index).toString()).classList.toggle(this.darkColorOn);
-        document.getElementById((index).toString()).classList.toggle(this.colorOn);
-      }
     },
 
   },
@@ -159,8 +160,8 @@ export default {
         this.keyColorOnOff(index+1);
 
         keyboardon[index] = true
-        played++
-        ageofsynth[index] = played
+        this.played++
+        ageofsynth[index] = this.played
         this.pauseOldOscillator()
         if (synth[index]===null) {
           synth[index] = new Tone.Synth().toDestination();

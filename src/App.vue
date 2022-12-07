@@ -29,7 +29,7 @@
 
   <header>
     <h1 class="font-bold text-6xl py-3 dark:text-slate-200">XenBoard</h1>
-    <p class="text-lg py-3 dark:text-slate-200">Microtonal keyboard test</p>
+    <p class="underline text-lg py-3 dark:text-slate-200">Interactive microtonal synth</p>
   </header>
 
   <XenBoard/>
