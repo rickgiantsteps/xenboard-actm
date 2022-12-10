@@ -16,7 +16,7 @@ export default {
     },
     data() {
         return {
-            darkOn: false,
+            darkOn: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches,
         };
     },
 
