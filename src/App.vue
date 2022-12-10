@@ -28,43 +28,29 @@
   </div>
 
   <header>
+
+
+
     <h1 class="font-bold text-6xl py-3 dark:text-slate-200">XenBoard</h1>
-    <p class="text-lg py-3 dark:text-slate-200">Microtonal keyboard test</p>
+    <p class="text-lg py-3 dark:text-slate-200 ">Microtonal keyboard test</p>
+
+<!--    <div id="sketch-holder">
+&lt;!&ndash;      <P5 class="P5js"></P5>&ndash;&gt;
+      <P5 v-bind:hexNumber="hexNumber" />
+    </div>-->
+
+
   </header>
 
   <XenBoard/>
 
   <footer>
-    <p class="text-base p-6 dark:text-slate-200">ACTM Project - a.a. 2022/2023</p>
+    <p class="text-base p-6 dark:text-slate-200 ">ACTM Project - a.a. 2022/2023</p>
   </footer>
 
 </template>
 
-<script>
-import XenBoard from './components/XenBoard.vue'
-
-document.body.classList.toggle("bg-[#ffb30024]");
-
-if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-  document.documentElement.classList.toggle("dark");
-  document.body.classList.toggle("dark:bg-slate-900");
-}
-
-export default {
-  name: 'App',
-  components: {
-    XenBoard
-  },
-
-  methods: {
-    darkModeSwitch() {
-      document.documentElement.classList.toggle("dark");
-      document.body.classList.toggle("dark:bg-slate-900");
-    },
-  }
-
-}
-</script>
+<script src="./App.js"></script>
 
 <style lang="scss">
 @import "assets/styles/styles.scss";
