@@ -14,11 +14,22 @@ export default {
         XenBoard,
         P5: P5
     },
+    data() {
+        return {
+            darkOn: false,
+        };
+    },
 
     methods: {
         darkModeSwitch() {
             document.documentElement.classList.toggle("dark");
             document.body.classList.toggle("dark:bg-slate-900");
+            if(this.darkOn === false){
+                this.darkOn = true;
+            }
+            else if(this.darkOn === true) {
+                this.darkOn = false;
+            }
         },
     },
 

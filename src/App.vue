@@ -28,24 +28,14 @@
   </div>
 
   <header>
-
-
-
     <h1 class="font-bold text-6xl py-3 dark:text-slate-200">XenBoard</h1>
-    <p class="text-lg py-3 dark:text-slate-200 ">Microtonal keyboard test</p>
-
-<!--    <div id="sketch-holder">
-&lt;!&ndash;      <P5 class="P5js"></P5>&ndash;&gt;
-      <P5 v-bind:hexNumber="hexNumber" />
-    </div>-->
-
-
+    <p class="underline text-lg py-3 dark:text-slate-200">Interactive Microtonal Synth</p>
   </header>
 
-  <XenBoard/>
+  <XenBoard v-model:darkOn="darkOn"/>
 
   <footer>
-    <p class="text-base p-6 dark:text-slate-200 ">ACTM Project - a.a. 2022/2023</p>
+    <p class="text-base p-6 dark:text-slate-200">ACTM Project - a.a. 2022/2023</p>
   </footer>
 
 </template>

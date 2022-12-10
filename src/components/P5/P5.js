@@ -1,10 +1,9 @@
-
 const sketch = function(p) {
 
     let scale = [];
-    //let num;
     let keyOnP5 = [];
     let mouseOnP5 = [];
+    let darkOnP5;
 
     //------------------------------------------------------------
     p.setup = function() {
@@ -54,9 +53,9 @@ const sketch = function(p) {
     p.draw = function() {
 
         scale = [];
-        //num = p.hexNumberID;
         keyOnP5 = p.keyOnID;
         mouseOnP5 = p.mouseOnID;
+        darkOnP5 = p.darkOnID;
 
         for (let i = 0; i < p.hexNumberID; i++) {
             scale[i] = (i+1) / p.hexNumberID;
@@ -64,6 +63,11 @@ const sketch = function(p) {
         }
 
         p.background('#fff4db');
+        console.log(darkOnP5);
+
+        if(darkOnP5 === true){
+            p.background('#0f172a');
+        }
 
         // define the text size based on the window height
         let tSize = p.min(p.windowWidth, p.windowHeight) / 50;
@@ -77,6 +81,9 @@ const sketch = function(p) {
 
         p.textSize(tSize);
         p.fill('#001133');
+        if(darkOnP5 === true){
+            p.fill('white');
+        }
         p.textAlign(p.CENTER, p.CENTER);
 
         p.translate(p.width / 2, p.height / 2);
@@ -95,41 +102,72 @@ const sketch = function(p) {
 
             p.text(noteName, x, y);
 
-                    if (i > 0){
-                        p.push();
-                        p.fill('#303c54');
-                        p.strokeWeight(2);
-                        p.line(x_coordinate[i-1], y_coordinate[i-1], x_coordinate[i], y_coordinate[i]);
-                        p.stroke(255);
-                        p.pop();
-                    }
+            if (i > 0 && darkOnP5 === true){
+                p.push();
+                p.fill('white');
+                p.stroke('white');
+                p.strokeWeight(2);
+                p.line(x_coordinate[i-1], y_coordinate[i-1], x_coordinate[i], y_coordinate[i]);
+                p.pop();
+                console.log("www");
+            }
 
-                    if (i == scale.length-1){
-                        p.push();
-                        p.fill('#303c54');
-                        p.strokeWeight(2);
-                        p.line(x_coordinate[i], y_coordinate[i], x_coordinate[0], y_coordinate[0]);
-                        p.stroke(255);
-                        p.pop();
-                    }
+            if (i > 0 && darkOnP5 === false){
+                p.push();
+                p.fill('#303c54')
+                p.stroke('#303c54');
+                p.strokeWeight(2);
+                p.line(x_coordinate[i-1], y_coordinate[i-1], x_coordinate[i], y_coordinate[i]);
+                p.pop();
+                console.log("aaa");
+            }
 
-                    if (keyOnP5[i] === true || mouseOnP5[i] == true) {
+            if (i == scale.length-1 && darkOnP5 === true){
+                p.push();
+                p.fill('white');
+                p.stroke('white');
+                p.strokeWeight(2);
+                p.line(x_coordinate[i], y_coordinate[i], x_coordinate[0], y_coordinate[0]);
+                p.pop();
+                console.log("xxx");
+            }
 
-                        p.push(); // Start another new drawing state
+            if (i == scale.length-1 && darkOnP5 === false){
+                p.push();
+                p.fill('#303c54');
+                p.stroke('#303c54');
+                p.strokeWeight(2);
+                p.line(x_coordinate[i], y_coordinate[i], x_coordinate[0], y_coordinate[0]);
+                p.pop();
+                console.log("yyy");
+            }
 
-                        p.fill('#001133');
-                        p.stroke('#001133');
-                        p.text(noteName, x, y);
-                        p.pop();
+            if (keyOnP5[i] === true || mouseOnP5[i] == true) {
 
-                        p.push(); // Start another new drawing state
-                        p.stroke('#001133');
-                        p.strokeWeight(2);
-                        p.line(x_coordinate[i], y_coordinate[i], 0, 0);
-                        p.pop();
+                p.push(); // Start another new drawing state
 
-                    }
-               }
+                p.fill('#001133');
+                if(darkOnP5 === true){
+                    p.fill('white');
+                }
+                p.stroke('#001133');
+                if(darkOnP5 === true){
+                    p.stroke('white');
+                }
+                p.text(noteName, x, y);
+                p.pop();
+
+                p.push(); // Start another new drawing state
+                p.stroke('#001133');
+                if(darkOnP5 === true){
+                    p.stroke('white');
+                }
+                p.strokeWeight(2);
+                p.line(x_coordinate[i], y_coordinate[i], 0, 0);
+                p.pop();
+
+            }
+        }
     }
 
 }
@@ -151,6 +189,9 @@ export default {
         },
         mouseOn:{
             type: Array,
+        },
+        darkOn:{
+            type: Boolean,
         }
     },
     data() {
@@ -164,6 +205,7 @@ export default {
             this.mySketch.hexNumberID = this.testingVar;
             this.mySketch.keyOnID = this.testingKey;
             this.mySketch.mouseOnID = this.testingMouse;
+            this.mySketch.darkOnID = this.testingDark;
         });
     },
 
@@ -171,6 +213,7 @@ export default {
         this.testingVar = this.hexNumber;
         this.testingKey = this.keyOn;
         this.testingMouse = this.mouseOn;
+        this.testingDark = this.darkOn;
     },
 
     computed: {
@@ -205,6 +248,11 @@ export default {
 
             },
             deep: true
+        },
+
+        darkOn(newValue) {
+            this.testingDark = newValue;
+            this.mySketch.darkOnID = this.testingDark;
         },
 
     }

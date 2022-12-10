@@ -51,12 +51,6 @@ body::-webkit-scrollbar-thumb {
   transition: clip-path 1ms, background-color 100ms;
 }
 
-#sketch-holder{
-  position: relative;
-  display: flex;
-  justify-content: center;
-}
-
 @media screen and (max-width: #{3 * $block-size - 1 + $scrollbar-size}px) {
   .grid {
     grid-template-columns: repeat(auto-fit, $block-size + px);
@@ -97,4 +91,10 @@ body::-webkit-scrollbar-thumb {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+#sketch-holder{
+  position: relative;
+  display: flex;
+  justify-content: center;
 }
