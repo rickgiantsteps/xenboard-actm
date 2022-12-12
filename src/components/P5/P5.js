@@ -91,7 +91,7 @@ const sketch = function(p) {
         for (let i = 0; i < scale.length; i++) {
             // calculate a position along a circle
             let angle = p.map(i, 0, scale.length, -p.PI / 2, p.TWO_PI - p.PI / 2);
-            let radius = 200; //min(width, height) / 3;
+            let radius = p.min(p.windowWidth, p.windowHeight) / 4.2;
             let x = Math.cos(angle) * radius;
             let y = Math.sin(angle) * radius;
 
