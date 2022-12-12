@@ -15,6 +15,9 @@ a {
   color: #42b983;
 }
 
+
+
+
 /* avoid styling html tags directly, this will cause a huge mess very quickly
   instead make a class .hex-list and put the li tags inside
   same goes for h3, a, etc :-D
@@ -26,4 +29,8 @@ a {
     display: inline-block;
     margin: 0 10px;
   } /* this will only work for li elements that are inside a .hex-list element so it's safe */
+}
+
+.P5js{
+  padding: 10px;
 }

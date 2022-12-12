@@ -92,3 +92,9 @@ body::-webkit-scrollbar-thumb {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+#sketch-holder{
+  position: relative;
+  display: flex;
+  justify-content: center;
+}

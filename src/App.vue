@@ -28,11 +28,14 @@
   </div>
 
   <header>
+  
     <h1 class="font-bold text-6xl py-3 dark:text-slate-200">XenBoard</h1>
-    <p class="underline text-lg py-3 dark:text-slate-200">Interactive microtonal synth</p>
+
+    <p class="underline text-lg py-3 dark:text-slate-200">Interactive Microtonal Synth</p>
+    
   </header>
 
-  <XenBoard/>
+  <XenBoard v-model:darkOn="darkOn"/>
 
   <footer>
     <p class="text-base p-6 dark:text-slate-200">ACTM Project - a.a. 2022/2023</p>
@@ -40,31 +43,7 @@
 
 </template>
 
-<script>
-import XenBoard from './components/XenBoard.vue'
-
-document.body.classList.toggle("bg-[#ffb30024]");
-
-if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-  document.documentElement.classList.toggle("dark");
-  document.body.classList.toggle("dark:bg-slate-900");
-}
-
-export default {
-  name: 'App',
-  components: {
-    XenBoard
-  },
-
-  methods: {
-    darkModeSwitch() {
-      document.documentElement.classList.toggle("dark");
-      document.body.classList.toggle("dark:bg-slate-900");
-    },
-  }
-
-}
-</script>
+<script src="./App.js"></script>
 
 <style lang="scss">
 @import "assets/styles/styles.scss";
