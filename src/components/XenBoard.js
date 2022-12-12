@@ -1,11 +1,11 @@
 import HexagonKey from './hex.vue'
 import P5 from "@/components/P5/P5-multi.vue";
 import * as Tone from 'tone'
+import DissonanceGraph from "@/components/P5/dissonance-graph.vue";
 
 let synth = new Array(12)
 let note = new Array(12)
 let ageofsynth = new Array(12).fill(0);
-//let played = 0
 let keymouseon = new Array(12).fill(false);
 let keyboardon = new Array(12).fill(false);
 let keyboard = ["q","w","e","r","t","y","u","i","o","p","è","+","ù","a","s","d","f","g","h","j","k","l","ò","à",
@@ -15,8 +15,6 @@ for (let i=0; i<12; i++) {
   synth[i] = new Tone.Synth().toDestination();
   note[i] = 440 * 2 ** (i / 12)
 }
-
-Tone.start();
 
 export default {
   name: 'XenBoard',
@@ -34,8 +32,9 @@ export default {
 
             keyOn: keyboardon,
             mouseOn: keymouseon,
-            innerDarkOn: this.darkOn
-
+            innerDarkOn: this.darkOn,
+            synths: synth,
+            notes: note,
         };
     },
 
@@ -123,11 +122,9 @@ export default {
     created() {
 
         /*for (let i=0; i<12; i++) {
-            synth[i] = new this.$tone.Synth().toDestination();
+            synth[i] = new Tone.Synth().toDestination();
             note[i] = 440 * 2 ** (i / 12)
-        }
-
-        this.$tone.start()*/
+        }*/
 
         window.addEventListener("keydown", e => {
             if(e.target.type === 'number') {
@@ -180,6 +177,7 @@ export default {
     },
 
     components: {
+        DissonanceGraph,
         HexagonKey,
         P5
     },

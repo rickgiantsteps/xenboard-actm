@@ -12,7 +12,7 @@ const sketch = function(p) {
         canvas.center();
         canvas.position(p.x, p.windowHeight/1.7);*/
 
-        let canvas = p.createCanvas(p.windowWidth/2, p.windowHeight/2);
+        let canvas = p.createCanvas(p.windowWidth/4, p.windowHeight/2);
         //let canvas_horizontal_offset = (p.windowWidth - p.width) / 2;
         //let elem = document.getElementsByClassName("posSketch")[0];
         //canvas.position(canvas_horizontal_offset, elem.getBoundingClientRect().y + 90);
@@ -46,7 +46,7 @@ const sketch = function(p) {
 
     //------------------------------------------------------------
     p.windowResized = function () {
-        p.resizeCanvas(p.windowWidth/2, p.windowHeight/2);
+        p.resizeCanvas(p.windowWidth/4, p.windowHeight/2);
     }
 
     //------------------------------------------------------------
@@ -63,7 +63,6 @@ const sketch = function(p) {
         }
 
         p.background('#fff4db');
-        console.log(darkOnP5);
 
         if(darkOnP5 === true){
             p.background('#0f172a');
@@ -109,7 +108,6 @@ const sketch = function(p) {
                 p.strokeWeight(2);
                 p.line(x_coordinate[i-1], y_coordinate[i-1], x_coordinate[i], y_coordinate[i]);
                 p.pop();
-                console.log("www");
             }
 
             if (i > 0 && darkOnP5 === false){
@@ -119,30 +117,27 @@ const sketch = function(p) {
                 p.strokeWeight(2);
                 p.line(x_coordinate[i-1], y_coordinate[i-1], x_coordinate[i], y_coordinate[i]);
                 p.pop();
-                console.log("aaa");
             }
 
-            if (i == scale.length-1 && darkOnP5 === true){
+            if (i === scale.length-1 && darkOnP5 === true){
                 p.push();
                 p.fill('white');
                 p.stroke('white');
                 p.strokeWeight(2);
                 p.line(x_coordinate[i], y_coordinate[i], x_coordinate[0], y_coordinate[0]);
                 p.pop();
-                console.log("xxx");
             }
 
-            if (i == scale.length-1 && darkOnP5 === false){
+            if (i === scale.length-1 && darkOnP5 === false){
                 p.push();
                 p.fill('#303c54');
                 p.stroke('#303c54');
                 p.strokeWeight(2);
                 p.line(x_coordinate[i], y_coordinate[i], x_coordinate[0], y_coordinate[0]);
                 p.pop();
-                console.log("yyy");
             }
 
-            if (keyOnP5[i] === true || mouseOnP5[i] == true) {
+            if (keyOnP5[i] === true || mouseOnP5[i] === true) {
 
                 p.push(); // Start another new drawing state
 

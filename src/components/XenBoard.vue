@@ -1,11 +1,17 @@
 <template>
 
-  <div id="sketch-holder">
-    <P5 v-model:hexNumber="hexNumber"
-        v-model:keyOn="keyOn"
-        v-model:mouseOn="mouseOn"
-        v-model:darkOn="innerDarkOn"/>
+  <div class="justify-center flex flex-row content-center gap-x-10">
+    <div id="sketch-holder">
+      <P5 v-model:hexNumber="hexNumber"
+          v-model:keyOn="keyOn"
+          v-model:mouseOn="mouseOn"
+          v-model:darkOn="innerDarkOn"/>
+    </div>
+    <div id="sketch-holder-2">
+      <dissonance-graph v-model:hexNumber="hexNumber"/>
+    </div>
   </div>
+
 
   <div class="p-3">
     <label class="text-base px-0.5 dark:text-slate-200">Central frequency (Hz): </label>
