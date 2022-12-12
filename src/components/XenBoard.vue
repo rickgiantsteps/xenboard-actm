@@ -3,6 +3,7 @@
   <div class="justify-center flex flex-row content-center gap-x-10">
     <div id="sketch-holder">
       <P5 v-model:hexNumber="hexNumber"
+          v-model:squareRoot="rootn"
           v-model:keyOn="keyOn"
           v-model:mouseOn="mouseOn"
           v-model:darkOn="innerDarkOn"/>

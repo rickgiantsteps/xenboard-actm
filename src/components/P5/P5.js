@@ -1,3 +1,30 @@
+function gcd(a, b) {
+    return (b) ? gcd(b, a % b) : a;
+}
+
+function decimalToFraction(_decimal) {
+
+    if (_decimal == 1){
+        return {
+            top		: 1,
+            bottom	: 1,
+            display	: 1 + ':' + 1
+        };
+    }  else {
+
+        let top		= _decimal.toString().replace(/\d+[.]/, '');
+        let bottom	= Math.pow(10, top.length);
+        if (_decimal > 1) {
+            top	= +top + Math.floor(_decimal) * bottom;
+        }
+        let x = gcd(top, bottom);
+        return {
+            top		: (top / x),
+            bottom	: (bottom / x),
+            display	: (top / x) + ':' + (bottom / x)
+        };
+    }
+}
 const sketch = function(p) {
 
     let scale = [];
@@ -12,7 +39,7 @@ const sketch = function(p) {
         canvas.center();
         canvas.position(p.x, p.windowHeight/1.7);*/
 
-        let canvas = p.createCanvas(p.windowWidth/4, p.windowHeight/2);
+        let canvas = p.createCanvas(p.windowWidth/4 + 200, p.windowHeight/2);
         //let canvas_horizontal_offset = (p.windowWidth - p.width) / 2;
         //let elem = document.getElementsByClassName("posSketch")[0];
         //canvas.position(canvas_horizontal_offset, elem.getBoundingClientRect().y + 90);
@@ -58,8 +85,7 @@ const sketch = function(p) {
         darkOnP5 = p.darkOnID;
 
         for (let i = 0; i < p.hexNumberID; i++) {
-            scale[i] = (i+1) / p.hexNumberID;
-            scale[i] = scale[i].toFixed(2);
+            scale[i] = decimalToFraction((p.root ** (i/p.hexNumberID)).toFixed(3));
         }
 
         p.background('#fff4db');
@@ -97,7 +123,7 @@ const sketch = function(p) {
             x_coordinate[i] = x / 1.1;
             y_coordinate[i] = y / 1.1;
 
-            let noteName = scale[i].toString();
+            let noteName = scale[i].display.toString();
 
             p.text(noteName, x, y);
 
@@ -176,6 +202,11 @@ export default {
             default: 12,
             required: true
         },
+        squareRoot: {
+            type: Number,
+            default: 2,
+            required: true
+        },
         modelValue: {
 
         },
@@ -198,6 +229,7 @@ export default {
 
             this.mySketch = new this.$p5(sketch, this.$refs.canvasOutlet);
             this.mySketch.hexNumberID = this.testingVar;
+            this.mySketch.root = this.rootValue;
             this.mySketch.keyOnID = this.testingKey;
             this.mySketch.mouseOnID = this.testingMouse;
             this.mySketch.darkOnID = this.testingDark;
@@ -206,6 +238,7 @@ export default {
 
     created() {
         this.testingVar = this.hexNumber;
+        this.rootValue = this.squareRoot;
         this.testingKey = this.keyOn;
         this.testingMouse = this.mouseOn;
         this.testingDark = this.darkOn;
@@ -225,6 +258,10 @@ export default {
         hexNumber(newValue) {
             this.testingVar = newValue;
             this.mySketch.hexNumberID = this.testingVar;//this.hexNumberNew;
+        },
+
+        squareRoot(sr) {
+            this.mySketch.root = sr;
         },
 
         keyOn: {
