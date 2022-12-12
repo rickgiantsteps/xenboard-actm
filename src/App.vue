@@ -28,8 +28,11 @@
   </div>
 
   <header>
+  
     <h1 class="font-bold text-6xl py-3 dark:text-slate-200">XenBoard</h1>
+
     <p class="underline text-lg py-3 dark:text-slate-200">Interactive Microtonal Synth</p>
+    
   </header>
 
   <XenBoard v-model:darkOn="darkOn"/>

@@ -37,5 +37,4 @@
 </template>
 
 
-
 <script src="./XenBoard.js"> </script>
