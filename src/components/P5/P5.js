@@ -31,6 +31,7 @@ const sketch = function(p) {
     let keyOnP5 = [];
     let mouseOnP5 = [];
     let darkOnP5;
+    //let octave;
 
     //------------------------------------------------------------
     p.setup = function() {
@@ -85,8 +86,10 @@ const sketch = function(p) {
         darkOnP5 = p.darkOnID;
 
         for (let i = 0; i < p.hexNumberID; i++) {
-            scale[i] = decimalToFraction((p.root ** (i/p.hexNumberID)).toFixed(3));
+            scale[i] = decimalToFraction((p.root ** (i/p.hexNumberID)).toFixed(2));
         }
+
+       // octave = keyOnP5.length / scale.length;
 
         p.background('#fff4db');
 
@@ -103,6 +106,8 @@ const sketch = function(p) {
         // Array for coordinate y
         let y_coordinate = [];
 
+        // Array nomi
+        let noteName = [];
 
         p.textSize(tSize);
         p.fill('#001133');
@@ -123,9 +128,9 @@ const sketch = function(p) {
             x_coordinate[i] = x / 1.1;
             y_coordinate[i] = y / 1.1;
 
-            let noteName = scale[i].display.toString();
+            noteName[i] = scale[i].display.toString();
 
-            p.text(noteName, x, y);
+            p.text(noteName[i], x, y);
 
             if (i > 0 && darkOnP5 === true){
                 p.push();
@@ -162,10 +167,12 @@ const sketch = function(p) {
                 p.line(x_coordinate[i], y_coordinate[i], x_coordinate[0], y_coordinate[0]);
                 p.pop();
             }
+        }
+        for (let ii = 0; ii < mouseOnP5.length; ii++){
+            let octave_pos = Math.floor(ii / scale.length);
 
-            if (keyOnP5[i] === true || mouseOnP5[i] === true) {
-
-                p.push(); // Start another new drawing state
+            if (keyOnP5[ii] === true || mouseOnP5[ii] === true) {
+                /*p.push(); // Start another new drawing state
 
                 p.fill('#001133');
                 if(darkOnP5 === true){
@@ -175,8 +182,10 @@ const sketch = function(p) {
                 if(darkOnP5 === true){
                     p.stroke('white');
                 }
-                p.text(noteName, x, y);
-                p.pop();
+                p.text(noteName[ii-scale.length*octave_pos], x_coordinate[ii-scale.length*octave_pos], y_coordinate[ii-scale.length*octave_pos]);
+                p.pop();*/
+
+
 
                 p.push(); // Start another new drawing state
                 p.stroke('#001133');
@@ -184,7 +193,7 @@ const sketch = function(p) {
                     p.stroke('white');
                 }
                 p.strokeWeight(2);
-                p.line(x_coordinate[i], y_coordinate[i], 0, 0);
+                p.line(x_coordinate[ii-scale.length*octave_pos], y_coordinate[ii-scale.length*octave_pos], 0, 0);
                 p.pop();
 
             }

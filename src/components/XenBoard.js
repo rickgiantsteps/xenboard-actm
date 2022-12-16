@@ -185,7 +185,6 @@ export default {
     watch:{
         darkOn(newValue) {
             this.innerDarkOn = newValue;
-            console.log(this.innerDarkOn);
         },
     }
 
