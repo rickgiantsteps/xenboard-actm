@@ -185,8 +185,6 @@ const sketch = function(p) {
                 p.text(noteName[ii-scale.length*octave_pos], x_coordinate[ii-scale.length*octave_pos], y_coordinate[ii-scale.length*octave_pos]);
                 p.pop();*/
 
-
-
                 p.push(); // Start another new drawing state
                 p.stroke('#001133');
                 if(darkOnP5 === true){
