@@ -4,7 +4,7 @@ function gcd(a, b) {
 
 function decimalToFraction(_decimal) {
 
-    if (_decimal == 1){
+    if (_decimal === 1){
         return {
             top		: 1,
             bottom	: 1,
@@ -169,8 +169,8 @@ const sketch = function(p) {
             }
         }
         for (let ii = 0; ii < mouseOnP5.length; ii++){
-            let octave_pos = Math.floor(ii / scale.length);
-            let octave_colors_On = ["#ffd700","#d6d6f7","#ab76ab","#fb9185","#a48585","#bd1d00","#a09520","#156262","#454500"];
+            let octave_colors_On = ["#ffd700", "#ab76ab", "#bd1d00"];
+            let octave_pos = Math.floor(ii / scale.length) % octave_colors_On.length;
 
             if (keyOnP5[ii] === true || mouseOnP5[ii] === true) {
                 /*p.push(); // Start another new drawing state
@@ -192,7 +192,7 @@ const sketch = function(p) {
                     p.stroke("#0EA5E9");
                 }
                 p.strokeWeight(2);
-                p.line(x_coordinate[ii-scale.length*octave_pos], y_coordinate[ii-scale.length*octave_pos], 0, 0);
+                p.line(x_coordinate[ii-scale.length*Math.floor(ii / scale.length)], y_coordinate[ii-scale.length*Math.floor(ii / scale.length)], 0, 0);
                 p.pop();
 
             }

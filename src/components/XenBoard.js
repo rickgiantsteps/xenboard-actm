@@ -10,13 +10,14 @@ let keymouseon = new Array(12).fill(false);
 let keyboardon = new Array(12).fill(false);
 let keyboard = ["q","w","e","r","t","y","u","i","o","p","è","+","ù","a","s","d","f","g","h","j","k","l","ò","à",
                 "z","x","c","v","b","n","m",",",".","-","1","2","3","4","5","6","7","8","9","0"]
-let octave_colors = ["bg-[#ffd085]","bg-[#E6E6FA]","bg-[#D8BFD8]","bg-[#FA8072]","bg-[#CD5C5C]","bg-[#FF6347]","bg-[#EEE8AA]","bg-[#AFEEEE]","bg-[#808000]"];
-let octave_colors_On = ["bg-[#ffd700]","bg-[#d6d6f7]","bg-[#ab76ab]","bg-[#fb9185]","bg-[#a48585]","bg-[#bd1d00]","bg-[#a09520]","bg-[#156262]","bg-[#454500]"];
-let octave_colors_Mid = ["bg-[#ffbe5b]","bg-[#8484e6]","bg-[#c9a7c9]","bg-[#f96f5f]","bg-[#dd4c4c]","bg-[#ff846e]","bg-[#e7df89]","bg-[#8fe7e7]","bg-[#bbbb00]"];
 
-let octave_colors_dark = ["bg-slate-500","bg-[#E6E6FA]","bg-[#D8BFD8]","bg-[#FA8072]","bg-[#CD5C5C]","bg-[#FF6347]","bg-[#EEE8AA]","bg-[#AFEEEE]","bg-[#808000]"];
-let octave_colors_dark_On = ["bg-sky-500","bg-[#d6d6f7]","bg-[#ab76ab]","bg-[#fb9185]","bg-[#a48585]","bg-[#bd1d00]","bg-[#a09520]","bg-[#156262]","dark:bg-[#454500]"];
-let octave_colors_dark_Mid= ["bg-sky-700","bg-[#8484e6]","bg-[#c9a7c9]","bg-[#f96f5f]","bg-[#dd4c4c]","bg-[#ff846e]","bg-[#e7df89]","bg-[#8fe7e7]","bg-[#bbbb00]"];
+let octave_colors = ["bg-[#ffd085]", "bg-[#D8BFD8]", "bg-[#FF6347]"];
+let octave_colors_On = ["bg-[#ffd700]", "bg-[#ab76ab]", "bg-[#bd1d00]"];
+let octave_colors_Mid = ["bg-[#ffbe5b]", "bg-[#c9a7c9]", "bg-[#ff846e]"];
+
+let octave_colors_dark = ["bg-slate-500", "bg-[#D8BFD8]", "bg-[#FF6347]"];
+let octave_colors_dark_On = ["bg-sky-500", "bg-[#ab76ab]", "bg-[#bd1d00]"];
+let octave_colors_dark_Mid= ["bg-sky-700", "bg-[#c9a7c9]", "bg-[#ff846e]"];
 
 
 for (let i=0; i<12; i++) {
@@ -63,30 +64,35 @@ export default {
         },
 
         changeOctaveColor(note_number, octave_number){
-            for(let i = 0; i < note_number * octave_number; i++){
-                document.getElementById((i+1).toString()).classList.remove("bg-[#ffd085]");
-                document.getElementById((i+1).toString()).classList.remove("dark:bg-slate-500");
-                document.getElementById((i+1).toString()).classList.remove("active:bg-[#ffd700]");
-                document.getElementById((i+1).toString()).classList.remove("dark:active:bg-sky-500");
-                document.getElementById((i+1).toString()).classList.remove("hover:bg-[#ffbe5b]");
-                document.getElementById((i+1).toString()).classList.remove("dark:hover:bg-sky-700");
-                for (let j = 0; j < octave_colors.length; j++) {
-                    document.getElementById((i+1).toString()).classList.remove(octave_colors[j]);
-                    document.getElementById((i+1).toString()).classList.remove("dark:" + octave_colors_dark[j]);
-                    document.getElementById((i+1).toString()).classList.remove("active:" + octave_colors_On[j]);
-                    document.getElementById((i+1).toString()).classList.remove("dark:active:" + octave_colors_dark_On[j]);
-                    document.getElementById((i+1).toString()).classList.remove("hover:" + octave_colors_Mid[j]);
-                    document.getElementById((i+1).toString()).classList.remove("dark:hover:" + octave_colors_dark_Mid[j]);
+            for(let i = 0; i < note_number * octave_number; i++) {
+                if (keymouseon[i] !== true && keyboardon[i] !== true) {
+                    document.getElementById((i + 1).toString()).classList.remove("bg-[#ffd085]");
+                    document.getElementById((i + 1).toString()).classList.remove("dark:bg-slate-500");
+                    document.getElementById((i + 1).toString()).classList.remove("active:bg-[#ffd700]");
+                    document.getElementById((i + 1).toString()).classList.remove("dark:active:bg-sky-500");
+                    document.getElementById((i + 1).toString()).classList.remove("hover:bg-[#ffbe5b]");
+                    document.getElementById((i + 1).toString()).classList.remove("dark:hover:bg-sky-700");
+                    for (let j = 0; j < octave_colors.length; j++) {
+                        document.getElementById((i + 1).toString()).classList.remove(octave_colors[j]);
+                        document.getElementById((i + 1).toString()).classList.remove("dark:" + octave_colors_dark[j]);
+                        document.getElementById((i + 1).toString()).classList.remove("active:" + octave_colors_On[j]);
+                        document.getElementById((i + 1).toString()).classList.remove("dark:active:" + octave_colors_dark_On[j]);
+                        document.getElementById((i + 1).toString()).classList.remove("hover:" + octave_colors_Mid[j]);
+                        document.getElementById((i + 1).toString()).classList.remove("dark:hover:" + octave_colors_dark_Mid[j]);
+                    }
                 }
             }
-            for (let i = 0; i < note_number * octave_number; i++){
-                let octave_pos = Math.floor(i / note_number);
-                    document.getElementById((i+1).toString()).classList.add(octave_colors[octave_pos]);
-                    document.getElementById((i+1).toString()).classList.add("dark:" + octave_colors_dark[octave_pos]);
-                    document.getElementById((i+1).toString()).classList.add("active:" + octave_colors_On[octave_pos]);
-                    document.getElementById((i+1).toString()).classList.add("dark:active:" + octave_colors_dark_On[octave_pos]);
-                    document.getElementById((i+1).toString()).classList.add("hover:" + octave_colors_Mid[octave_pos]);
-                    document.getElementById((i+1).toString()).classList.add("dark:hover:" + octave_colors_dark_Mid[octave_pos]);
+
+            for (let i = 0; i < note_number * octave_number; i++) {
+                if (keymouseon[i] !== true && keyboardon[i] !== true) {
+                    let octave_pos = Math.floor(i / note_number) % octave_colors.length;
+                    document.getElementById((i + 1).toString()).classList.add(octave_colors[octave_pos]);
+                    document.getElementById((i + 1).toString()).classList.add("dark:" + octave_colors_dark[octave_pos]);
+                    document.getElementById((i + 1).toString()).classList.add("active:" + octave_colors_On[octave_pos]);
+                    document.getElementById((i + 1).toString()).classList.add("dark:active:" + octave_colors_dark_On[octave_pos]);
+                    document.getElementById((i + 1).toString()).classList.add("hover:" + octave_colors_Mid[octave_pos]);
+                    document.getElementById((i + 1).toString()).classList.add("dark:hover:" + octave_colors_dark_Mid[octave_pos]);
+                }
             }
         },
 
