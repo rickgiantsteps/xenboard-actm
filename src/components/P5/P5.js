@@ -4,7 +4,7 @@ function gcd(a, b) {
 
 function decimalToFraction(_decimal) {
 
-    if (_decimal === 1){
+    if (_decimal == 1){
         return {
             top		: 1,
             bottom	: 1,
