@@ -9,7 +9,7 @@
           v-model:darkOn="innerDarkOn"/>
     </div>
     <div id="sketch-holder-2">
-      <dissonance-graph v-model:hexNumber="hexNumber"/>
+      <dissonance-graph v-model:freqs="notes"/>
     </div>
   </div>
 
