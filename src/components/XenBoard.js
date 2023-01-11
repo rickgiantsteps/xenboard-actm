@@ -56,7 +56,7 @@ export default {
                 }
             }
             this.createOsc();
-            this.changeOctaveColor(this.hexNumber, this.octaves);
+            this.$nextTick(function () {this.changeOctaveColor(this.hexNumber, this.octaves)})
             keyboardon.length = note.length;
             keyboardon[note.length-1] = false;
             keymouseon.length = note.length;

@@ -18,7 +18,7 @@
   <div class="p-3">
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Main Tunings: </label>
     <select class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
-        v-model.number = "hexNumber" v-on:change="createNotes()">
+        v-model.number = "hexNumber" v-on:change="this.rootn=2; createNotes()">
       <option style="text-align: center;" disabled value="">Please select one</option>
       <option style="text-align: center;" value="19">19EDO</option>
       <option style="text-align: center;" value="24">24EDO</option>
