@@ -20,6 +20,7 @@
     <select class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
         v-model.number = "hexNumber" v-on:change="this.rootn=2; createNotes()">
       <option style="text-align: center;" disabled value="">Please select one</option>
+      <option style="text-align: center;" value="12">12EDO</option>
       <option style="text-align: center;" value="19">19EDO</option>
       <option style="text-align: center;" value="24">24EDO</option>
       <option style="text-align: center;" value="31">31EDO</option>
