@@ -14,7 +14,8 @@
   </div>
 
 
-  <button @click="tune = !tune; this.hexNumber=0;">Toggle tunings creation</button>
+  <button class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
+      @click="tune = !tune; this.hexNumber=0;">Toggle tunings creation</button>
   <div class="p-3" v-if="tune">
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Main Tunings: </label>
     <select class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
