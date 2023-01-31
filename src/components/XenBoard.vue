@@ -34,9 +34,17 @@
     <input type="number" id="hexnum" name="hexnum" class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
            v-model.number = "hexNumber" min="1" max="100" v-on:change="createNotes()"/>
 
-    <label class="text-base px-0.5 pl-5 dark:text-slate-200">Number of octaves: </label>
-    <input type="number" id="octnum" name="octnum" class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
-           v-model.number = "octaves" min="1" max="10" v-on:change="createNotes()"/>
+    <label class="text-base px-0.5 pl-5 dark:text-slate-200">Add/remove lower octaves</label>
+    <button class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
+            v-on:click="this.low < 4 ? this.low += 1:'';createNotes()">+</button>
+    <button class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
+            v-on:click="this.low > 0 ? this.low -= 1:'';createNotes()">-</button>
+
+    <label class="text-base px-0.5 pl-5 dark:text-slate-200">Add/remove higher octaves</label>
+    <button class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
+            v-on:click="this.high < 4 ? this.high += 1:'';createNotes()">+</button>
+    <button class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
+            v-on:click="this.high > 0 ? this.high -= 1:'';createNotes()">-</button>
 
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Root: </label>
     <input type="number" id="root" name="root" class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"

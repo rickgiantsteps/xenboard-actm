@@ -33,6 +33,8 @@ export default {
             played: 0,
             hexNumber: 12,
             octaves: 1,
+            high: 0,
+            low: 0,
             centerfreq: 440,
             rootn: 2,
             poly: 12,
@@ -49,12 +51,34 @@ export default {
 
     methods: {
         createNotes() {
-            for (let j = 0; j < this.octaves; j++) {
-                note.length = this.hexNumber * this.octaves
-                for (let i = this.hexNumber * j; i < this.hexNumber * (j + 1); i++) {
-                    note[i] = (this.centerfreq * this.rootn ** j) * this.rootn ** ((i % this.hexNumber) / this.hexNumber)
+            this.octaves = this.high + this.low + 1;
+            note.length = this.hexNumber * this.octaves;
+
+            let counter;
+            let position = 0;
+            for(let i=0;i<this.low;i++) {
+                counter = 0;
+                while(counter < this.hexNumber) {
+                    note[position + counter] = (this.centerfreq / (this.rootn ** (this.low - i))) * this.rootn ** (counter / this.hexNumber);
+                    counter++;
                 }
+                position += counter;
             }
+
+            for(let i=0;i<this.hexNumber;i++) {
+                note[position + i] = this.centerfreq * this.rootn ** (i/this.hexNumber);
+            }
+            position += this.hexNumber;
+
+            for(let i=0;i<this.high;i++) {
+                counter = 0;
+                while(counter < this.hexNumber) {
+                    note[position + counter] = (this.centerfreq *  (this.rootn**(i+1)) * this.rootn ** (counter / this.hexNumber));
+                    counter++;
+                }
+                position += counter;
+            }
+
             this.createOsc();
             this.$nextTick(function () {this.changeOctaveColor(this.hexNumber, this.octaves)})
             keyboardon.length = note.length;
