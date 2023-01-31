@@ -92,12 +92,29 @@ export default {
             keymouseon[note.length-1] = false;
         },
         createNotesFromTune() {
+            this.octaves = this.high + this.low + 1;
             tune.loadScale(this.hystTune);
             tune.tonicize(this.centerfreq);
             this.hexNumber = tune.scale.length;
-            for(let j=0;j<this.octaves;j++) {
-                for (let i = 0; i < this.hexNumber; i++) {
-                    note[i + j*this.hexNumber] = tune.note(i, j);
+            let counter;
+            let position = 0;
+            for(let i=this.low;i>0;i--) {
+                counter = 0;
+                while(counter<this.hexNumber) {
+                    note[counter] = tune.note(counter, -i);
+                    counter++;
+                }
+                position += counter;
+            }
+            for(let i=0;i<this.hexNumber;i++) {
+                note[position + i] = tune.note(i, 0);
+            }
+            position += this.hexNumber;
+            for(let i=0;i<this.high;i++) {
+                counter = 0;
+                while(counter < this.hexNumber) {
+                    note[position + counter] = tune.note(counter, i+1);
+                    counter++;
                 }
             }
             this.createOsc();
