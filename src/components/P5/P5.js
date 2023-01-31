@@ -74,7 +74,7 @@ const sketch = function(p) {
 
     //------------------------------------------------------------
     p.windowResized = function () {
-        p.resizeCanvas(p.windowWidth/4, p.windowHeight/2);
+        p.resizeCanvas(p.windowWidth/4 + 200, p.windowHeight/2);
     }
 
     //------------------------------------------------------------
