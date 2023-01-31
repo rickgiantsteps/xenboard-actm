@@ -74,6 +74,7 @@
       <option style="text-align: center;" value="slendro">Javanese Slendro</option>
       <option style="text-align: center;" value="harrison_5">Harrison's pelog style pentatonic</option>
       <option style="text-align: center;" value="malkauns">Indian Raga Malkauns</option>
+      <option style="text-align: center;" value="bohlen-eg">Bohlen-Pierce</option>
     </select>
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Central frequency (Hz): </label>
     <input type="number" id="freqhz" name="freqhz" class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
