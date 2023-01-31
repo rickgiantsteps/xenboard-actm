@@ -14,8 +14,9 @@
   </div>
 
 
-
-  <div class="p-3">
+  <button class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
+      @click="tune = !tune; this.hexNumber=0;">Toggle tunings creation</button>
+  <div class="p-3" v-if="tune">
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Main Tunings: </label>
     <select class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
         v-model.number = "hexNumber" v-on:change="this.rootn=2; createNotes()">
@@ -53,6 +54,34 @@
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Polyphony (n of oscillators): </label>
     <input type="number" id="root" name="root" class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
            v-model.number = "poly" min="1" max="50" v-on:change="createOsc()"/>
+  </div>
+
+  <div class="p-3" v-else>
+    <label class="text-base px-0.5 pl-5 dark:text-slate-200">Main Tunings: </label>
+    <select class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
+    v-model="hystTune" @change="createNotesFromTune()">
+      <option style="text-align: center;" disabled value="">Please select one</option>
+      <option style="text-align: center;" value="ji_12">Basic just intonation</option>
+      <option style="text-align: center;" value="harm30">First 30 harm.s and subharm.s</option>
+      <option style="text-align: center;" value="pyth_31">31-tone Pythagorean</option>
+      <option style="text-align: center;" value="ptolemy">Zarlino's scale</option>
+      <option style="text-align: center;" value="couperin">Couperin meantone</option>
+      <option style="text-align: center;" value="helmholtz_pure">Helmholtz</option>
+      <option style="text-align: center;" value="partch_43">Partch's 43-tone pure</option>
+      <option style="text-align: center;" value="johnston_81">Johnston's 81-note</option>
+      <option style="text-align: center;" value="young-lm_piano">Young's well tempered</option>
+      <option style="text-align: center;" value="xenakis_chrom">Byzantine Liturgical</option>
+      <option style="text-align: center;" value="slendro">Javanese Slendro</option>
+      <option style="text-align: center;" value="harrison_5">Harrison's pelog style pentatonic</option>
+      <option style="text-align: center;" value="malkauns">Indian Raga Malkauns</option>
+    </select>
+    <label class="text-base px-0.5 pl-5 dark:text-slate-200">Central frequency (Hz): </label>
+    <input type="number" id="freqhz" name="freqhz" class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
+           v-model.number = "centerfreq" min="1" v-on:change="createNotesFromTune()"/>
+    <label class="text-base px-0.5 pl-5 dark:text-slate-200">Number of octaves: </label>
+    <input type="number" id="octnum" name="octnum" class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
+           v-model.number = "octaves" min="1" max="10" v-on:change="createNotesFromTune()"/>
+
   </div>
 
   <div class="grid" id='hexgrid'>
