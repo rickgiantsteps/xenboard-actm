@@ -7,8 +7,7 @@
 //calculate dissonance with Euler's gradus function E(n) = ∑ p|n e(p)(p−1)
 
 function eulerGradus(decimalRatio) {
-
-  let fraction = decimalToFraction(decimalRatio)
+  let fraction = decimalToFraction(decimalRatio.toFixed(6))
   let n = fraction[0]
   let d = fraction[1]
   let gradus = 1
@@ -23,7 +22,7 @@ function eulerGradus(decimalRatio) {
 }
 
 function primeFactors(n) {
-  const factors = [];
+  let factors = [n];
   let divisor = 2;
 
   while (n >= 2) {
@@ -34,6 +33,7 @@ function primeFactors(n) {
       divisor++;
     }
   }
+
   return factors;
 }
 
@@ -72,7 +72,9 @@ const sketch = function(p) {
 
   p.setup = function () {
 
-    let canvas = p.createCanvas(p.windowWidth / 4, p.windowHeight / 2);
+    let canvas = p.createCanvas(p.windowWidth / 4, (p.windowHeight / 2)+20);
+
+    p.frameRate(10);
 
     canvas.parent('sketch-holder-2');
     canvas.style("display", "block");
@@ -81,11 +83,6 @@ const sketch = function(p) {
       p.resizeCanvas(p.windowWidth / 4, p.windowHeight / 2);
     }
 
-/*
-    for (let i = 0; i < numPts; i++) {
-      valueY.push(p.random(100,300));
-      //valueY = p.p5notes
-    }*/
   }
 
 
@@ -95,10 +92,14 @@ const sketch = function(p) {
 
       p.background(220);
 
-      numPts = p.p5notes.length
+      numPts = p.p5notes.length-1;
+      valueY=[]
 
       for (let i = 0; i < numPts; i++) {
-        valueY.push(p.p5notes[i]-440);
+        //makes values fit in range of the canvas
+        // (https://stackoverflow.com/questions/11607228/how-can-i-make-an-array-of-integers-fit-within-a-range)
+        valueY.push(((p.windowHeight / 2)+10)-((p.windowHeight / 2))*(gradusValues[i]-Math.min(...gradusValues))
+                      /(Math.max(...gradusValues)-Math.min(...gradusValues)))
       }
 
       p.noStroke();
@@ -128,17 +129,13 @@ const sketch = function(p) {
   }
 }
 
+let dissonanceValues = []
+let gradusValues = []
 export default {
   name: "dissonance-graph",
 
   props: {
     freqs: {
-      type: Array
-    },
-    dissonance: {
-      type: Array
-    },
-    gradus: {
       type: Array
     }
   },
@@ -152,14 +149,18 @@ export default {
     setTimeout(()=> {
       this.mySketch = new this.$p5(sketch, this.$refs.canvasOutlet);
       this.mySketch.p5notes = this.notefrequencies;
-      this.mySketch.gradusval = this.gradusValues;
+      this.mySketch.gradusval = gradusValues;
     });
   },
 
   created() {
     this.notefrequencies = this.freqs;
-    this.dissonanceValues = this.dissonance;
-    this.gradusValues = this.gradus;
+    for (let i = 1; i <= this.notefrequencies.length-1; i++) {
+      dissonanceValues[i-1] = this.notefrequencies[0] / this.notefrequencies[i]
+      gradusValues[i-1] = eulerGradus(dissonanceValues[i-1])
+    }
+    console.log(gradusValues)
+
   },
 
   watch: {
@@ -168,11 +169,11 @@ export default {
       handler(newValue) {
         this.notefrequencies = newValue;
         this.mySketch.p5notes = this.notefrequencies;
-        for (let i = 1; i <= this.notefrequencies.length; i++) {
-          this.dissonanceValues[i] = this.notefrequencies[0] / this.notefrequencies[i]
-          this.gradusValues[i] = eulerGradus(this.dissonanceValues[i])
+        for (let i = 1; i <= this.notefrequencies.length-1; i++) {
+          dissonanceValues[i-1] = this.notefrequencies[0] / this.notefrequencies[i]
+          gradusValues[i-1] = eulerGradus(dissonanceValues[i-1])
         }
-        this.mySketch.gradusval = this.gradusValues
+        this.mySketch.gradusval = gradusValues
       },
       deep: true
     },
