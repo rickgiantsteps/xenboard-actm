@@ -67,14 +67,12 @@ function gcd(a, b) {
 
 const sketch = function(p) {
 
-  let valueY = [];
+  let valueY = [(p.windowHeight / 2)+20];
   let numPts = [];
 
   p.setup = function () {
 
     let canvas = p.createCanvas(p.windowWidth / 4, (p.windowHeight / 2)+20);
-
-    p.frameRate(10);
 
     canvas.parent('sketch-holder-2');
     canvas.style("display", "block");
@@ -92,8 +90,10 @@ const sketch = function(p) {
 
       p.background(220);
 
-      numPts = p.p5notes.length-1;
-      valueY=[]
+      console.log(p.p5notes)
+
+      numPts = p.p5notes.length/p.p5octaves;
+      valueY=[(p.windowHeight / 2)+20]
 
       for (let i = 0; i < numPts; i++) {
         //makes values fit in range of the canvas
@@ -136,8 +136,19 @@ export default {
 
   props: {
     freqs: {
-      type: Array
-    }
+      type: Array,
+      required: true
+    },
+
+    hexNumber: {
+      type: Number,
+      default: 12,
+      required: true
+    },
+
+    octaves: {
+      type: Number
+    },
   },
 
   data() {
@@ -148,36 +159,38 @@ export default {
   mounted() {
     setTimeout(()=> {
       this.mySketch = new this.$p5(sketch, this.$refs.canvasOutlet);
-      this.mySketch.p5notes = this.notefrequencies;
-      this.mySketch.gradusval = gradusValues;
+      this.mySketch.p5notes = this.freqs;
+      this.mySketch.p5octaves = this.octaves;
     });
   },
 
   created() {
-    this.notefrequencies = this.freqs;
-    for (let i = 1; i <= this.notefrequencies.length-1; i++) {
-      dissonanceValues[i-1] = this.notefrequencies[0] / this.notefrequencies[i]
+    for (let i = 1; i < this.hexNumber; i++) {
+      dissonanceValues[i-1] = this.freqs[0] / this.freqs[i]
       gradusValues[i-1] = eulerGradus(dissonanceValues[i-1])
     }
-    console.log(gradusValues)
-
   },
 
   watch: {
 
+    //calcoli corretti ma il watch non segue cambiamenti nell'array freqs
+
     freqs: {
-      handler(newValue) {
-        this.notefrequencies = newValue;
-        this.mySketch.p5notes = this.notefrequencies;
-        for (let i = 1; i <= this.notefrequencies.length-1; i++) {
-          dissonanceValues[i-1] = this.notefrequencies[0] / this.notefrequencies[i]
-          gradusValues[i-1] = eulerGradus(dissonanceValues[i-1])
+      handler() {
+        this.mySketch.p5notes = this.freqs;
+        console.log(this.mySketch.p5notes.length)
+        console.log(this.freqs.length)
+        for (let i = 1; i < this.hexNumber; i++) {
+          dissonanceValues[i - 1] = this.freqs[0] / this.freqs[i]
+          gradusValues[i - 1] = eulerGradus(dissonanceValues[i - 1])
         }
-        this.mySketch.gradusval = gradusValues
       },
       deep: true
     },
 
+      octaves(newValue) {
+        this.mySketch.p5octaves = newValue;
+      }
   }
 
 }
