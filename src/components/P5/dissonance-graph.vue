@@ -90,21 +90,24 @@ const sketch = function(p) {
 
       p.background(220);
 
-      console.log(p.p5notes)
 
       numPts = p.p5notes.length/p.p5octaves;
       valueY=[(p.windowHeight / 2)+20]
 
-      for (let i = 0; i < numPts; i++) {
+
+      for (let i = 0; i < numPts-1; i++) {
         //makes values fit in range of the canvas
         // (https://stackoverflow.com/questions/11607228/how-can-i-make-an-array-of-integers-fit-within-a-range)
         valueY.push(((p.windowHeight / 2)+10)-((p.windowHeight / 2))*(gradusValues[i]-Math.min(...gradusValues))
                       /(Math.max(...gradusValues)-Math.min(...gradusValues)))
       }
 
+      console.log(valueY)
+
       p.noStroke();
       // draw ellipses
       for (let i = 0; i < valueY.length; i++) {
+        p.text(i)
         let x = i * (p.width / (numPts - 1));
         let y = valueY[i];
         p.ellipse(x, y, 7);
@@ -117,6 +120,16 @@ const sketch = function(p) {
       let px = 0;
       let py = valueY[0];
       for (let i = 0; i < valueY.length; i++) {
+
+        //x axis text
+        if (i+1===1 || (i+1)%5===0 || (i+1)===valueY.length) {
+          p.text(i+1, (((p.windowWidth / 4)/valueY.length)*i)+5, p.windowHeight / 2 + 15)
+        }
+
+        //y axis text
+        p.text(Math.max(...gradusValues), 5, 15)
+
+
         let x = i * (p.width / (numPts - 1));
         let y = valueY[i];
 
