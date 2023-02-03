@@ -113,22 +113,25 @@ const sketch = function(p) {
         p.ellipse(x, y, 7);
       }
 
-
-      p.strokeWeight(2);
-      p.stroke(0);
-      // draw lines
-      let px = 0;
-      let py = valueY[0];
       for (let i = 0; i < valueY.length; i++) {
-
         //x axis text
-        if (i+1===1 || (i+1)%5===0 || (i+1)===valueY.length) {
-          p.text(i+1, (((p.windowWidth / 4)/valueY.length)*i)+5, p.windowHeight / 2 + 15)
+        //if (i+1===1 || (i+1)%5===0 || (i+1)===valueY.length) {
+        if (i + 1 === 1 || (i + 1) % 5 === 0) {
+          p.text(i + 1, (((p.windowWidth / 4) / valueY.length) * i) + 5, p.windowHeight / 2 + 15)
         }
 
         //y axis text
         p.text(Math.max(...gradusValues), 5, 15)
+      }
 
+
+        p.strokeWeight(2);
+      p.stroke(0);
+      p.textStyle("NORMAL");
+      // draw lines
+      let px = 0;
+      let py = valueY[0];
+      for (let i = 0; i < valueY.length; i++) {
 
         let x = i * (p.width / (numPts - 1));
         let y = valueY[i];
