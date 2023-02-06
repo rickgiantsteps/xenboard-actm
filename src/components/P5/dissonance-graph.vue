@@ -261,7 +261,12 @@ export default {
         dissonanceValues[i - 1] = this.freqs[0] / this.freqs[i]
         gradusValues[i - 1] = eulerGradus(dissonanceValues[i - 1])
       }
-    }
+    },
+
+    darkOn(newValue) {
+      this.testingDark = newValue;
+      this.mySketch.darkOnID = this.testingDark;
+    },
   }
 }
 </script>
