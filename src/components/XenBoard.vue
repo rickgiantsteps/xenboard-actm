@@ -12,8 +12,7 @@
       <p class="dark:text-slate-200">Scale dissonance values (Euler's Gradus Function)</p>
       <dissonance-graph v-model:freqs="notes"
                         v-model:secondfreq="notes[1]"
-                        v-model:hexNumber="hexNumber"
-                        v-model:octaves="octaves"/>
+                        v-model:hexNumber="hexNumber"/>
     </div>
     <div id="dissonance-boxes" class="grid-cols-2 place-content-center">
       <div id="mel-dissonance">

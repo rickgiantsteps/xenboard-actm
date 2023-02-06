@@ -90,7 +90,7 @@ const sketch = function(p) {
 
       p.background(220);
 
-      numPts = p.p5notes.length/p.p5octaves;
+      numPts = p.p5numbernotes;
       valueY=[(p.windowHeight / 2)+20]
 
       for (let i = 0; i < numPts-1; i++) {
@@ -148,7 +148,6 @@ export default {
   name: "dissonance-graph",
 
   props: {
-
     secondfreq: {
       type: Number,
       required: true
@@ -163,11 +162,7 @@ export default {
       type: Number,
       default: 12,
       required: true
-    },
-
-    octaves: {
-      type: Number
-    },
+    }
   },
 
   data() {
@@ -178,9 +173,8 @@ export default {
   mounted() {
     setTimeout(()=> {
       this.mySketch = new this.$p5(sketch, this.$refs.canvasOutlet);
-      this.mySketch.p5notes = this.freqs;
+      this.mySketch.p5numbernotes = this.hexNumber
       this.mySketch.p5secondfreq = this.secondfreq;
-      this.mySketch.p5octaves = this.octaves;
     });
   },
 
@@ -196,8 +190,6 @@ export default {
     //calcoli corretti ma il watch non segue cambiamenti nell'array freqs
 
     secondfreq(newValue) {
-      console.log(this.freqs)
-      console.log(newValue)
       gradusValues = []
       this.mySketch.p5notes = this.freqs;
       this.mySketch.p5secondfreq = newValue;
@@ -205,7 +197,6 @@ export default {
         dissonanceValues[i - 1] = this.freqs[0] / this.freqs[i]
         gradusValues[i - 1] = eulerGradus(dissonanceValues[i - 1])
       }
-      console.log(gradusValues)
     },
 /*
     freqs: {
@@ -220,8 +211,15 @@ export default {
       deep: true
     },*/
 
-    octaves(newValue) {
-      this.mySketch.p5octaves = newValue;
+    hexNumber(newValue) {
+      this.mySketch.p5numbernotes = newValue;
+      gradusValues = []
+      this.mySketch.p5notes = this.freqs;
+      this.mySketch.p5secondfreq = this.secondfreq;
+      for (let i = 1; i < this.hexNumber; i++) {
+        dissonanceValues[i - 1] = this.freqs[0] / this.freqs[i]
+        gradusValues[i - 1] = eulerGradus(dissonanceValues[i - 1])
+      }
     }
 
   }
