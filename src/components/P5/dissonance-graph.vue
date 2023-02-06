@@ -78,7 +78,7 @@ const sketch = function(p) {
     canvas.style("display", "block");
 
     p.windowResized = function () {
-      p.resizeCanvas(p.windowWidth / 4, p.windowHeight / 2);
+      p.resizeCanvas(p.windowWidth / 4, (p.windowHeight / 2)+20);
     }
 
   }
@@ -148,10 +148,6 @@ export default {
   name: "dissonance-graph",
 
   props: {
-    secondfreq: {
-      type: Number,
-      required: true
-    },
 
     freqs: {
       type: Array,
@@ -173,8 +169,7 @@ export default {
   mounted() {
     setTimeout(()=> {
       this.mySketch = new this.$p5(sketch, this.$refs.canvasOutlet);
-      this.mySketch.p5numbernotes = this.hexNumber
-      this.mySketch.p5secondfreq = this.secondfreq;
+      this.mySketch.p5numbernotes = this.hexNumber;
     });
   },
 
@@ -187,18 +182,6 @@ export default {
 
   watch: {
 
-    //calcoli corretti ma il watch non segue cambiamenti nell'array freqs
-
-    secondfreq(newValue) {
-      gradusValues = []
-      this.mySketch.p5notes = this.freqs;
-      this.mySketch.p5secondfreq = newValue;
-      for (let i = 1; i < this.hexNumber; i++) {
-        dissonanceValues[i - 1] = this.freqs[0] / this.freqs[i]
-        gradusValues[i - 1] = eulerGradus(dissonanceValues[i - 1])
-      }
-    },
-/*
     freqs: {
       handler() {
         this.mySketch.p5notes = this.freqs;
@@ -209,21 +192,17 @@ export default {
         }
       },
       deep: true
-    },*/
+    },
 
     hexNumber(newValue) {
       this.mySketch.p5numbernotes = newValue;
       gradusValues = []
-      this.mySketch.p5notes = this.freqs;
-      this.mySketch.p5secondfreq = this.secondfreq;
       for (let i = 1; i < this.hexNumber; i++) {
         dissonanceValues[i - 1] = this.freqs[0] / this.freqs[i]
         gradusValues[i - 1] = eulerGradus(dissonanceValues[i - 1])
       }
     }
-
   }
-
 }
 </script>
 

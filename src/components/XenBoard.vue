@@ -11,7 +11,6 @@
     <div id="sketch-holder-2">
       <p class="dark:text-slate-200">Scale dissonance values (Euler's Gradus Function)</p>
       <dissonance-graph :freqs="notes"
-                        :secondfreq="notes[1]"
                         :hexNumber="hexNumber"/>
     </div>
     <div id="dissonance-boxes" class="grid-cols-2 place-content-center">
