@@ -27,7 +27,7 @@
   </div>
 
   <div class="pt-6 pb-2">
-    <button class="bg-white gap-x-10 w-44 shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded dark:bg-slate-200 dark:text-slate-900"
+    <button class="click-button bg-white gap-x-10 w-44 shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded dark:bg-slate-200 dark:text-slate-900"
         @click="tune = !tune; this.hexNumber=0;">Toggle tunings creation</button>
   </div>
   <div class="p-3" v-if="tune">
@@ -50,15 +50,15 @@
            v-model.number = "hexNumber" min="1" max="100" v-on:change="createNotes()"/>
 
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Lower octaves: </label>
-    <button class="mr-0.5 bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900"
+    <button class="click-button mr-0.5 bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900"
             v-on:click="this.low < 4 ? this.low += 1:'';createNotes()">+</button>
-    <button class="bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900"
+    <button class="click-button bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900"
             v-on:click="this.low > 0 ? this.low -= 1:'';createNotes()">-</button>
 
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Higher octaves: </label>
-    <button class="mr-0.5 bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900"
+    <button class="click-button mr-0.5 bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900"
             v-on:click="this.high < 4 ? this.high += 1:'';createNotes()">+</button>
-    <button class="bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900"
+    <button class="click-button bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900"
             v-on:click="this.high > 0 ? this.high -= 1:'';createNotes()">-</button>
 
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Root: </label>
@@ -94,15 +94,15 @@
     <input type="number" id="freqhz" name="freqhz" class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
            v-model.number = "centerfreq" min="1" v-on:change="createNotesFromTune()"/>
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Lower octaves: </label>
-    <button class="mr-0.5 bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900"
+    <button class="click-button mr-0.5 bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900"
             v-on:click="this.low < 4 ? this.low += 1:'';createNotesFromTune()">+</button>
-    <button class="bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900"
+    <button class="click-button bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900"
             v-on:click="this.low > 0 ? this.low -= 1:'';createNotesFromTune()">-</button>
 
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Higher octaves: </label>
-    <button class="mr-0.5 bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900"
+    <button class="click-button mr-0.5 bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900"
             v-on:click="this.high < 4 ? this.high += 1:'';createNotesFromTune()">+</button>
-    <button class="bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900"
+    <button class="click-button bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900"
             v-on:click="this.high > 0 ? this.high -= 1:'';createNotesFromTune()">-</button>
 
   </div>
