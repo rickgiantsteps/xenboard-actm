@@ -117,3 +117,238 @@ body.dark::-webkit-scrollbar-thumb {
   display: flex;
 
 }
+
+/* Effects */
+body {
+  background: #28263b;
+  font-family: 'Rationale', sans-serif;
+}
+
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.effects-board {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 80%;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 0 auto;
+}
+
+
+.effects-choice-container {
+  height: auto;
+  border-radius: 5px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 15px;
+  grid-column: 1/4;
+}
+
+.effect-type {
+  color: white;
+  font-size: 14px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.canvas {
+  width: 100%;
+  height:75px;
+  fill: none;
+}
+
+.effect-selections {
+  border-radius: 5px;
+  height: fit-content;
+  width: auto;
+  text-align: center;
+  margin: 5px;
+  justify-items: center;
+  align-items: center;
+  padding: 8px;
+  display: grid;
+  grid-template-rows: 2em 3em 6em;
+}
+
+.chorus-slider-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  font-size: 15px;
+  color: #DA22FF;
+  grid-gap: 25px;
+  margin-top: 130px;
+}
+
+.tremolo-slider-container, .vibrato-slider-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-size: 15px;
+  color: #DA22FF;
+  grid-gap: 25px;
+  margin-top: 130px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+
+.volume-slider-container, .distortion-slider-container {
+  display: grid;
+  grid-template-columns: min-content;
+  font-size: 15px;
+  color: #DA22FF;
+  margin-top: 130px;
+}
+
+.input[type="range"] {
+  -webkit-appearance: none;
+  height: 5px;
+  width: 60px;
+  border-radius: 5px;
+  background: #4d4879;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  transform: rotate(270deg);
+  position: relative;
+  bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 25px;
+  border-radius: 5px;
+  background-image: linear-gradient(to right, #1E293B 0%, #1E293B 51%, #1E293B 100%);
+  cursor: pointer;
+}
+
+.input::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #1E293B;
+  cursor: pointer;
+}
+
+.button-80 {
+  background: darkred;
+  backface-visibility: hidden;
+  border-radius: .375rem;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Circular,Helvetica,sans-serif;
+  font-size: 15px;
+  line-height: 1.3;
+  padding: 5px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transform: translateZ(0) scale(1);
+  transition: transform .2s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+
+.button-80:not(:disabled):hover {
+  transform: scale(1.05);
+}
+
+.button-80:not(:disabled):hover:active {
+  transform: scale(1.05) translateY(.125rem);
+}
+
+.button-80:focus {
+  outline: 0 solid transparent;
+}
+
+.button-80:focus:before {
+  content: "";
+  left: calc(-1*.375rem);
+  pointer-events: none;
+  position: absolute;
+  top: calc(-1*.375rem);
+  transition: border-radius;
+  user-select: none;
+}
+
+.button-80:focus:not(:focus-visible) {
+  outline: 0 solid transparent;
+}
+
+.button-80:focus:not(:focus-visible):before {
+  border-width: 0;
+}
+
+.button-80:not(:disabled):active {
+  transform: translateY(.125rem);
+}
+
+
+.button-81 {
+  background: mediumseagreen;
+  backface-visibility: hidden;
+  border-radius: .375rem;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Circular,Helvetica,sans-serif;
+  font-size: 15px;
+  line-height: 1.3;
+  padding: 5px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transform: translateZ(0) scale(1);
+  transition: transform .2s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+
+.button-81:not(:disabled):hover {
+  transform: scale(1.05);
+}
+
+.button-81:not(:disabled):hover:active {
+  transform: scale(1.05) translateY(.125rem);
+}
+
+.button-81:focus {
+  outline: 0 solid transparent;
+}
+
+.button-81:focus:before {
+  content: "";
+  left: calc(-1*.375rem);
+  pointer-events: none;
+  position: absolute;
+  top: calc(-1*.375rem);
+  transition: border-radius;
+  user-select: none;
+}
+
+.button-81:focus:not(:focus-visible) {
+  outline: 0 solid transparent;
+}
+
+.button-81:focus:not(:focus-visible):before {
+  border-width: 0;
+}
+
+.button-81:not(:disabled):active {
+  transform: translateY(.125rem);
+}
