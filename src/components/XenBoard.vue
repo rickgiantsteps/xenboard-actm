@@ -2,17 +2,17 @@
 
   <div class="justify-center flex flex-row content-center gap-x-10">
     <div id="sketch-holder">
-      <P5 v-model:hexNumber="hexNumber"
-          v-model:squareRoot="rootn"
-          v-model:keyOn="keyOn"
-          v-model:mouseOn="mouseOn"
-          v-model:darkOn="innerDarkOn"/>
+      <P5 :hexNumber="hexNumber"
+          :squareRoot="rootn"
+          :keyOn="keyOn"
+          :mouseOn="mouseOn"
+          :darkOn="innerDarkOn"/>
     </div>
     <div id="sketch-holder-2">
       <p class="dark:text-slate-200">Scale dissonance values (Euler's Gradus Function)</p>
-      <dissonance-graph v-model:freqs="notes"
-                        v-model:secondfreq="notes[1]"
-                        v-model:hexNumber="hexNumber"/>
+      <dissonance-graph :freqs="notes"
+                        :secondfreq="notes[1]"
+                        :hexNumber="hexNumber"/>
     </div>
     <div id="dissonance-boxes" class="grid-cols-2 place-content-center">
       <div id="mel-dissonance">
@@ -95,9 +95,9 @@
            v-model.number = "centerfreq" min="1" v-on:change="createNotesFromTune()"/>
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Lower octaves: </label>
     <button class="mr-0.5 bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900"
-            v-on:click="this.low < 4 ? this.low += 1:'';createNotes()">+</button>
+            v-on:click="this.low < 4 ? this.low += 1:'';createNotesFromTune()">+</button>
     <button class="bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900"
-            v-on:click="this.low > 0 ? this.low -= 1:'';createNotes()">-</button>
+            v-on:click="this.low > 0 ? this.low -= 1:'';createNotesFromTune()">-</button>
 
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Higher octaves: </label>
     <button class="mr-0.5 bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900"

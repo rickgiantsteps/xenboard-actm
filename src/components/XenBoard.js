@@ -59,7 +59,6 @@ export default {
         createNotes() {
             this.octaves = this.high + this.low + 1;
             note.length = this.hexNumber * this.octaves;
-
             let counter;
             let position = 0;
             for(let i=0;i<this.low;i++) {
@@ -73,8 +72,6 @@ export default {
 
             for(let i=0;i<this.hexNumber;i++) {
                 note[position + i] = this.centerfreq * this.rootn ** (i/this.hexNumber);
-                //Vue.set(this.notes, position + i, this.centerfreq * this.rootn ** (i/this.hexNumber))
-                //this.$set(note, (position + i).toString(), this.centerfreq * this.rootn ** (i/this.hexNumber));
             }
             position += this.hexNumber;
 
@@ -87,12 +84,7 @@ export default {
                 position += counter;
             }
 
-            this.createOsc();
-            this.$nextTick(function () {this.changeOctaveColor(this.hexNumber, this.octaves)})
-            keyboardon.length = note.length;
-            keyboardon[note.length-1] = false;
-            keymouseon.length = note.length;
-            keymouseon[note.length-1] = false;
+            this.afterCreatingNotes();
         },
         createNotesFromTune() {
             this.octaves = this.high + this.low + 1;
@@ -104,7 +96,7 @@ export default {
             for(let i=this.low;i>0;i--) {
                 counter = 0;
                 while(counter<this.hexNumber) {
-                    note[counter] = tune.note(counter, -i);
+                    note[position + counter] = tune.note(counter, 0-i);
                     counter++;
                 }
                 position += counter;
@@ -119,7 +111,11 @@ export default {
                     note[position + counter] = tune.note(counter, i+1);
                     counter++;
                 }
+                position += counter;
             }
+            this.afterCreatingNotes();
+        },
+        afterCreatingNotes() {
             this.createOsc();
             this.$nextTick(function () {this.changeOctaveColor(this.hexNumber, this.octaves)})
             keyboardon.length = note.length;
