@@ -90,10 +90,8 @@ const sketch = function(p) {
 
       p.background(220);
 
-
       numPts = p.p5notes.length/p.p5octaves;
       valueY=[(p.windowHeight / 2)+20]
-
 
       for (let i = 0; i < numPts-1; i++) {
         //makes values fit in range of the canvas
@@ -102,7 +100,6 @@ const sketch = function(p) {
                       /(Math.max(...gradusValues)-Math.min(...gradusValues)))
       }
 
-      console.log(valueY)
 
       p.noStroke();
       // draw ellipses
@@ -151,6 +148,12 @@ export default {
   name: "dissonance-graph",
 
   props: {
+
+    secondfreq: {
+      type: Number,
+      required: true
+    },
+
     freqs: {
       type: Array,
       required: true
@@ -176,6 +179,7 @@ export default {
     setTimeout(()=> {
       this.mySketch = new this.$p5(sketch, this.$refs.canvasOutlet);
       this.mySketch.p5notes = this.freqs;
+      this.mySketch.p5secondfreq = this.secondfreq;
       this.mySketch.p5octaves = this.octaves;
     });
   },
@@ -191,22 +195,35 @@ export default {
 
     //calcoli corretti ma il watch non segue cambiamenti nell'array freqs
 
+    secondfreq(newValue) {
+      console.log(this.freqs)
+      console.log(newValue)
+      gradusValues = []
+      this.mySketch.p5notes = this.freqs;
+      this.mySketch.p5secondfreq = newValue;
+      for (let i = 1; i < this.hexNumber; i++) {
+        dissonanceValues[i - 1] = this.freqs[0] / this.freqs[i]
+        gradusValues[i - 1] = eulerGradus(dissonanceValues[i - 1])
+      }
+      console.log(gradusValues)
+    },
+/*
     freqs: {
       handler() {
         this.mySketch.p5notes = this.freqs;
-        console.log(this.mySketch.p5notes.length)
-        console.log(this.freqs.length)
+        gradusValues = []
         for (let i = 1; i < this.hexNumber; i++) {
           dissonanceValues[i - 1] = this.freqs[0] / this.freqs[i]
           gradusValues[i - 1] = eulerGradus(dissonanceValues[i - 1])
         }
       },
       deep: true
-    },
+    },*/
 
-      octaves(newValue) {
-        this.mySketch.p5octaves = newValue;
-      }
+    octaves(newValue) {
+      this.mySketch.p5octaves = newValue;
+    }
+
   }
 
 }

@@ -72,6 +72,8 @@ export default {
 
             for(let i=0;i<this.hexNumber;i++) {
                 note[position + i] = this.centerfreq * this.rootn ** (i/this.hexNumber);
+                //Vue.set(this.notes, position + i, this.centerfreq * this.rootn ** (i/this.hexNumber))
+                //this.$set(note, (position + i).toString(), this.centerfreq * this.rootn ** (i/this.hexNumber));
             }
             position += this.hexNumber;
 

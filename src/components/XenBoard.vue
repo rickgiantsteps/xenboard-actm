@@ -11,6 +11,7 @@
     <div id="sketch-holder-2">
       <p class="dark:text-slate-200">Scale dissonance values (Euler's Gradus Function)</p>
       <dissonance-graph v-model:freqs="notes"
+                        v-model:secondfreq="notes[1]"
                         v-model:hexNumber="hexNumber"
                         v-model:octaves="octaves"/>
     </div>
@@ -27,7 +28,7 @@
   </div>
 
   <div class="pt-6 pb-2">
-    <button class="bg-white gap-x-10 w-44 shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
+    <button class="bg-white gap-x-10 w-44 shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded dark:bg-slate-200 dark:text-slate-900"
         @click="tune = !tune; this.hexNumber=0;">Toggle tunings creation</button>
   </div>
   <div class="p-3" v-if="tune">
