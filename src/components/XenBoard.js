@@ -22,9 +22,35 @@ let octave_colors_dark = ["bg-slate-500", "bg-[#D8BFD8]", "bg-[#FF6347]"];
 let octave_colors_dark_On = ["bg-sky-500", "bg-[#ab76ab]", "bg-[#bd1d00]"];
 let octave_colors_dark_Mid= ["bg-sky-700", "bg-[#c9a7c9]", "bg-[#ff846e]"];
 
+let effectsAddedList = [];
+
+let vibrato = new Tone.Vibrato(0,0).toDestination();
+let tremolo = new Tone.Tremolo(0, 0).toDestination().start();
+let distortion = new Tone.Distortion(0).toDestination();
+let chorus = new Tone.Chorus(0,0,0).toDestination().start();
+let reverb = new Tone.JCReverb(0).toDestination();
 
 for (let i=0; i<12; i++) {
   synth[i] = new Tone.Synth().toDestination();
+}
+
+function addRemoveEffects(effect){
+    if(effectsAddedList.includes(effect)) {
+        let index = effectsAddedList.indexOf(effect)
+        effectsAddedList.splice(index, 1);
+    } else {
+        effectsAddedList.push(effect);
+    }
+}
+
+function muteEffect(effect){
+    for (let i=0; i<12; i++) {
+        if (effectsAddedList.includes((effect.toString()).toLowerCase())) {
+            synth[i].chain(effect).toDestination();
+        } else {
+            synth[i].disconnect(effect);
+        }
+    }
 }
 
 export default {
@@ -176,7 +202,7 @@ export default {
         if (synth[n]===null) {
           synth[n] = new this.$tone.Synth().toDestination();
         }
-        synth[n].triggerAttack(this.notes[n], this.$tone.now());
+        synth[n].triggerAttack(this.notes[n], this.$tone.now(), document.getElementById('volume').value);
       }
     },
 
@@ -236,6 +262,42 @@ export default {
         document.getElementById((index).toString()).classList.toggle("dark:" + octave_colors_dark_On[idx_col_dark]);
     },
 
+        vibratoEffectToggle() {
+            addRemoveEffects("vibrato");
+            document.getElementById("vibrato-button").style.backgroundColor = effectsAddedList.includes("vibrato") ? "#3cb371" : "#8b0000";
+            muteEffect(vibrato);
+        },
+
+        tremoloEffectToggle() {
+            addRemoveEffects("tremolo");
+            document.getElementById("tremolo-button").style.backgroundColor = effectsAddedList.includes("tremolo") ? "#3cb371" : "#8b0000";
+            muteEffect(tremolo);
+        },
+
+        distortionEffectToggle() {
+            addRemoveEffects("distortion");
+            document.getElementById("distortion-button").style.backgroundColor = effectsAddedList.includes("distortion") ? "#3cb371" : "#8b0000";
+            muteEffect(distortion);
+        },
+
+        chorusEffectToggle() {
+            addRemoveEffects("chorus");
+            document.getElementById("chorus-button").style.backgroundColor = effectsAddedList.includes("chorus") ? "#3cb371" : "#8b0000";
+            muteEffect(chorus);
+        },
+
+        reverbEffectToggle() {
+            addRemoveEffects("reverb");
+            document.getElementById("reverb-button").style.backgroundColor = effectsAddedList.includes("reverb") ? "#3cb371" : "#8b0000";
+            for (let i=0; i<12; i++) {
+                if (effectsAddedList.includes("reverb")) {
+                    synth[i].chain(reverb).toDestination();
+                } else {
+                    synth[i].disconnect(reverb);
+                }
+            }
+        },
+
     },
 
     created() {
@@ -243,6 +305,27 @@ export default {
         for (let i=0; i<12; i++) {
             this.notes[i] = 440 * 2 ** (i / 12)
         }
+
+        window.addEventListener("change", e => {
+            if (e.target.type === 'vibrato') {
+                return;
+            }
+            document.getElementById("volume-button").style.backgroundColor = document.getElementById('volume').value != 0 ? "#3cb371" : "#8b0000";
+
+            vibrato.frequency.value = document.getElementById('vibrato-frequency').value;
+            vibrato.depth.value = document.getElementById('vibrato-depth').value;
+
+            tremolo.frequency.value = document.getElementById('tremolo-frequency').value;
+            tremolo.depth.value = document.getElementById('tremolo-depth').value;
+
+            distortion.distortion = document.getElementById('distortion').value;
+
+            chorus.frequency.value = document.getElementById('c-frequency').value;
+            chorus.delayTime = document.getElementById('c-delay-time').value;
+            chorus.depth = document.getElementById('c-depth').value;
+
+            reverb.roomSize.value = document.getElementById('reverb').value;
+        });
 
         window.addEventListener("keydown", e => {
             if(e.target.type === 'number') {
@@ -265,7 +348,7 @@ export default {
                 if (synth[index]===null) {
                     synth[index] = new this.$tone.Synth().toDestination();
                 }
-                synth[index].triggerAttack(this.notes[index], this.$tone.now());
+                synth[index].triggerAttack(this.notes[index], this.$tone.now(), document.getElementById('volume').value);
             }
         });
 

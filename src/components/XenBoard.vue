@@ -111,6 +111,180 @@
                 dark:hover:bg-sky-700 dark:active:bg-sky-500 " @mousedown="playOscillator(n-1)" @mouseup="stopOscillator(n-1)"
                 @mouseleave="stopOscillator(n-1)" v-bind:key="n" v-text="n-1" v-bind:id="n" v-for="n in hexNumber*octaves"/>
   </div>
+
+  <div class="wrapper">
+    <div class="effects-board">
+      <div class="effects-choice-container bg-[#ffd085] dark:bg-slate-600 shadow shadow-amber-500 dark:shadow-indigo-500">
+        <label class="text-3xl px-0.5 pl-5 dark:text-slate-200">Effects</label>
+        <section class="effect-type">
+
+          <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400">
+            <button type="button" class="button-81" id="volume-button">Volume</button>
+            <div class="volume-slider-container">
+              <section>
+                <input type="range"
+                       min="0"
+                       max="1"
+                       value="0.5"
+                       step=".01"
+                       class="input"
+                       id="volume"
+                       oninput="rangeValueVolume.innerText = this.value">
+                <label class="text-base text-slate-700 dark:text-slate-200">Volume</label>
+                <p id="rangeValueVolume" class="text-base text-slate-700 dark:text-slate-200">0.5</p>
+              </section>
+            </div>
+          </div>
+
+          <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400"
+               id="Vibrato">
+            <button type="button" class="button-80" id="vibrato-button" @mousedown="vibratoEffectToggle()">Vibrato</button>
+            <div class="vibrato-slider-container">
+              <section>
+                <input type="range"
+                       min="0"
+                       max="5"
+                       value="0"
+                       step=".5"
+                       class="input"
+                       id="vibrato-frequency"
+                       oninput="rangeValueVibFreq.innerText = this.value">
+                <label class="text-base text-slate-700 dark:text-slate-200">Frequency</label>
+                <p id="rangeValueVibFreq" class="text-base text-slate-700 dark:text-slate-200">0</p>
+              </section>
+              <section>
+                <input type="range"
+                       min="0"
+                       max="1"
+                       value="0"
+                       step="0.2"
+                       class="input"
+                       id="vibrato-depth"
+                       oninput="rangeValueVibDepth.innerText = this.value">
+                <label class="text-base text-slate-700 dark:text-slate-200">Depth</label>
+                <p id="rangeValueVibDepth" class="text-base text-slate-700 dark:text-slate-200">0</p>
+              </section>
+            </div>
+          </div>
+
+          <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400"
+               id="Tremolo" >
+            <button type="button" class="button-80" id="tremolo-button" @mousedown="tremoloEffectToggle()">Tremolo</button>
+            <div class="tremolo-slider-container">
+              <section class="two-sliders">
+                <input type="range"
+                       min="0"
+                       max="50"
+                       value="0"
+                       step=".1"
+                       class="input"
+                       id="tremolo-frequency"
+                       oninput="rangeValueTremFreq.innerText = this.value">
+                <label class="text-base text-slate-700 dark:text-slate-200">Frequency</label>
+                <p id="rangeValueTremFreq" class="text-base text-slate-700 dark:text-slate-200">0</p>
+              </section>
+              <section class="two-sliders">
+                <input type="range"
+                       min="0"
+                       max="1"
+                       value="0"
+                       step="0.2"
+                       class="input"
+                       id="tremolo-depth"
+                       oninput="rangeValueTremDepth.innerText = this.value">
+                <label class="text-base text-slate-700 dark:text-slate-200">Depth</label>
+                <p id="rangeValueTremDepth" class="text-base text-slate-700 dark:text-slate-200">0</p>
+              </section>
+            </div>
+          </div>
+
+          <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400"
+               id="Distortion">
+            <button type="button" class="button-80" id="distortion-button" @mousedown="distortionEffectToggle()">Distrotion</button>
+            <div class="distortion-slider-container">
+              <section>
+                <input type="range"
+                       min="0"
+                       max="1"
+                       value="0"
+                       step=".1"
+                       class="input"
+                       id="distortion"
+                       oninput="rangeValueDistortion.innerText = this.value">
+                <label class="text-base text-slate-700 dark:text-slate-200">Distortion</label>
+                <p id="rangeValueDistortion" class="text-base text-slate-700 dark:text-slate-200">0</p>
+              </section>
+            </div>
+          </div>
+
+          <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400"
+               id="Chorus">
+            <button type="button" class="button-80" id="chorus-button" @mousedown="chorusEffectToggle()">Chorus</button>
+            <div class="chorus-slider-container">
+              <section>
+                <input type="range"
+                       min="0"
+                       max="20"
+                       value="0"
+                       step="0.1"
+                       class="input"
+                       id="c-frequency"
+                       oninput="rangeValueCFreq.innerText = this.value">
+                <label class="text-base text-slate-700 dark:text-slate-200">Frequency</label>
+                <p id="rangeValueCFreq" class="text-base text-slate-700 dark:text-slate-200">0</p>
+              </section>
+              <section>
+                <input type="range"
+                       min="0"
+                       max="5"
+                       value="0"
+                       step="0.1"
+                       class="input"
+                       id="c-delay-time"
+                       oninput="rangeValueCDelay.innerText = this.value">
+                <label class="text-base text-slate-700 dark:text-slate-200">Delay</label>
+                <p id="rangeValueCDelay" class="text-base text-slate-700 dark:text-slate-200">0</p>
+              </section>
+              <section>
+                <input type="range"
+                       min="0"
+                       max="1"
+                       value="0"
+                       step="0.1"
+                       class="input"
+                       id="c-depth"
+                       oninput="rangeValueCDepth.innerText = this.value">
+                <label class="text-base text-slate-700 dark:text-slate-200">Depth</label>
+                <p id="rangeValueCDepth" class="text-base text-slate-700 dark:text-slate-200">0</p>
+              </section>
+            </div>
+          </div>
+
+          <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400"
+               id="Reverb">
+            <button type="button" class="button-80" id="reverb-button" @mousedown="reverbEffectToggle()">Reverb</button>
+            <div class="distortion-slider-container">
+              <section>
+                <input type="range"
+                       min="0"
+                       max="0.9"
+                       value="0"
+                       step=".1"
+                       class="input"
+                       id="reverb"
+                       oninput="rangeValueReverb.innerText = this.value">
+                <label class="text-base text-slate-700 dark:text-slate-200">Reverb</label>
+                <p id="rangeValueReverb" class="text-base text-slate-700 dark:text-slate-200">0</p>
+              </section>
+            </div>
+          </div>
+
+
+        </section>
+      </div>
+    </div>
+  </div>
+
 </template>
 
 
