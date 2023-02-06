@@ -8,7 +8,6 @@ let tune = new Tune();
 tune.mode.output = "frequency";
 
 let synth = new Array(12)
-let note = new Array(12)
 let ageofsynth = new Array(12).fill(0);
 let keymouseon = new Array(12).fill(false);
 let keyboardon = new Array(12).fill(false);
@@ -26,7 +25,6 @@ let octave_colors_dark_Mid= ["bg-sky-700", "bg-[#c9a7c9]", "bg-[#ff846e]"];
 
 for (let i=0; i<12; i++) {
   synth[i] = new Tone.Synth().toDestination();
-  note[i] = 440 * 2 ** (i / 12)
 }
 
 export default {
@@ -51,34 +49,34 @@ export default {
             mouseOn: keymouseon,
             innerDarkOn: this.darkOn,
             synths: synth,
-            notes: note,
+            notes: [],
         };
     },
 
     methods: {
         createNotes() {
             this.octaves = this.high + this.low + 1;
-            note.length = this.hexNumber * this.octaves;
+            this.notes.length = this.hexNumber * this.octaves;
             let counter;
             let position = 0;
             for(let i=0;i<this.low;i++) {
                 counter = 0;
                 while(counter < this.hexNumber) {
-                    note[position + counter] = (this.centerfreq / (this.rootn ** (this.low - i))) * this.rootn ** (counter / this.hexNumber);
+                    this.notes[position + counter] = (this.centerfreq / (this.rootn ** (this.low - i))) * this.rootn ** (counter / this.hexNumber);
                     counter++;
                 }
                 position += counter;
             }
 
             for(let i=0;i<this.hexNumber;i++) {
-                note[position + i] = this.centerfreq * this.rootn ** (i/this.hexNumber);
+                this.notes[position + i] = this.centerfreq * this.rootn ** (i/this.hexNumber);
             }
             position += this.hexNumber;
 
             for(let i=0;i<this.high;i++) {
                 counter = 0;
                 while(counter < this.hexNumber) {
-                    note[position + counter] = (this.centerfreq *  (this.rootn**(i+1)) * this.rootn ** (counter / this.hexNumber));
+                    this.notes[position + counter] = (this.centerfreq *  (this.rootn**(i+1)) * this.rootn ** (counter / this.hexNumber));
                     counter++;
                 }
                 position += counter;
@@ -96,19 +94,19 @@ export default {
             for(let i=this.low;i>0;i--) {
                 counter = 0;
                 while(counter<this.hexNumber) {
-                    note[position + counter] = tune.note(counter, 0-i);
+                    this.notes[position + counter] = tune.note(counter, 0-i);
                     counter++;
                 }
                 position += counter;
             }
             for(let i=0;i<this.hexNumber;i++) {
-                note[position + i] = tune.note(i, 0);
+                this.notes[position + i] = tune.note(i, 0);
             }
             position += this.hexNumber;
             for(let i=0;i<this.high;i++) {
                 counter = 0;
                 while(counter < this.hexNumber) {
-                    note[position + counter] = tune.note(counter, i+1);
+                    this.notes[position + counter] = tune.note(counter, i+1);
                     counter++;
                 }
                 position += counter;
@@ -118,10 +116,10 @@ export default {
         afterCreatingNotes() {
             this.createOsc();
             this.$nextTick(function () {this.changeOctaveColor(this.hexNumber, this.octaves)})
-            keyboardon.length = note.length;
-            keyboardon[note.length-1] = false;
-            keymouseon.length = note.length;
-            keymouseon[note.length-1] = false;
+            keyboardon.length = this.notes.length;
+            keyboardon[this.notes.length-1] = false;
+            keymouseon.length = this.notes.length;
+            keymouseon[this.notes.length-1] = false;
         },
         changeOctaveColor(note_number, octave_number){
             for(let i = 0; i < note_number * octave_number; i++) {
@@ -178,7 +176,7 @@ export default {
         if (synth[n]===null) {
           synth[n] = new this.$tone.Synth().toDestination();
         }
-        synth[n].triggerAttack(note[n], this.$tone.now());
+        synth[n].triggerAttack(this.notes[n], this.$tone.now());
       }
     },
 
@@ -242,10 +240,9 @@ export default {
 
     created() {
 
-        /*for (let i=0; i<12; i++) {
-            synth[i] = new Tone.Synth().toDestination();
-            note[i] = 440 * 2 ** (i / 12)
-        }*/
+        for (let i=0; i<12; i++) {
+            this.notes[i] = 440 * 2 ** (i / 12)
+        }
 
         window.addEventListener("keydown", e => {
             if(e.target.type === 'number') {
@@ -268,7 +265,7 @@ export default {
                 if (synth[index]===null) {
                     synth[index] = new this.$tone.Synth().toDestination();
                 }
-                synth[index].triggerAttack(note[index], this.$tone.now());
+                synth[index].triggerAttack(this.notes[index], this.$tone.now());
             }
         });
 
