@@ -69,6 +69,7 @@ const sketch = function(p) {
 
   let valueY = [(p.windowHeight / 2)+20];
   let numPts = [];
+  let darkOnP5;
 
   p.setup = function () {
 
@@ -88,7 +89,13 @@ const sketch = function(p) {
 
     p.draw = function () {
 
-      p.background(220);
+      darkOnP5 = p.darkOnID;
+
+      p.background('#fff4db');
+
+      if(darkOnP5 === true){
+        p.background('#0f172a');
+      }
 
       numPts = p.p5numbernotes;
       valueY=[(p.windowHeight / 2)+20]
@@ -118,12 +125,23 @@ const sketch = function(p) {
         }
 
         //y axis text
+        if(darkOnP5 === true){
+          p.fill('white');
+        }
+        if(darkOnP5 != true){
+          p.fill('#001133');
+        }
         p.text(Math.max(...gradusValues), 5, 15)
       }
 
 
         p.strokeWeight(2);
-      p.stroke(0);
+      if(darkOnP5 === true){
+        p.stroke('white');
+      }
+      if(darkOnP5 != true){
+        p.stroke('#001133');
+      }
       p.textStyle("NORMAL");
       // draw lines
       let px = 0;
@@ -138,6 +156,43 @@ const sketch = function(p) {
         px = x;
         py = y;
       }
+
+      let height_Canvas = (p.windowHeight / 2)+20
+
+      p.push();
+      p.strokeWeight(2);
+      if(darkOnP5 === true){
+        p.stroke('white');
+      }
+      if(darkOnP5 != true){
+        p.stroke('#001133');
+      }
+      p.line(1, 1, p.windowWidth / 4, 1);
+      p.strokeWeight(2);
+      if(darkOnP5 === true){
+        p.stroke('white');
+      }
+      if(darkOnP5 != true){
+        p.stroke('#001133');
+      }
+      p.line(1, 1, 1, height_Canvas);
+      p.strokeWeight(4);
+      if(darkOnP5 === true){
+        p.stroke('white');
+      }
+      if(darkOnP5 != true){
+        p.stroke('#001133');
+      }
+      p.line(p.windowWidth / 4, height_Canvas, (p.windowWidth / 4), 1);
+      p.strokeWeight(5);
+      if(darkOnP5 === true){
+        p.stroke('white');
+      }
+      if(darkOnP5 != true){
+        p.stroke('#001133');
+      }
+      p.line(1, height_Canvas, (p.windowWidth / 4), height_Canvas);
+      p.pop();
 
   }
 }
@@ -158,6 +213,9 @@ export default {
       type: Number,
       default: 12,
       required: true
+    },
+    darkOn:{
+      type: Boolean,
     }
   },
 
@@ -170,6 +228,7 @@ export default {
     setTimeout(()=> {
       this.mySketch = new this.$p5(sketch, this.$refs.canvasOutlet);
       this.mySketch.p5numbernotes = this.hexNumber;
+      this.mySketch.darkOnID = this.testingDark;
     });
   },
 
@@ -178,11 +237,25 @@ export default {
       dissonanceValues[i-1] = this.freqs[0] / this.freqs[i]
       gradusValues[i-1] = eulerGradus(dissonanceValues[i-1])
     }
+    this.testingDark = this.darkOn;
+  },
+
+  updated(){
+    console.log(this.freqs.length);
+    for (let i = 1; i < this.hexNumber; i++) {
+      dissonanceValues[i-1] = this.freqs[0] / this.freqs[i]
+      gradusValues[i-1] = eulerGradus(dissonanceValues[i-1])
+    }
   },
 
   watch: {
 
-    freqs: {
+    darkOn(newValue) {
+      this.testingDark = newValue;
+      this.mySketch.darkOnID = this.testingDark;
+    },
+
+/*    freqs: {
       handler() {
         this.mySketch.p5notes = this.freqs;
         gradusValues = []
@@ -192,7 +265,7 @@ export default {
         }
       },
       deep: true
-    },
+    },*/
 
     hexNumber(newValue) {
       this.mySketch.p5numbernotes = newValue;
