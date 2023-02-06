@@ -44,11 +44,13 @@ function addRemoveEffects(effect){
 }
 
 function muteEffect(effect){
-    for (let i=0; i<12; i++) {
-        if (effectsAddedList.includes((effect.toString()).toLowerCase())) {
-            synth[i].chain(effect).toDestination();
-        } else {
-            synth[i].disconnect(effect);
+    for (let i=0; i<synth.length; i++) {
+        if (synth[i] != null) {
+            if (effectsAddedList.includes((effect.toString()).toLowerCase())) {
+                synth[i].chain(effect).toDestination();
+            } else {
+                synth[i].disconnect(effect);
+            }
         }
     }
 }
@@ -201,6 +203,12 @@ export default {
         this.pauseOldOscillator()
         if (synth[n]===null) {
           synth[n] = new this.$tone.Synth().toDestination();
+            if (effectsAddedList != []) {
+                for (let i = 0; i < effectsAddedList.length; i++) {
+                    console.log(eval(effectsAddedList[i]));
+                    synth[n].chain(eval(effectsAddedList[i])).toDestination();
+                }
+            }
         }
         synth[n].triggerAttack(this.notes[n], this.$tone.now(), document.getElementById('volume').value);
       }
@@ -289,11 +297,13 @@ export default {
         reverbEffectToggle() {
             addRemoveEffects("reverb");
             document.getElementById("reverb-button").style.backgroundColor = effectsAddedList.includes("reverb") ? "#3cb371" : "#8b0000";
-            for (let i=0; i<12; i++) {
-                if (effectsAddedList.includes("reverb")) {
-                    synth[i].chain(reverb).toDestination();
-                } else {
-                    synth[i].disconnect(reverb);
+            for (let i=0; i<synth.length; i++) {
+                if (synth[i] != null) {
+                    if (effectsAddedList.includes("reverb")) {
+                        synth[i].chain(reverb).toDestination();
+                    } else {
+                        synth[i].disconnect(reverb);
+                    }
                 }
             }
         },
@@ -347,6 +357,11 @@ export default {
                 this.pauseOldOscillator()
                 if (synth[index]===null) {
                     synth[index] = new this.$tone.Synth().toDestination();
+                    if (effectsAddedList != []) {
+                        for (let i = 0; i < effectsAddedList.length; i++) {
+                            synth[index].chain(eval(effectsAddedList[i])).toDestination();
+                        }
+                    }
                 }
                 synth[index].triggerAttack(this.notes[index], this.$tone.now(), document.getElementById('volume').value);
             }
