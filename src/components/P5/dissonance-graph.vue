@@ -250,12 +250,7 @@ export default {
 
   watch: {
 
-    darkOn(newValue) {
-      this.testingDark = newValue;
-      this.mySketch.darkOnID = this.testingDark;
-    },
-
-/*    freqs: {
+    freqs: {
       handler() {
         this.mySketch.p5notes = this.freqs;
         gradusValues = []
@@ -265,7 +260,7 @@ export default {
         }
       },
       deep: true
-    },*/
+    },
 
     hexNumber(newValue) {
       this.mySketch.p5numbernotes = newValue;
