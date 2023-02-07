@@ -1,14 +1,18 @@
 <template>
-  <div style="display: block">
-    <div class="shadow shadow-amber-500 dark:shadow-indigo-500 click-button rec-button text-base text-center"
+  <div class="bg-[#ffd085] dark:bg-slate-500 text-slate-700 dark:text-slate-200
+    shadow shadow-amber-500 dark:shadow-indigo-500 click-button text-base text-center rec-button mp3-button"
+    v-on:click="hasRecorded ? downloadMp3() : ''">
+      <img src="../assets/download.png" alt="download button" class="rec-button-content"/>
+      Download mp3
+  </div>
+  <div class="shadow shadow-amber-500 dark:shadow-indigo-500 click-button rec-button red-button text-base text-center"
          :class="{'bg-[#ffd085] dark:bg-slate-500 text-slate-700 dark:text-slate-200': !isRecording,
           'rec-on shadow-2xl shadow-red-900 dark:shadow-red-900 text-slate-200': isRecording}"
          v-on:click="!isRecording ?  startRecording() : stopRecording()">
       <img src="../assets/circle-button.png" alt="rec button" class="rec-button-content"/>
       Toggle recording
-    </div>
-    <audio controls v-if="hasRecorded" id="audio"></audio>
   </div>
+  <audio controls v-if="hasRecorded" id="audio" class="audio-box"></audio>
 
   <div class="justify-center flex flex-row content-center gap-x-10">
     <div id="sketch-holder-3">

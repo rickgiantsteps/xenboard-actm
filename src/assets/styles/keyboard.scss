@@ -406,14 +406,17 @@ body {
 /* Rec button */
 
 .rec-button {
-  position: absolute;
   left: 5%;
-  z-index: 1;
   height: fit-content;
   width: fit-content;
-  display: block;
+  display: grid;
+  margin: 5px;
   padding: 3px;
   border-radius: .375rem;
+}
+
+.red-button {
+  position: absolute;
 }
 
 .rec-button-content {
@@ -425,5 +428,16 @@ body {
 
 .rec-on {
   position: fixed;
+  z-index: 1;
   background-color: firebrick;
+}
+
+.audio-box {
+  position: absolute;
+  top: 10%;
+  left: 5%;
+}
+
+.mp3-button {
+  position: relative;
 }

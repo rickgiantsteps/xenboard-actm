@@ -29,6 +29,7 @@ let chorus = new Tone.Chorus(0,0,0).toDestination().start();
 let reverb = new Tone.JCReverb(0).toDestination();
 
 let recorder = new Tone.Recorder();
+let url;
 
 let lastnote = 0;
 
@@ -268,11 +269,18 @@ export default {
             });
         },
         async stopRecording() {
+            this.hasRecorded = true;
             this.isRecording = !this.isRecording;
             const recording = await recorder.stop();
             console.log("Recording has stopped");
-            this.hasRecorded=true;
-            document.getElementById("audio").src = URL.createObjectURL(recording);
+            url = URL.createObjectURL(recording);
+            document.getElementById("audio").src = url;
+        },
+        downloadMp3() {
+            const anchor = document.createElement("a");
+            anchor.download = "recording.mp3";
+            anchor.href = url;
+            anchor.click();
         },
 
         vibratoEffectToggle() {
