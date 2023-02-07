@@ -6,69 +6,10 @@
 
 //calculate dissonance with Euler's gradus function E(n) = ∑ p|n e(p)(p−1)
 
-function eulerGradus(decimalRatio) {
-  let fraction = decimalToFraction(decimalRatio.toFixed(6))
-  let n = fraction[0]
-  let d = fraction[1]
-  let gradus = 1
-  let count = 1
-
-  for (let i in primeFactors(d*n)) {
-    gradus += count*(i-1)
-    count++
-  }
-
-  return gradus
-}
-
-function primeFactors(n) {
-  let factors = [n];
-  let divisor = 2;
-
-  while (n >= 2) {
-    if (n % divisor === 0) {
-      factors.push(divisor);
-      n = n / divisor;
-    } else {
-      divisor++;
-    }
-  }
-
-  return factors;
-}
-
-function decimalToFraction(_decimal) {
-  if (_decimal === parseInt(_decimal)) {
-    return {
-      top: parseInt(_decimal),
-      bottom: 1,
-      display: parseInt(_decimal) + '/' + 1
-    };
-  }
-  else {
-    let top = _decimal.toString().includes(".") ? _decimal.toString().replace(/\d+[.]/, '') : 0;
-    let bottom = Math.pow(10, top.toString().replace('-','').length);
-    if (_decimal >= 1) {
-      top = +top + (Math.floor(_decimal) * bottom);
-    }
-    else if (_decimal <= -1) {
-      top = +top + (Math.ceil(_decimal) * bottom);
-    }
-
-    let x = Math.abs(gcd(top, bottom));
-    return [(top / x), (bottom / x)]
-  }
-}
-
-function gcd(a, b) {
-  return (b) ? gcd(b, a % b) : a;
-}
-
-
 const sketch = function(p) {
 
   let valueY = [(p.windowHeight / 2)+20];
-  let numPts = [];
+  let numPts;
   let darkOnP5;
 
   p.setup = function () {
@@ -237,11 +178,72 @@ export default {
   created() {
     for (let i = 1; i < this.hexNumber; i++) {
       dissonanceValues[i-1] = this.freqs[0] / this.freqs[i]
-      gradusValues[i-1] = eulerGradus(dissonanceValues[i-1])
+      gradusValues[i-1] = this.eulerGradus(dissonanceValues[i-1])
     }
     averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/this.hexNumber
-    this.$emit("averagediss_change", averagediss)
+    this.$emit("averagediss_change", parseFloat(averagediss.toFixed(6)))
     this.testingDark = this.darkOn;
+  },
+
+  methods: {
+    eulerGradus(decimalRatio) {
+      let fraction = this.decimalToFraction(decimalRatio.toFixed(6))
+      let n = fraction[0]
+      let d = fraction[1]
+      let gradus = 1
+      let count = 1
+
+      for (let i in this.primeFactors(d*n)) {
+        gradus += count*(i-1)
+        count++
+      }
+
+      return gradus
+    },
+
+    primeFactors(n) {
+      let factors = [n];
+      let divisor = 2;
+
+      while (n >= 2) {
+        if (n % divisor === 0) {
+          factors.push(divisor);
+          n = n / divisor;
+        } else {
+          divisor++;
+        }
+      }
+
+      return factors;
+    },
+
+    decimalToFraction(_decimal) {
+      if (_decimal === parseInt(_decimal)) {
+        return {
+          top: parseInt(_decimal),
+          bottom: 1,
+          display: parseInt(_decimal) + '/' + 1
+        };
+      }
+      else {
+        let top = _decimal.toString().includes(".") ? _decimal.toString().replace(/\d+[.]/, '') : 0;
+        let bottom = Math.pow(10, top.toString().replace('-','').length);
+        if (_decimal >= 1) {
+          top = +top + (Math.floor(_decimal) * bottom);
+        }
+        else if (_decimal <= -1) {
+          top = +top + (Math.ceil(_decimal) * bottom);
+        }
+
+        let x = Math.abs(this.gcd(top, bottom));
+        return [(top / x), (bottom / x)]
+      }
+    },
+
+    gcd(a, b) {
+      return (b) ? this.gcd(b, a % b) : a;
+    }
+
   },
 
   watch: {
@@ -252,11 +254,11 @@ export default {
         gradusValues = []
         for (let i = 1; i < this.hexNumber; i++) {
           dissonanceValues[i - 1] = this.freqs[0] / this.freqs[i]
-          gradusValues[i - 1] = eulerGradus(dissonanceValues[i - 1])
+          gradusValues[i - 1] = this.eulerGradus(dissonanceValues[i - 1])
         }
 
         averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/this.hexNumber
-        this.$emit("averagediss_change", averagediss)
+        this.$emit("averagediss_change", parseFloat(averagediss.toFixed(6)))
       },
       deep: true
     },
@@ -267,11 +269,11 @@ export default {
       gradusValues = []
       for (let i = 1; i < this.hexNumber; i++) {
         dissonanceValues[i - 1] = this.freqs[0] / this.freqs[i]
-        gradusValues[i - 1] = eulerGradus(dissonanceValues[i - 1])
+        gradusValues[i - 1] = this.eulerGradus(dissonanceValues[i - 1])
       }
 
       averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/this.hexNumber
-      this.$emit("averagediss_change", averagediss)
+      this.$emit("averagediss_change", averagediss.toFixed(6))
     },
 
     darkOn(newValue) {

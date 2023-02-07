@@ -29,6 +29,8 @@ let distortion = new Tone.Distortion(0).toDestination();
 let chorus = new Tone.Chorus(0,0,0).toDestination().start();
 let reverb = new Tone.JCReverb(0).toDestination();
 
+let lastnote = 0;
+
 export default {
   name: 'XenBoard',
     computed: {
@@ -56,8 +58,8 @@ export default {
             keyOn: keyboardon,
             mouseOn: keymouseon,
             innerDarkOn: this.darkOn,
-            synths: synth,
-            avgdiss: 0
+            avgdiss: 0,
+            meldiss: 0
         };
     },
 
@@ -122,6 +124,7 @@ export default {
             }
             this.afterCreatingNotes();
         },
+
         afterCreatingNotes() {
             this.createOsc();
             this.$nextTick(function () {this.changeOctaveColor(this.hexNumber, this.octaves)})
@@ -130,6 +133,7 @@ export default {
             keymouseon.length = this.notes.length;
             keymouseon[this.notes.length-1] = false;
         },
+
         changeOctaveColor(note_number, octave_number){
             for(let i = 0; i < note_number * octave_number; i++) {
                 if (keymouseon[i] !== true && keyboardon[i] !== true) {
@@ -163,37 +167,39 @@ export default {
             }
         },
 
-    createOsc() {
-      for (let i = 0; i < synth.length; i++) {
-        if (synth[i] !== null) {
-          synth[i].dispose()
-        }
-      }
-      synth.length = this.hexNumber * this.octaves;
-      ageofsynth.length = this.hexNumber * this.octaves;
-      ageofsynth.fill(0);
-      this.played = 0;
-      synth.fill(null)
-    },
-    playOscillator(n) {
-      if ((keymouseon[n] === false || isNaN(keymouseon[n])) && keyboardon[n] !== true) {
+        createOsc() {
+          for (let i = 0; i < synth.length; i++) {
+            if (synth[i] !== null) {
+              synth[i].dispose()
+            }
+          }
+          synth.length = this.hexNumber * this.octaves;
+          ageofsynth.length = this.hexNumber * this.octaves;
+          ageofsynth.fill(0);
+          this.played = 0;
+          synth.fill(null)
+        },
 
-        keymouseon[n] = true
-        this.played++
-        ageofsynth[n] = this.played
-        this.pauseOldOscillator()
-        if (synth[n]===null) {
-          synth[n] = new this.$tone.Synth().toDestination();
-            if (effectsAddedList != []) {
-                for (let i = 0; i < effectsAddedList.length; i++) {
-                    console.log(eval(effectsAddedList[i]));
-                    synth[n].chain(eval(effectsAddedList[i])).toDestination();
+        playOscillator(n) {
+          if ((keymouseon[n] === false || isNaN(keymouseon[n])) && keyboardon[n] !== true) {
+
+            this.update_melodic_dissonance(this.notes[n])
+
+            keymouseon[n] = true
+            this.played++
+            ageofsynth[n] = this.played
+            this.pauseOldOscillator()
+            if (synth[n]===null) {
+              synth[n] = new this.$tone.Synth().toDestination();
+                if (effectsAddedList != []) {
+                    for (let i = 0; i < effectsAddedList.length; i++) {
+                        synth[n].chain(eval(effectsAddedList[i])).toDestination();
+                    }
                 }
             }
-        }
-        synth[n].triggerAttack(this.notes[n], this.$tone.now(), document.getElementById('volume').value);
-      }
-    },
+            synth[n].triggerAttack(this.notes[n], this.$tone.now(), document.getElementById('volume').value);
+          }
+        },
 
         stopOscillator(n) {
             if (keymouseon[n] === true && keyboardon[n] !== true) {
@@ -224,32 +230,32 @@ export default {
             }
         },
 
-    keyColorOnOff(index) {
-        /*document.getElementById((index).toString()).classList.toggle("bg-[#ffd085]");
-        document.getElementById((index).toString()).classList.toggle(this.colorOn);*/
-        /*document.getElementById((index).toString()).classList.toggle("dark:bg-slate-500");
-        document.getElementById((index).toString()).classList.toggle(this.darkColorOn);*/
-        let idx_col = 0;
-        let idx_col_dark = 0;
-        for (let j = 0; j < octave_colors.length; j++) {
-            if (document.getElementById((index).toString()).classList.contains(octave_colors[j])) {
-                idx_col = j;
+        keyColorOnOff(index) {
+            /*document.getElementById((index).toString()).classList.toggle("bg-[#ffd085]");
+            document.getElementById((index).toString()).classList.toggle(this.colorOn);*/
+            /*document.getElementById((index).toString()).classList.toggle("dark:bg-slate-500");
+            document.getElementById((index).toString()).classList.toggle(this.darkColorOn);*/
+            let idx_col = 0;
+            let idx_col_dark = 0;
+            for (let j = 0; j < octave_colors.length; j++) {
+                if (document.getElementById((index).toString()).classList.contains(octave_colors[j])) {
+                    idx_col = j;
+                }
+                if (document.getElementById((index).toString()).classList.contains(octave_colors_On[j])) {
+                    idx_col = j;
+                }
+                if (document.getElementById((index).toString()).classList.contains("dark:" + octave_colors_dark[j])) {
+                    idx_col_dark = j;
+                }
+                if (document.getElementById((index).toString()).classList.contains("dark:" + octave_colors_dark_On[j])) {
+                    idx_col_dark = j;
+                }
             }
-            if (document.getElementById((index).toString()).classList.contains(octave_colors_On[j])) {
-                idx_col = j;
-            }
-            if (document.getElementById((index).toString()).classList.contains("dark:" + octave_colors_dark[j])) {
-                idx_col_dark = j;
-            }
-            if (document.getElementById((index).toString()).classList.contains("dark:" + octave_colors_dark_On[j])) {
-                idx_col_dark = j;
-            }
-        }
-        document.getElementById((index).toString()).classList.toggle(octave_colors[idx_col]);
-        document.getElementById((index).toString()).classList.toggle(octave_colors_On[idx_col]);
-        document.getElementById((index).toString()).classList.toggle("dark:" + octave_colors_dark[idx_col_dark]);
-        document.getElementById((index).toString()).classList.toggle("dark:" + octave_colors_dark_On[idx_col_dark]);
-    },
+            document.getElementById((index).toString()).classList.toggle(octave_colors[idx_col]);
+            document.getElementById((index).toString()).classList.toggle(octave_colors_On[idx_col]);
+            document.getElementById((index).toString()).classList.toggle("dark:" + octave_colors_dark[idx_col_dark]);
+            document.getElementById((index).toString()).classList.toggle("dark:" + octave_colors_dark_On[idx_col_dark]);
+        },
 
         vibratoEffectToggle() {
             this.addRemoveEffects("vibrato");
@@ -312,6 +318,76 @@ export default {
 
         averagediss_change($event) {
             this.avgdiss = $event
+        },
+
+        eulerGradus(decimalRatio) {
+            let fraction = this.decimalToFraction(decimalRatio.toFixed(6))
+            let n = fraction[0]
+            let d = fraction[1]
+            let gradus = 1
+            let count = 1
+
+            for (let i in this.primeFactors(d*n)) {
+                gradus += count*(i-1)
+                count++
+            }
+
+            return gradus
+        },
+
+        primeFactors(n) {
+            let factors = [n];
+            let divisor = 2;
+
+            while (n >= 2) {
+                if (n % divisor === 0) {
+                    factors.push(divisor);
+                    n = n / divisor;
+                } else {
+                    divisor++;
+                }
+            }
+
+            return factors;
+        },
+
+        decimalToFraction(_decimal) {
+            if (_decimal === parseInt(_decimal)) {
+                return {
+                    top: parseInt(_decimal),
+                    bottom: 1,
+                    display: parseInt(_decimal) + '/' + 1
+                };
+            }
+            else {
+                let top = _decimal.toString().includes(".") ? _decimal.toString().replace(/\d+[.]/, '') : 0;
+                let bottom = Math.pow(10, top.toString().replace('-','').length);
+                if (_decimal >= 1) {
+                    top = +top + (Math.floor(_decimal) * bottom);
+                }
+                else if (_decimal <= -1) {
+                    top = +top + (Math.ceil(_decimal) * bottom);
+                }
+
+                let x = Math.abs(this.gcd(top, bottom));
+                return [(top / x), (bottom / x)]
+            }
+        },
+
+        gcd(a, b) {
+            return (b) ? this.gcd(b, a % b) : a;
+        },
+
+        update_melodic_dissonance(playedNote) {
+            if(lastnote!=0) {
+                if(lastnote<playedNote) {
+                    this.meldiss = this.eulerGradus(lastnote/playedNote)
+                } else {
+                    this.meldiss = this.eulerGradus(playedNote/lastnote)
+                }
+            }
+
+            lastnote = playedNote
         }
 
     },
@@ -355,8 +431,8 @@ export default {
             if (!isNaN(index) && (index+1) <= this.hexNumber*this.octaves && (isNaN(keyboardon[index])||keyboardon[index]===false)
                 && keymouseon[index] !== true) {
 
+                this.update_melodic_dissonance(this.notes[index])
                 this.keyColorOnOff(index+1)
-                console.log(index+1)
 
                 keyboardon[index] = true
                 this.played++

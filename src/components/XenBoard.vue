@@ -8,12 +8,12 @@
           :mouseOn="mouseOn"
           :darkOn="innerDarkOn"/>
     </div>
+
     <div id="sketch-holder-2">
       <p class="dark:text-slate-200">Scale dissonance values (Euler's Gradus Function)</p>
-      <dissonance-graph :freqs="notes"
-                        :darkOn="innerDarkOn"
-                        :hexNumber="hexNumber" @averagediss_change="averagediss_change($event)"/>
+      <dissonance-graph :freqs="notes" :darkOn="innerDarkOn" :hexNumber="hexNumber" @averagediss_change="averagediss_change($event)"/>
     </div>
+
     <div id="dissonance-boxes" class="grid-cols-2 place-content-center">
       <div id="average-temperament-dissonance">
         <p class="underline text-lg py-3 dark:text-slate-200">Average Scale Dissonance</p>
@@ -21,7 +21,7 @@
       </div>
       <div id="mel-dissonance">
         <p class="underline text-lg py-3 dark:text-slate-200">Melodic Dissonance</p>
-        <p class="text-xl py-3 dark:text-slate-200">0</p>
+        <p class="text-xl py-3 dark:text-slate-200">{{meldiss}}</p>
       </div>
       <div id="harm-dissonance">
         <p class="underline text-lg py-3 dark:text-slate-200">Harmonic Dissonance</p>
@@ -111,6 +111,10 @@
             v-on:click="this.high < 4 ? this.high += 1:'';createNotesFromTune()">+</button>
     <button class="click-button bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900"
             v-on:click="this.high > 0 ? this.high -= 1:'';createNotesFromTune()">-</button>
+
+    <label class="text-base px-0.5 pl-5 dark:text-slate-200">Polyphony: </label>
+    <input type="number" id="root" name="root" class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
+           v-model.number = "poly" min="1" max="50" v-on:change="createOsc()"/>
   </div>
 
   <div class="grid" id='hexgrid'>

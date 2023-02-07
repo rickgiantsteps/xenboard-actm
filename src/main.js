@@ -11,6 +11,3 @@ app.config.globalProperties.$p5 = p5;
 app.config.globalProperties.$tonal = Tonal;
 
 app.mount('#app')
-
-
-//createApp(App).mount('#app')
