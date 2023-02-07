@@ -1,31 +1,35 @@
 <template>
 
   <div class="justify-center flex flex-row content-center gap-x-10">
-    <div id="sketch-holder">
-      <P5 :hexNumber="hexNumber"
-          :squareRoot="rootn"
-          :keyOn="keyOn"
-          :mouseOn="mouseOn"
-          :darkOn="innerDarkOn"/>
+    <div id="sketch-holder-3">
+      <p class="underline text-lg pb-5 dark:text-slate-200">Notes Polygon</p>
+      <NotesPolygon :hexNumber="hexNumber"
+                :squareRoot="rootn"
+                :keyOn="keyOn"
+                :mouseOn="mouseOn"
+                :darkOn="innerDarkOn"/>
     </div>
 
     <div id="sketch-holder-2">
       <p class="dark:text-slate-200">Scale dissonance values (Euler's Gradus Function)</p>
-      <dissonance-graph :freqs="notes" :darkOn="innerDarkOn" :hexNumber="hexNumber" @averagediss_change="averagediss_change($event)"/>
+      <DissonanceGraph :freqs="notes" :darkOn="innerDarkOn" :hexNumber="hexNumber" @averagediss_change="averagediss_change($event)"/>
     </div>
 
     <div id="dissonance-boxes" class="grid-cols-2 place-content-center">
       <div id="average-temperament-dissonance">
-        <p class="underline text-lg py-3 dark:text-slate-200">Average Scale Dissonance</p>
-        <p class="text-xl py-3 dark:text-slate-200">{{avgdiss}}</p>
+        <p class="underline text-lg dark:text-slate-200">Average Scale Dissonance</p>
+        <p class="dark:text-slate-200">(Euler's Gradus)</p>
+        <p class="text-xl py-5 pb-11 dark:text-slate-200">{{avgdiss}}</p>
       </div>
       <div id="mel-dissonance">
-        <p class="underline text-lg py-3 dark:text-slate-200">Melodic Dissonance</p>
-        <p class="text-xl py-3 dark:text-slate-200">{{meldiss}}</p>
+        <p class="underline text-lg dark:text-slate-200">Melodic Dissonance</p>
+        <p class="dark:text-slate-200">(Euler's Gradus)</p>
+        <p class="text-xl py-5 pb-11 dark:text-slate-200">{{meldiss}}</p>
       </div>
       <div id="harm-dissonance">
-        <p class="underline text-lg py-3 dark:text-slate-200">Harmonic Dissonance</p>
-        <p class="text-xl py-3 dark:text-slate-200">0</p>
+        <p class="underline text-lg dark:text-slate-200">Harmonic Dissonance</p>
+        <p class="dark:text-slate-200">(Something Something)</p>
+        <p class="text-xl py-5 dark:text-slate-200">0</p>
       </div>
     </div>
   </div>

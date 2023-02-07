@@ -1,9 +1,8 @@
-import HexagonKey from './hex.vue'
-import P5 from "@/components/P5/P5-multi.vue";
-import * as Tone from 'tone'
-//import DissonanceGraph from "@/components/P5/dissonance-graph.vue";
-import Tune from "./tune.js"
+import HexagonKey from './hex-key.vue'
+import NotesPolygon from "./P5/notes-polygon.vue";
 import DissonanceGraph from "./P5/dissonance-graph.vue";
+import * as Tone from 'tone'
+import Tune from "./tune.js"
 
 let tune = new Tune();
 tune.mode.output = "frequency";
@@ -33,11 +32,6 @@ let lastnote = 0;
 
 export default {
   name: 'XenBoard',
-    computed: {
-        DissonanceGraph() {
-            return DissonanceGraph
-        }
-    },
 
     data() {
         return {
@@ -476,9 +470,9 @@ export default {
     },
 
     components: {
-        DissonanceGraph,
         HexagonKey,
-        P5
+        NotesPolygon,
+        DissonanceGraph
     },
 
     watch:{

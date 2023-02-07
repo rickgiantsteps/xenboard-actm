@@ -1,5 +1,4 @@
 import XenBoard from './components/XenBoard.vue'
-import P5 from "./components/P5/P5";
 
 
 document.body.classList.toggle("bg-[#ffb30024]");
@@ -15,7 +14,6 @@ export default {
 
     components: {
         XenBoard,
-        P5: P5
     },
 
     data() {

@@ -4,8 +4,6 @@
 
 <script>
 
-//calculate dissonance with Euler's gradus function E(n) = ∑ p|n e(p)(p−1)
-
 const sketch = function(p) {
 
   let valueY = [(p.windowHeight / 2)+20];
@@ -24,8 +22,6 @@ const sketch = function(p) {
     }
 
   }
-
-
 
 
     p.draw = function () {
@@ -142,7 +138,7 @@ let averagediss = 0
 let dissonanceValues = []
 let gradusValues = []
 export default {
-  name: "dissonance-graph",
+  name: "DissonanceGraph",
 
   props: {
 
@@ -180,12 +176,15 @@ export default {
       dissonanceValues[i-1] = this.freqs[0] / this.freqs[i]
       gradusValues[i-1] = this.eulerGradus(dissonanceValues[i-1])
     }
-    averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/this.hexNumber
+    console.log(this.hexNumber)
+    console.log(gradusValues)
+    averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/(this.hexNumber-1)
     this.$emit("averagediss_change", parseFloat(averagediss.toFixed(6)))
     this.testingDark = this.darkOn;
   },
 
   methods: {
+    //calculates dissonance with Euler's gradus function E(n) = ∑ p|n e(p)(p−1)
     eulerGradus(decimalRatio) {
       let fraction = this.decimalToFraction(decimalRatio.toFixed(6))
       let n = fraction[0]
@@ -257,7 +256,11 @@ export default {
           gradusValues[i - 1] = this.eulerGradus(dissonanceValues[i - 1])
         }
 
-        averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/this.hexNumber
+        if (this.hexNumber!=1) {
+          averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/(this.hexNumber-1)
+        } else {
+          averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/(this.hexNumber)
+        }
         this.$emit("averagediss_change", parseFloat(averagediss.toFixed(6)))
       },
       deep: true
@@ -272,7 +275,11 @@ export default {
         gradusValues[i - 1] = this.eulerGradus(dissonanceValues[i - 1])
       }
 
-      averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/this.hexNumber
+      if (this.hexNumber!=1) {
+        averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/(this.hexNumber-1)
+      } else {
+        averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/(this.hexNumber)
+      }
       this.$emit("averagediss_change", averagediss.toFixed(6))
     },
 
