@@ -280,7 +280,7 @@ export default {
       } else {
         averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/(this.hexNumber)
       }
-      this.$emit("averagediss_change", averagediss.toFixed(6))
+      this.$emit("averagediss_change", parseFloat(averagediss.toFixed(6)))
     },
 
     darkOn(newValue) {
