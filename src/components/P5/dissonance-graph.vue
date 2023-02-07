@@ -218,10 +218,7 @@ export default {
 
     darkOn:{
       type: Boolean,
-    },
-
-    averageDissonance: averagediss
-
+    }
   },
 
   data() {
@@ -242,6 +239,8 @@ export default {
       dissonanceValues[i-1] = this.freqs[0] / this.freqs[i]
       gradusValues[i-1] = eulerGradus(dissonanceValues[i-1])
     }
+    averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/this.hexNumber
+    this.$emit("averagediss_change", averagediss)
     this.testingDark = this.darkOn;
   },
 
@@ -257,6 +256,7 @@ export default {
         }
 
         averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/this.hexNumber
+        this.$emit("averagediss_change", averagediss)
       },
       deep: true
     },
@@ -271,6 +271,7 @@ export default {
       }
 
       averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/this.hexNumber
+      this.$emit("averagediss_change", averagediss)
     },
 
     darkOn(newValue) {

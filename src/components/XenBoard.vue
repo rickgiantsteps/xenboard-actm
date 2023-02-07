@@ -12,12 +12,12 @@
       <p class="dark:text-slate-200">Scale dissonance values (Euler's Gradus Function)</p>
       <dissonance-graph :freqs="notes"
                         :darkOn="innerDarkOn"
-                        :hexNumber="hexNumber"/>
+                        :hexNumber="hexNumber" @averagediss_change="averagediss_change($event)"/>
     </div>
     <div id="dissonance-boxes" class="grid-cols-2 place-content-center">
       <div id="average-temperament-dissonance">
         <p class="underline text-lg py-3 dark:text-slate-200">Average Scale Dissonance</p>
-        <p class="text-xl py-3 dark:text-slate-200">{{hexNumber}}</p>
+        <p class="text-xl py-3 dark:text-slate-200">{{avgdiss}}</p>
       </div>
       <div id="mel-dissonance">
         <p class="underline text-lg py-3 dark:text-slate-200">Melodic Dissonance</p>
@@ -56,7 +56,7 @@
 
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Lower octaves: </label>
     <button class="click-button mr-0.5 bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900"
-            v-on:click="this.low < 4 ? this.low += 1:'';createNotes()">+</button>
+            v-on:click="this.low < 5 ? this.low += 1:'';createNotes()">+</button>
     <button class="click-button bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900"
             v-on:click="this.low > 0 ? this.low -= 1:'';createNotes()">-</button>
 
