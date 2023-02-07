@@ -1,6 +1,7 @@
 <template>
   <div class="bg-[#ffd085] dark:bg-slate-500 text-slate-700 dark:text-slate-200
     shadow shadow-amber-500 dark:shadow-indigo-500 click-button text-base text-center rec-button mp3-button"
+       v-if="hasRecorded"
     v-on:click="hasRecorded ? downloadMp3() : ''">
       <img src="../assets/download.png" alt="download button" class="rec-button-content"/>
       Download mp3
