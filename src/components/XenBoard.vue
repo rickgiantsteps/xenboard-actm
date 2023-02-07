@@ -25,7 +25,7 @@
       </div>
       <div id="harm-dissonance">
         <p class="underline text-lg py-3 dark:text-slate-200">Harmonic Dissonance</p>
-        <p class="text-xl py-3 dark:text-slate-200">0</p>
+        <p class="text-xl py-3 dark:text-slate-200">{{harmdiss}}</p>
       </div>
     </div>
   </div>
