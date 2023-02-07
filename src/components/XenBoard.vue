@@ -15,6 +15,10 @@
                         :hexNumber="hexNumber"/>
     </div>
     <div id="dissonance-boxes" class="grid-cols-2 place-content-center">
+      <div id="average-temperament-dissonance">
+        <p class="underline text-lg py-3 dark:text-slate-200">Average Scale Dissonance</p>
+        <p class="text-xl py-3 dark:text-slate-200">{{hexNumber}}</p>
+      </div>
       <div id="mel-dissonance">
         <p class="underline text-lg py-3 dark:text-slate-200">Melodic Dissonance</p>
         <p class="text-xl py-3 dark:text-slate-200">0</p>
@@ -30,6 +34,7 @@
     <button class="click-button bg-white gap-x-10 w-44 shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded dark:bg-slate-200 dark:text-slate-900"
         @click="tune = !tune; this.hexNumber=0;">Toggle tunings creation</button>
   </div>
+
   <div class="p-3" v-if="tune">
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Main Tunings: </label>
     <select class="bg-white h-6 shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
@@ -90,9 +95,11 @@
       <option style="text-align: center;" value="malkauns">Indian Raga Malkauns</option>
       <option style="text-align: center;" value="bohlen-eg">Bohlen-Pierce</option>
     </select>
+
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Central frequency (Hz): </label>
     <input type="number" id="freqhz" name="freqhz" class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
            v-model.number = "centerfreq" min="1" v-on:change="createNotesFromTune()"/>
+
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Lower octaves: </label>
     <button class="click-button mr-0.5 bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900"
             v-on:click="this.low < 4 ? this.low += 1:'';createNotesFromTune()">+</button>
@@ -104,7 +111,6 @@
             v-on:click="this.high < 4 ? this.high += 1:'';createNotesFromTune()">+</button>
     <button class="click-button bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900"
             v-on:click="this.high > 0 ? this.high -= 1:'';createNotesFromTune()">-</button>
-
   </div>
 
   <div class="grid" id='hexgrid'>
@@ -114,11 +120,12 @@
   </div>
 
   <div class="wrapper">
+
     <div class="effects-board">
       <div class="effects-choice-container bg-[#ffd085] dark:bg-slate-600 shadow shadow-amber-500 dark:shadow-indigo-500">
         <label class="text-3xl px-0.5 pl-5 dark:text-slate-200">Effects</label>
-        <section class="effect-type">
 
+        <section class="effect-type">
           <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400">
             <button type="button" class="button-81" id="volume-button">Volume</button>
             <div class="volume-slider-container">
@@ -168,8 +175,7 @@
             </div>
           </div>
 
-          <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400"
-               id="Tremolo" >
+          <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400" id="Tremolo">
             <button type="button" class="button-80" id="tremolo-button" @mousedown="tremoloEffectToggle()">Tremolo</button>
             <div class="tremolo-slider-container">
               <section class="two-sliders">
@@ -201,7 +207,7 @@
 
           <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400"
                id="Distortion">
-            <button type="button" class="button-80" id="distortion-button" @mousedown="distortionEffectToggle()">Distrotion</button>
+            <button type="button" class="button-80" id="distortion-button" @mousedown="distortionEffectToggle()">Distortion</button>
             <div class="distortion-slider-container">
               <section>
                 <input type="range"

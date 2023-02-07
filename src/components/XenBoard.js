@@ -17,43 +17,16 @@ let keyboard = ["q","w","e","r","t","y","u","i","o","p","è","+","ù","a","s","d
 let octave_colors = ["bg-[#ffd085]", "bg-[#D8BFD8]", "bg-[#FF6347]"];
 let octave_colors_On = ["bg-[#ffd700]", "bg-[#ab76ab]", "bg-[#bd1d00]"];
 let octave_colors_Mid = ["bg-[#ffbe5b]", "bg-[#c9a7c9]", "bg-[#ff846e]"];
-
 let octave_colors_dark = ["bg-slate-500", "bg-[#D8BFD8]", "bg-[#FF6347]"];
 let octave_colors_dark_On = ["bg-sky-500", "bg-[#ab76ab]", "bg-[#bd1d00]"];
 let octave_colors_dark_Mid= ["bg-sky-700", "bg-[#c9a7c9]", "bg-[#ff846e]"];
 
 let effectsAddedList = [];
-
 let vibrato = new Tone.Vibrato(0,0).toDestination();
 let tremolo = new Tone.Tremolo(0, 0).toDestination().start();
 let distortion = new Tone.Distortion(0).toDestination();
 let chorus = new Tone.Chorus(0,0,0).toDestination().start();
 let reverb = new Tone.JCReverb(0).toDestination();
-
-for (let i=0; i<12; i++) {
-  synth[i] = new Tone.Synth().toDestination();
-}
-
-function addRemoveEffects(effect){
-    if(effectsAddedList.includes(effect)) {
-        let index = effectsAddedList.indexOf(effect)
-        effectsAddedList.splice(index, 1);
-    } else {
-        effectsAddedList.push(effect);
-    }
-}
-
-function muteEffect(effect){
-    for (let i=0; i<synth.length; i++) {
-        if (synth[i] != null) {
-            if (effectsAddedList.includes((effect.toString()).toLowerCase())) {
-                synth[i].chain(effect).toDestination();
-            } else {
-                synth[i].disconnect(effect);
-            }
-        }
-    }
-}
 
 export default {
   name: 'XenBoard',
@@ -61,6 +34,7 @@ export default {
     data() {
         return {
             tune: true,
+            notes: [],
             played: 0,
             hexNumber: 12,
             octaves: 1,
@@ -77,7 +51,6 @@ export default {
             mouseOn: keymouseon,
             innerDarkOn: this.darkOn,
             synths: synth,
-            notes: [],
         };
     },
 
@@ -112,6 +85,7 @@ export default {
 
             this.afterCreatingNotes();
         },
+
         createNotesFromTune() {
             this.octaves = this.high + this.low + 1;
             tune.loadScale(this.hystTune);
@@ -271,31 +245,31 @@ export default {
     },
 
         vibratoEffectToggle() {
-            addRemoveEffects("vibrato");
+            this.addRemoveEffects("vibrato");
             document.getElementById("vibrato-button").style.backgroundColor = effectsAddedList.includes("vibrato") ? "#3cb371" : "#8b0000";
-            muteEffect(vibrato);
+            this.muteEffect(vibrato);
         },
 
         tremoloEffectToggle() {
-            addRemoveEffects("tremolo");
+            this.addRemoveEffects("tremolo");
             document.getElementById("tremolo-button").style.backgroundColor = effectsAddedList.includes("tremolo") ? "#3cb371" : "#8b0000";
-            muteEffect(tremolo);
+            this.muteEffect(tremolo);
         },
 
         distortionEffectToggle() {
-            addRemoveEffects("distortion");
+            this.addRemoveEffects("distortion");
             document.getElementById("distortion-button").style.backgroundColor = effectsAddedList.includes("distortion") ? "#3cb371" : "#8b0000";
-            muteEffect(distortion);
+            this.muteEffect(distortion);
         },
 
         chorusEffectToggle() {
-            addRemoveEffects("chorus");
+            this.addRemoveEffects("chorus");
             document.getElementById("chorus-button").style.backgroundColor = effectsAddedList.includes("chorus") ? "#3cb371" : "#8b0000";
-            muteEffect(chorus);
+            this.muteEffect(chorus);
         },
 
         reverbEffectToggle() {
-            addRemoveEffects("reverb");
+            this.addRemoveEffects("reverb");
             document.getElementById("reverb-button").style.backgroundColor = effectsAddedList.includes("reverb") ? "#3cb371" : "#8b0000";
             for (let i=0; i<synth.length; i++) {
                 if (synth[i] != null) {
@@ -308,11 +282,33 @@ export default {
             }
         },
 
+        addRemoveEffects(effect){
+            if(effectsAddedList.includes(effect)) {
+                let index = effectsAddedList.indexOf(effect)
+                effectsAddedList.splice(index, 1);
+            } else {
+                effectsAddedList.push(effect);
+            }
+        },
+
+        muteEffect(effect){
+            for (let i=0; i<synth.length; i++) {
+                if (synth[i] != null) {
+                    if (effectsAddedList.includes((effect.toString()).toLowerCase())) {
+                        synth[i].chain(effect).toDestination();
+                    } else {
+                        synth[i].disconnect(effect);
+                    }
+                }
+            }
+        }
+
     },
 
     created() {
 
         for (let i=0; i<12; i++) {
+            synth[i] = new Tone.Synth().toDestination();
             this.notes[i] = 440 * 2 ** (i / 12)
         }
 

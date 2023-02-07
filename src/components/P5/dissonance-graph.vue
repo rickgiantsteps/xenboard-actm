@@ -197,6 +197,7 @@ const sketch = function(p) {
   }
 }
 
+let averagediss = 0
 let dissonanceValues = []
 let gradusValues = []
 export default {
@@ -214,9 +215,13 @@ export default {
       default: 12,
       required: true
     },
+
     darkOn:{
       type: Boolean,
-    }
+    },
+
+    averageDissonance: averagediss
+
   },
 
   data() {
@@ -250,17 +255,22 @@ export default {
           dissonanceValues[i - 1] = this.freqs[0] / this.freqs[i]
           gradusValues[i - 1] = eulerGradus(dissonanceValues[i - 1])
         }
+
+        averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/this.hexNumber
       },
       deep: true
     },
 
     hexNumber(newValue) {
       this.mySketch.p5numbernotes = newValue;
+      this.mySketch.p5notes = this.freqs;
       gradusValues = []
       for (let i = 1; i < this.hexNumber; i++) {
         dissonanceValues[i - 1] = this.freqs[0] / this.freqs[i]
         gradusValues[i - 1] = eulerGradus(dissonanceValues[i - 1])
       }
+
+      averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/this.hexNumber
     },
 
     darkOn(newValue) {
