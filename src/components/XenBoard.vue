@@ -1,22 +1,22 @@
 <template>
-   <div>
-      <div class="shadow shadow-amber-500 dark:shadow-indigo-500 click-button rec-button text-base text-center"
+  <div id="rec">
+    <div class="shadow shadow-amber-500 dark:shadow-indigo-500 click-button rec-button text-base text-center"
          :class="{'bg-[#ffd085] dark:bg-slate-500 text-slate-700 dark:text-slate-200': !isRecording,
-          'rec-on text-slate-200': isRecording}"
+          'rec-on shadow-2xl shadow-red-900 dark:shadow-red-900 text-slate-200': isRecording}"
          v-on:click="isRecording = !isRecording">
-        <img src="../assets/circle-button.png" alt="rec button" class="rec-button-content"/>
-        Toggle recording
-      </div>
-   </div>
+      <img src="../assets/circle-button.png" alt="rec button" class="rec-button-content"/>
+      Toggle recording
+    </div>
+  </div>
 
   <div class="justify-center flex flex-row content-center gap-x-10">
     <div id="sketch-holder-3">
       <p class="underline text-lg pb-5 dark:text-slate-200">Notes Polygon</p>
       <NotesPolygon :hexNumber="hexNumber"
-                :squareRoot="rootn"
-                :keyOn="keyOn"
-                :mouseOn="mouseOn"
-                :darkOn="innerDarkOn"/>
+                    :squareRoot="rootn"
+                    :keyOn="keyOn"
+                    :mouseOn="mouseOn"
+                    :darkOn="innerDarkOn"/>
     </div>
 
     <div id="sketch-holder-2">
@@ -45,13 +45,13 @@
 
   <div class="pt-6 pb-2">
     <button class="click-button bg-white gap-x-10 w-44 shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded dark:bg-slate-200 dark:text-slate-900"
-        @click="tune = !tune; this.hexNumber=0;">Toggle tunings creation</button>
+            @click="tune = !tune; this.hexNumber=0;">Toggle tunings creation</button>
   </div>
 
   <div class="p-3" v-if="tune">
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Main Tunings: </label>
     <select class="bg-white h-6 shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
-        v-model.number = "hexNumber" v-on:change="this.rootn=2; createNotes()">
+            v-model.number = "hexNumber" v-on:change="this.rootn=2; createNotes()">
       <option style="text-align: center;" disabled value="">Please select one</option>
       <option style="text-align: center;" value="12">12EDO</option>
       <option style="text-align: center;" value="19">19EDO</option>
@@ -91,7 +91,7 @@
   <div class="p-3" v-else>
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Main Tunings: </label>
     <select class="h-6 bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
-    v-model="hystTune" @change="createNotesFromTune()">
+            v-model="hystTune" @change="createNotesFromTune()">
       <option style="text-align: center;" disabled value="">Select...</option>
       <option style="text-align: center;" value="ji_12">Basic just intonation</option>
       <option style="text-align: center;" value="harm30">First 30 harm.s and subharm.s</option>
