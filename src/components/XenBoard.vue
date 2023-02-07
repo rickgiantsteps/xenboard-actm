@@ -1,4 +1,13 @@
 <template>
+   <div>
+      <div class="shadow shadow-amber-500 dark:shadow-indigo-500 click-button rec-button text-base text-center"
+         :class="{'bg-[#ffd085] dark:bg-slate-500 text-slate-700 dark:text-slate-200': !isRecording,
+          'rec-on text-slate-200': isRecording}"
+         v-on:click="isRecording = !isRecording">
+        <img src="../assets/circle-button.png" alt="rec button" class="rec-button-content"/>
+        Toggle recording
+      </div>
+   </div>
 
   <div class="justify-center flex flex-row content-center gap-x-10">
     <div id="sketch-holder-3">

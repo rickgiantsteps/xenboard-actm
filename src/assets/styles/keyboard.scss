@@ -353,6 +353,7 @@ body {
   transform: translateY(.125rem);
 }
 
+/* Buttons */
 .click-button {
   backface-visibility: hidden;
   box-sizing: border-box;
@@ -400,4 +401,29 @@ body {
 
 .click-button:not(:disabled):active {
   transform: translateY(.125rem);
+}
+
+/* Rec button */
+
+.rec-button {
+  position: absolute;
+  left: 5%;
+  z-index: 1;
+  height: fit-content;
+  width: fit-content;
+  display: block;
+  padding: 3px;
+  border-radius: .375rem;
+}
+
+.rec-button-content {
+  position: relative;
+  top: 3px;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.rec-on {
+  position: fixed;
+  background-color: firebrick;
 }

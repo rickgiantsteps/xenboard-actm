@@ -48,6 +48,7 @@ export default {
             colorOn: "bg-[#ffd700]",
             darkColorOn: "dark:bg-sky-500",
             hystTune: "",
+            isRecording: false,
 
             keyOn: keyboardon,
             mouseOn: keymouseon,
@@ -249,6 +250,10 @@ export default {
             document.getElementById((index).toString()).classList.toggle(octave_colors_On[idx_col]);
             document.getElementById((index).toString()).classList.toggle("dark:" + octave_colors_dark[idx_col_dark]);
             document.getElementById((index).toString()).classList.toggle("dark:" + octave_colors_dark_On[idx_col_dark]);
+        },
+
+        startRecording() {
+
         },
 
         vibratoEffectToggle() {
