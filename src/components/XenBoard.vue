@@ -106,7 +106,7 @@
 
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Lower octaves: </label>
     <button class="click-button mr-0.5 bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900"
-            v-on:click="this.low < 4 ? this.low += 1:'';createNotesFromTune()">+</button>
+            v-on:click="this.low < 5 ? this.low += 1:'';createNotesFromTune()">+</button>
     <button class="click-button bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900"
             v-on:click="this.low > 0 ? this.low -= 1:'';createNotesFromTune()">-</button>
 
