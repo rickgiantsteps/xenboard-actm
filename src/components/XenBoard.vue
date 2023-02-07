@@ -1,12 +1,13 @@
 <template>
-  <div id="rec">
+  <div style="display: block">
     <div class="shadow shadow-amber-500 dark:shadow-indigo-500 click-button rec-button text-base text-center"
          :class="{'bg-[#ffd085] dark:bg-slate-500 text-slate-700 dark:text-slate-200': !isRecording,
           'rec-on shadow-2xl shadow-red-900 dark:shadow-red-900 text-slate-200': isRecording}"
-         v-on:click="isRecording = !isRecording">
+         v-on:click="!isRecording ?  startRecording() : stopRecording()">
       <img src="../assets/circle-button.png" alt="rec button" class="rec-button-content"/>
       Toggle recording
     </div>
+    <audio controls v-if="hasRecorded" id="audio"></audio>
   </div>
 
   <div class="justify-center flex flex-row content-center gap-x-10">

@@ -51,6 +51,7 @@ export default {
             darkColorOn: "dark:bg-sky-500",
             hystTune: "",
             isRecording: false,
+            hasRecorded: false,
 
             keyOn: keyboardon,
             mouseOn: keymouseon,
@@ -255,17 +256,23 @@ export default {
         },
 
         startRecording() {
+            this.isRecording = !this.isRecording;
             for(let i=0;i<synth.length;i++) {
-                synth[i].connect(recorder);
+                for(let j=0;j<effectsAddedList.length;j++) {
+                    synth[i].chain(eval(effectsAddedList[j]));
+                }
+                synth[i].chain(Tone.Destination, recorder);
             }
-            recorder.toDestination();
             recorder.start().then(()=> {
                 console.log("Recording has started");
-                this.isRecording = !this.isRecording;
             });
         },
-        stopRecording() {
-
+        async stopRecording() {
+            this.isRecording = !this.isRecording;
+            const recording = await recorder.stop();
+            console.log("Recording has stopped");
+            this.hasRecorded=true;
+            document.getElementById("audio").src = URL.createObjectURL(recording);
         },
 
         vibratoEffectToggle() {
