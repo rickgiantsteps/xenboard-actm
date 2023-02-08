@@ -502,7 +502,7 @@ export default {
                     cont++;
                 }
             }
-            this.harmdiss = this.setharesFormula(tones);
+            this.harmdiss = parseFloat(this.setharesFormula(tones).toFixed(6));
             //console.log(this.harmdiss);
         }
     },
