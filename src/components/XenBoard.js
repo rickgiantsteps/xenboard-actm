@@ -54,12 +54,9 @@ export default {
             centerfreq: 440,
             rootn: 2,
             poly: 12,
-            colorOn: "bg-[#ffd700]",
-            darkColorOn: "dark:bg-sky-500",
             hystTune: "",
             isRecording: false,
             hasRecorded: false,
-
             keyOn: keyboardon,
             mouseOn: keymouseon,
             innerDarkOn: this.darkOn,

@@ -1,21 +1,30 @@
 <template>
-  <div class="bg-[#ffd085] dark:bg-slate-500 text-slate-700 dark:text-slate-200
-    shadow shadow-amber-500 dark:shadow-indigo-500 click-button text-base text-center rec-button mp3-button"
-       v-if="hasRecorded"
-    v-on:click="hasRecorded ? downloadMp3() : ''">
-      <img src="../assets/download.png" alt="download button" class="rec-button-content"/>
-      Download mp3
-  </div>
-  <div class="shadow shadow-amber-500 dark:shadow-indigo-500 click-button rec-button red-button text-base text-center"
-         :class="{'bg-[#ffd085] dark:bg-slate-500 text-slate-700 dark:text-slate-200': !isRecording,
-          'rec-on shadow-2xl shadow-red-900 dark:shadow-red-900 text-slate-200': isRecording}"
-         v-on:click="!isRecording ?  startRecording() : stopRecording()">
-      <img src="../assets/circle-button.png" alt="rec button" class="rec-button-content"/>
-      Toggle recording
-  </div>
-  <audio controls v-if="hasRecorded" id="audio" class="audio-box"></audio>
 
   <div class="justify-center flex flex-row content-center gap-x-10">
+
+    <div class="gap-x-0 grid-rows-3 w-36 p-0 -mr-10 pl-2">
+      <div class="shadow shadow-amber-500 dark:shadow-indigo-500 click-button rec-button red-button text-base text-center"
+           :class="{'bg-[#ffd085] dark:bg-slate-500 text-slate-700 dark:text-slate-200 red-button': !isRecording,
+            'rec-on shadow-2xl shadow-red-900 dark:shadow-red-900 text-slate-200 top-20': isRecording}"
+           v-on:click="!isRecording ?  startRecording() : stopRecording()">
+        <img src="../assets/circle-button.png" alt="rec button" class="rec-button-content w-5 h-5"/>
+        Toggle recording
+      </div>
+      <div class="bg-[#ffd085] dark:bg-slate-500 text-slate-700 dark:text-slate-200
+        shadow shadow-amber-500 dark:shadow-indigo-500 click-button text-base text-center rec-button w-5"
+             v-if="hasRecorded && !isRecording"
+             v-on:click="hasRecorded ? downloadMp3() : ''">
+          <img src="../assets/download.png" alt="download button" class="rec-button-content w-5 h-5"/>
+          Download MP3
+      </div>
+      <audio controls v-if="hasRecorded && !isRecording" id="audio" class="ml-1 mt-2 mb-1 place-items-center w-32"></audio>
+      <div class="bg-[#ffd085] dark:bg-slate-500 text-slate-700 dark:text-slate-200
+        shadow shadow-amber-500 dark:shadow-indigo-500 click-button rec-button place-items-center col-start-2"
+           v-if="hasRecorded && !isRecording" v-on:click="hasRecorded = false">
+        <img src="../assets/trash.png" alt="rec button" class="rec-button-content object-center w-5 h-5 mb-1"/>
+      </div>
+    </div>
+
     <div id="sketch-holder-3">
       <p class="underline text-lg pb-5 dark:text-slate-200">Notes Polygon</p>
       <NotesPolygon :hexNumber="hexNumber"
