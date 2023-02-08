@@ -54,8 +54,8 @@
       </div>
       <div id="harm-dissonance">
         <p class="underline text-lg dark:text-slate-200">Harmonic Dissonance</p>
-        <p class="dark:text-slate-200">(Something Something)</p>
-        <p class="text-xl py-5 dark:text-slate-200">0</p>
+        <p class="dark:text-slate-200">(Sethares' Algorithm)</p>
+        <p class="text-xl py-5 dark:text-slate-200">{{harmdiss}}</p>
       </div>
     </div>
   </div>

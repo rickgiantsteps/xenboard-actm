@@ -1,8 +1,8 @@
 import HexagonKey from './hex-key.vue'
 import NotesPolygon from "./P5/notes-polygon.vue";
-import DissonanceGraph from "./P5/dissonance-graph.vue";
 import * as Tone from 'tone'
 import Tune from "./tune.js"
+import DissonanceGraph from "./P5/dissonance-graph.vue";
 
 let tune = new Tune();
 tune.mode.output = "frequency";
@@ -61,7 +61,8 @@ export default {
             mouseOn: keymouseon,
             innerDarkOn: this.darkOn,
             avgdiss: 0,
-            meldiss: 0
+            meldiss: 0,
+            harmdiss: 0
         };
     },
 
@@ -185,7 +186,7 @@ export default {
         playOscillator(n) {
             if ((keymouseon[n] === false || isNaN(keymouseon[n])) && keyboardon[n] !== true) {
 
-                this.update_melodic_dissonance(this.notes[n])
+                this.update_melodic_dissonance(this.notes[n]);
 
             keymouseon[n] = true
             this.played++
@@ -201,6 +202,7 @@ export default {
             }
               synth[n].oscillator.type = waveform;
               synth[n].triggerAttack(this.notes[n], this.$tone.now(), document.getElementById('volume').value);
+              this.update_harmonic_dissonance();
           }
         },
 
@@ -403,6 +405,39 @@ export default {
             return gradus
         },
 
+        setharesFormula_helper(f11, f22){
+            let f1 = Math.min(f11, f22);
+            let f2 = Math.max(f11, f22);
+
+            let b1 = 3.5;
+            let b2 = 5.75;
+            let s1 = 0.0207;
+            let s2 = 18.96;
+            let x = 0.24;
+            //let x = Math.abs(f1 - f2) / Math.min((f1, f2));
+
+            let s = x / ((s1 * f1) + s2);
+            let z1 = Math.exp(-b1 * s * (f2 - f1));
+            let z2 = Math.exp(-b2 * s * (f2 - f1));
+
+            let z = z1 - z2;
+
+
+            return z;
+        },
+
+        setharesFormula(tones){
+            let dissonance = 0;
+            for (let a = 0; a < tones.length; a++) {
+                for (let i = 1; i < tones.length; i++) {
+                    dissonance = dissonance + this.setharesFormula_helper(tones[a], tones[i]);
+                    console.log(dissonance);
+                }
+            }
+
+            return dissonance;//0.5*dissonance;
+        },
+
         primeFactors(n) {
             let factors = [n];
             let divisor = 2;
@@ -456,8 +491,20 @@ export default {
             }
 
             lastnote = playedNote
-        }
+        },
 
+        update_harmonic_dissonance(){
+            let tones = [];
+            let cont = 0;
+            for (let i = 0; i < keymouseon.length; i++) {
+                if (keymouseon[i] === true || keyboardon[i] === true){
+                    tones[cont] = this.notes[i];
+                    cont++;
+                }
+            }
+            this.harmdiss = this.setharesFormula(tones);
+            //console.log(this.harmdiss);
+        }
     },
 
     created() {
@@ -522,6 +569,7 @@ export default {
                 }
                 synth[index].oscillator.type = waveform;
                 synth[index].triggerAttack(this.notes[index], this.$tone.now(), document.getElementById('volume').value);
+                this.update_harmonic_dissonance();
             }
         });
 
