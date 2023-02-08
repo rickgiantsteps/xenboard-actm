@@ -29,6 +29,7 @@ let chorus = new Tone.Chorus(0,0,0).toDestination().start();
 let reverb = new Tone.JCReverb(0).toDestination();
 
 let recorder = new Tone.Recorder();
+Tone.Destination.connect(recorder);
 let url;
 
 let lastnote = 0;
@@ -258,12 +259,6 @@ export default {
 
         startRecording() {
             this.isRecording = !this.isRecording;
-            for(let i=0;i<synth.length;i++) {
-                for(let j=0;j<effectsAddedList.length;j++) {
-                    synth[i].chain(eval(effectsAddedList[j]));
-                }
-                synth[i].chain(Tone.Destination, recorder);
-            }
             recorder.start().then(()=> {
                 console.log("Recording has started");
             });
