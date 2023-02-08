@@ -338,13 +338,16 @@ export default {
             return gradus
         },
 
-        setharesFormula_helper(f1, f2){
+        setharesFormula_helper(f11, f22){
+            let f1 = Math.min(f11, f22);
+            let f2 = Math.max(f11, f22);
+
             let b1 = 3.5;
             let b2 = 5.75;
             let s1 = 0.0207;
             let s2 = 18.96;
-            //let x_cap = 0.24;
-            let x = Math.abs(f1 - f2) / Math.min((f1, f2));
+            let x = 0.24;
+            //let x = Math.abs(f1 - f2) / Math.min((f1, f2));
 
             let s = x / ((s1 * f1) + s2);
             let z1 = Math.exp(-b1 * s * (f2 - f1));
@@ -365,7 +368,7 @@ export default {
                 }
             }
 
-            return 0.5*dissonance;
+            return dissonance;//0.5*dissonance;
         },
 
         primeFactors(n) {
