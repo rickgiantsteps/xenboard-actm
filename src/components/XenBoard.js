@@ -261,7 +261,7 @@ export default {
 
         changeTriangle() {
             if(waveform !== "triangle") {
-                document.getElementById(waveform).style.backgroundColor = "#8b0000";
+                document.getElementById(waveform).style.backgroundColor = "#71717a";
                 document.getElementById("triangle").style.backgroundColor = "#3cb371";
                 waveform = "triangle";
             }
@@ -269,7 +269,7 @@ export default {
 
         changeSine() {
             if(waveform !== "sine") {
-                document.getElementById(waveform).style.backgroundColor = "#8b0000";
+                document.getElementById(waveform).style.backgroundColor = "#71717a";
                 document.getElementById("sine").style.backgroundColor = "#3cb371";
                 waveform = "sine";
             }
@@ -277,7 +277,7 @@ export default {
 
         changeSquare() {
             if(waveform !== "square") {
-                document.getElementById(waveform).style.backgroundColor = "#8b0000";
+                document.getElementById(waveform).style.backgroundColor = "#71717a";
                 document.getElementById("square").style.backgroundColor = "#3cb371";
                 waveform = "square";
             }
@@ -285,7 +285,7 @@ export default {
 
         changeSawtooth() {
             if(waveform !== "sawtooth") {
-                document.getElementById(waveform).style.backgroundColor = "#8b0000";
+                document.getElementById(waveform).style.backgroundColor = "#71717a";
                 document.getElementById("sawtooth").style.backgroundColor = "#3cb371";
                 waveform = "sawtooth";
             }
@@ -296,37 +296,37 @@ export default {
             if (mute === true) {
                 this.rangeValueVolume = 0;
                 document.getElementById("volume").value = 0 ;
-                document.getElementById("volume-button").style.backgroundColor = "#8b0000";
+                document.getElementById("volume-button").style.backgroundColor = "#71717a";
             }
         },
 
         vibratoEffectToggle() {
             this.addRemoveEffects("vibrato");
-            document.getElementById("vibrato-button").style.backgroundColor = effectsAddedList.includes("vibrato") ? "#3cb371" : "#8b0000";
+            document.getElementById("vibrato-button").style.backgroundColor = effectsAddedList.includes("vibrato") ? "#3cb371" : "#71717a";
             this.muteEffect(vibrato);
         },
 
         tremoloEffectToggle() {
             this.addRemoveEffects("tremolo");
-            document.getElementById("tremolo-button").style.backgroundColor = effectsAddedList.includes("tremolo") ? "#3cb371" : "#8b0000";
+            document.getElementById("tremolo-button").style.backgroundColor = effectsAddedList.includes("tremolo") ? "#3cb371" : "#71717a";
             this.muteEffect(tremolo);
         },
 
         distortionEffectToggle() {
             this.addRemoveEffects("distortion");
-            document.getElementById("distortion-button").style.backgroundColor = effectsAddedList.includes("distortion") ? "#3cb371" : "#8b0000";
+            document.getElementById("distortion-button").style.backgroundColor = effectsAddedList.includes("distortion") ? "#3cb371" : "#71717a";
             this.muteEffect(distortion);
         },
 
         chorusEffectToggle() {
             this.addRemoveEffects("chorus");
-            document.getElementById("chorus-button").style.backgroundColor = effectsAddedList.includes("chorus") ? "#3cb371" : "#8b0000";
+            document.getElementById("chorus-button").style.backgroundColor = effectsAddedList.includes("chorus") ? "#3cb371" : "#71717a";
             this.muteEffect(chorus);
         },
 
         reverbEffectToggle() {
             this.addRemoveEffects("reverb");
-            document.getElementById("reverb-button").style.backgroundColor = effectsAddedList.includes("reverb") ? "#3cb371" : "#8b0000";
+            document.getElementById("reverb-button").style.backgroundColor = effectsAddedList.includes("reverb") ? "#3cb371" : "#71717a";
             for (let i=0; i<synth.length; i++) {
                 if (synth[i] != null) {
                     if (effectsAddedList.includes("reverb")) {
