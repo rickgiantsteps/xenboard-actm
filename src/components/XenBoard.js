@@ -27,6 +27,7 @@ let tremolo = new Tone.Tremolo(0, 0).toDestination().start();
 let distortion = new Tone.Distortion(0).toDestination();
 let chorus = new Tone.Chorus(0,0,0).toDestination().start();
 let reverb = new Tone.JCReverb(0).toDestination();
+let waveform = "triangle";
 
 let lastnote = 0;
 
@@ -192,7 +193,8 @@ export default {
                     }
                 }
             }
-            synth[n].triggerAttack(this.notes[n], this.$tone.now(), document.getElementById('volume').value);
+              synth[n].oscillator.type = waveform;
+              synth[n].triggerAttack(this.notes[n], this.$tone.now(), document.getElementById('volume').value);
           }
         },
 
@@ -254,6 +256,38 @@ export default {
 
         startRecording() {
 
+        },
+
+        changeTriangle() {
+            if(waveform !== "triangle") {
+                document.getElementById(waveform).style.backgroundColor = "#8b0000";
+                document.getElementById("triangle").style.backgroundColor = "#3cb371";
+                waveform = "triangle";
+            }
+        },
+
+        changeSine() {
+            if(waveform !== "sine") {
+                document.getElementById(waveform).style.backgroundColor = "#8b0000";
+                document.getElementById("sine").style.backgroundColor = "#3cb371";
+                waveform = "sine";
+            }
+        },
+
+        changeSquare() {
+            if(waveform !== "square") {
+                document.getElementById(waveform).style.backgroundColor = "#8b0000";
+                document.getElementById("square").style.backgroundColor = "#3cb371";
+                waveform = "square";
+            }
+        },
+
+        changeSawtooth() {
+            if(waveform !== "sawtooth") {
+                document.getElementById(waveform).style.backgroundColor = "#8b0000";
+                document.getElementById("sawtooth").style.backgroundColor = "#3cb371";
+                waveform = "sawtooth";
+            }
         },
 
         vibratoEffectToggle() {
@@ -445,6 +479,7 @@ export default {
                         }
                     }
                 }
+                synth[index].oscillator.type = waveform;
                 synth[index].triggerAttack(this.notes[index], this.$tone.now(), document.getElementById('volume').value);
             }
         });

@@ -143,6 +143,16 @@
         <label class="text-3xl px-0.5 pl-5 dark:text-slate-200">Effects</label>
 
         <section class="effect-type">
+          <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400"
+               id="waveform">
+            <form>
+              <button type="button" class="button-81" name="triangle" id="triangle" @mousedown="changeTriangle()">Triangle</button>
+              <button type="button" class="button-80" name="sine" id="sine" @mousedown="changeSine()">Sine</button>
+              <button type="button" class="button-80" name="square" id="square" @mousedown="changeSquare()">Square</button>
+              <button type="button" class="button-80" name="sawtooth" id="sawtooth" @mousedown="changeSawtooth()">Sawtooth</button>
+            </form>
+          </div>
+
           <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400">
             <button type="button" class="button-81" id="volume-button">Volume</button>
             <div class="volume-slider-container">

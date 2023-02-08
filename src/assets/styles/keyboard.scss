@@ -153,7 +153,7 @@ body {
   color: white;
   font-size: 14px;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(7, 1fr);
 }
 
 .canvas {
@@ -426,4 +426,15 @@ body {
 .rec-on {
   position: fixed;
   background-color: firebrick;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-top: 120px;
+}
+
+form button {
+  margin-top: 10px;
 }
