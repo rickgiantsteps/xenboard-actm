@@ -2,7 +2,7 @@
 
   <div class="justify-center flex flex-row content-center gap-x-10">
 
-    <div class="gap-x-0 grid-rows-3 w-36 p-0 -mr-10 pl-2">
+    <div class="gap-x-0 grid-rows-3 w-36 p-0 -mr-16 pl-2">
       <div class="shadow shadow-amber-500 dark:shadow-indigo-500 click-button rec-button red-button text-base text-center"
            :class="{'bg-[#ffd085] dark:bg-slate-500 text-slate-700 dark:text-slate-200 red-button': !isRecording,
             'rec-on shadow-2xl shadow-red-900 dark:shadow-red-900 text-slate-200 top-20': isRecording}"
@@ -17,7 +17,9 @@
           <img src="../assets/download.png" alt="download button" class="rec-button-content w-5 h-5"/>
           Download MP3
       </div>
-      <audio controls v-if="hasRecorded && !isRecording" id="audio" class="ml-1 mt-2 mb-1 place-items-center w-32"></audio>
+      <div class="ml-2">
+        <audio controls v-if="hasRecorded && !isRecording" id="audio" class="ml-2 mt-2 mb-1 place-items-center w-56"></audio>
+      </div>
       <div class="bg-[#ffd085] dark:bg-slate-500 text-slate-700 dark:text-slate-200
         shadow shadow-amber-500 dark:shadow-indigo-500 click-button rec-button place-items-center col-start-2"
            v-if="hasRecorded && !isRecording" v-on:click="hasRecorded = false">
@@ -152,6 +154,24 @@
   </div>
 
   <div class="wrapper">
+
+    <div class="effects-board">
+      <div class="effects-choice-container bg-[#ffd085] dark:bg-slate-600 shadow shadow-amber-500 dark:shadow-indigo-500">
+        <label class="text-3xl px-0.5 pl-5 dark:text-slate-200">Synth</label>
+        <section class="effect-type">
+          <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400">
+            <form>
+              <button type="button" class="button-81" @mousedown="console.log()">OSC 1</button>
+            </form>
+          </div>
+          <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400">
+            <form>
+              <button type="button" class="button-81" @mousedown="console.log()">OSC 2</button>
+            </form>
+          </div>
+        </section>
+      </div>
+    </div>
 
     <div class="effects-board">
       <div class="effects-choice-container bg-[#ffd085] dark:bg-slate-600 shadow shadow-amber-500 dark:shadow-indigo-500">
