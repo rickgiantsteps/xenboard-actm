@@ -22,11 +22,13 @@ let octave_colors_dark_On = ["bg-sky-500", "bg-[#ab76ab]", "bg-[#bd1d00]"];
 let octave_colors_dark_Mid= ["bg-sky-700", "bg-[#c9a7c9]", "bg-[#ff846e]"];
 
 let effectsAddedList = [];
-let vibrato = new Tone.Vibrato(0,0).toDestination();
-let tremolo = new Tone.Tremolo(0, 0).toDestination().start();
-let distortion = new Tone.Distortion(0).toDestination();
-let chorus = new Tone.Chorus(0,0,0).toDestination().start();
-let reverb = new Tone.JCReverb(0).toDestination();
+let compressor = new Tone.Compressor(-30, 20);
+compressor.connect(Tone.Destination);
+let vibrato = new Tone.Vibrato(0,0).connect(compressor);
+let tremolo = new Tone.Tremolo(0, 0).connect(compressor).start();
+let distortion = new Tone.Distortion(0).connect(compressor);
+let chorus = new Tone.Chorus(0,0,0).connect(compressor).start();
+let reverb = new Tone.JCReverb(0).connect(compressor);
 let waveform = "triangle";
 let lastVol = 0;
 let mute = false;
@@ -193,10 +195,10 @@ export default {
             ageofsynth[n] = this.played
             this.pauseOldOscillator()
             if (synth[n]===null) {
-              synth[n] = new this.$tone.Synth().toDestination();
+              synth[n] = new this.$tone.Synth().connect(compressor);
                 if (effectsAddedList != []) {
                     for (let i = 0; i < effectsAddedList.length; i++) {
-                        synth[n].chain(eval(effectsAddedList[i])).toDestination();
+                        synth[n].chain(eval(effectsAddedList[i])).connect(compressor);
                     }
                 }
             }
@@ -356,7 +358,7 @@ export default {
             for (let i=0; i<synth.length; i++) {
                 if (synth[i] != null) {
                     if (effectsAddedList.includes("reverb")) {
-                        synth[i].chain(reverb).toDestination();
+                        synth[i].chain(reverb).connect(compressor);
                     } else {
                         synth[i].disconnect(reverb);
                     }
@@ -377,7 +379,7 @@ export default {
             for (let i=0; i<synth.length; i++) {
                 if (synth[i] != null) {
                     if (effectsAddedList.includes((effect.toString()).toLowerCase())) {
-                        synth[i].chain(effect).toDestination();
+                        synth[i].chain(effect).connect(compressor);
                     } else {
                         synth[i].disconnect(effect);
                     }
@@ -464,7 +466,7 @@ export default {
     created() {
 
         for (let i=0; i<12; i++) {
-            synth[i] = new Tone.Synth().toDestination();
+            synth[i] = new Tone.Synth().connect(compressor);
             this.notes[i] = 440 * 2 ** (i / 12)
         }
 
@@ -514,10 +516,10 @@ export default {
                 ageofsynth[index] = this.played
                 this.pauseOldOscillator()
                 if (synth[index]===null) {
-                    synth[index] = new this.$tone.Synth().toDestination();
+                    synth[index] = new this.$tone.Synth().connect(compressor);
                     if (effectsAddedList != []) {
                         for (let i = 0; i < effectsAddedList.length; i++) {
-                            synth[index].chain(eval(effectsAddedList[i])).toDestination();
+                            synth[index].chain(eval(effectsAddedList[i])).connect(compressor);
                         }
                     }
                 }
