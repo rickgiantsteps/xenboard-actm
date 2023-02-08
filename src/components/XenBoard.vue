@@ -154,7 +154,7 @@
           </div>
 
           <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400">
-            <button type="button" class="button-81" id="volume-button">Volume</button>
+            <button type="button" class="button-81" id="volume-button" @mousedown="volumeToggle()">Volume</button>
             <div class="volume-slider-container">
               <section>
                 <input type="range"
@@ -312,7 +312,6 @@
               </section>
             </div>
           </div>
-
 
         </section>
       </div>
