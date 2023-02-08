@@ -12,7 +12,7 @@ let ageofsynth = new Array(12).fill(0);
 let keymouseon = new Array(12).fill(false);
 let keyboardon = new Array(12).fill(false);
 let keyboard = ["q","w","e","r","t","y","u","i","o","p","è","+","ù","a","s","d","f","g","h","j","k","l","ò","à",
-                "z","x","c","v","b","n","m",",",".","-","1","2","3","4","5","6","7","8","9","0"]
+    "z","x","c","v","b","n","m",",",".","-","1","2","3","4","5","6","7","8","9","0"]
 
 let octave_colors = ["bg-[#ffd085]", "bg-[#D8BFD8]", "bg-[#FF6347]"];
 let octave_colors_On = ["bg-[#ffd700]", "bg-[#ab76ab]", "bg-[#bd1d00]"];
@@ -31,10 +31,14 @@ let waveform = "triangle";
 let lastVol = 0;
 let mute = false;
 
+let recorder = new Tone.Recorder();
+Tone.Destination.connect(recorder);
+let url;
+
 let lastnote = 0;
 
 export default {
-  name: 'XenBoard',
+    name: 'XenBoard',
 
     data() {
         return {
@@ -52,6 +56,7 @@ export default {
             darkColorOn: "dark:bg-sky-500",
             hystTune: "",
             isRecording: false,
+            hasRecorded: false,
 
             keyOn: keyboardon,
             mouseOn: keymouseon,
@@ -166,22 +171,22 @@ export default {
         },
 
         createOsc() {
-          for (let i = 0; i < synth.length; i++) {
-            if (synth[i] !== null) {
-              synth[i].dispose()
+            for (let i = 0; i < synth.length; i++) {
+                if (synth[i] !== null) {
+                    synth[i].dispose()
+                }
             }
-          }
-          synth.length = this.hexNumber * this.octaves;
-          ageofsynth.length = this.hexNumber * this.octaves;
-          ageofsynth.fill(0);
-          this.played = 0;
-          synth.fill(null)
+            synth.length = this.hexNumber * this.octaves;
+            ageofsynth.length = this.hexNumber * this.octaves;
+            ageofsynth.fill(0);
+            this.played = 0;
+            synth.fill(null)
         },
 
         playOscillator(n) {
-          if ((keymouseon[n] === false || isNaN(keymouseon[n])) && keyboardon[n] !== true) {
+            if ((keymouseon[n] === false || isNaN(keymouseon[n])) && keyboardon[n] !== true) {
 
-            this.update_melodic_dissonance(this.notes[n])
+                this.update_melodic_dissonance(this.notes[n])
 
             keymouseon[n] = true
             this.played++
@@ -257,7 +262,24 @@ export default {
         },
 
         startRecording() {
-
+            this.isRecording = !this.isRecording;
+            recorder.start().then(()=> {
+                console.log("Recording has started");
+            });
+        },
+        async stopRecording() {
+            this.hasRecorded = true;
+            this.isRecording = !this.isRecording;
+            const recording = await recorder.stop();
+            console.log("Recording has stopped");
+            url = URL.createObjectURL(recording);
+            document.getElementById("audio").src = url;
+        },
+        downloadMp3() {
+            const anchor = document.createElement("a");
+            anchor.download = "recording.mp3";
+            anchor.href = url;
+            anchor.click();
         },
 
         changeTriangle() {
@@ -524,9 +546,9 @@ export default {
     },
 
     props:{
-      darkOn:{
-          type: Boolean
-      }
+        darkOn:{
+            type: Boolean
+        }
     },
 
     components: {
