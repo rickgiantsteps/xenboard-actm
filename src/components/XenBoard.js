@@ -28,6 +28,7 @@ let distortion = new Tone.Distortion(0).toDestination();
 let chorus = new Tone.Chorus(0,0,0).toDestination().start();
 let reverb = new Tone.JCReverb(0).toDestination();
 let waveform = "triangle";
+let lastVol = 0;
 let mute = false;
 
 let lastnote = 0;
@@ -294,9 +295,12 @@ export default {
         volumeToggle() {
             mute = !mute;
             if (mute === true) {
-                this.rangeValueVolume = 0;
-                document.getElementById("volume").value = 0 ;
+                lastVol = document.getElementById("volume").value;
+                document.getElementById("volume").value = 0;
                 document.getElementById("volume-button").style.backgroundColor = "#71717a";
+            }else{
+                document.getElementById("volume").value = lastVol;
+                document.getElementById("volume-button").style.backgroundColor = "#3cb371";
             }
         },
 
