@@ -162,21 +162,32 @@
         <section class="synth-type">
 
           <div class="synth-selections shadow shadow-amber-500 dark:shadow-indigo-400">
-            <button type="button" class="button-81 shadow shadow-amber-500 dark:shadow-indigo-400" @mousedown="console.log()">OSC 1</button>
+            <button type="button" class="button-81 shadow shadow-amber-500 dark:shadow-indigo-400">OSC 1</button>
             <div class="volume-slider-container">
               <section>
                 <form>
-                  <button type="button" class="button-81" name="triangle" id="triangle" @mousedown="changeWave('triangle')">Triangle</button>
-                  <button type="button" class="button-80" name="sine" id="sine" @mousedown="changeWave('sine')">Sine</button>
-                  <button type="button" class="button-80" name="square" id="square" @mousedown="changeWave('square')">Square</button>
-                  <button type="button" class="button-80" name="sawtooth" id="sawtooth" @mousedown="changeWave('sawtooth')">Sawtooth</button>
+                  <button type="button" class="button-81" name="triangle0" id="triangle0" @mousedown="changeWave('triangle', 0)">Triangle</button>
+                  <button type="button" class="button-80" name="sine0" id="sine0" @mousedown="changeWave('sine', 0)">Sine</button>
+                  <button type="button" class="button-80" name="square0" id="square0" @mousedown="changeWave('square', 0)">Square</button>
+                  <button type="button" class="button-80" name="sawtooth0" id="sawtooth0" @mousedown="changeWave('sawtooth', 0)">Sawtooth</button>
                 </form>
-            </section>
-      </div>
+              </section>
+            </div>
           </div>
 
           <div class="synth-selections shadow shadow-amber-500 dark:shadow-indigo-400">
-              <button type="button" class="button-81" @mousedown="console.log()">OSC 2</button>
+            <button type="button" class="button-81 shadow shadow-amber-500 dark:shadow-indigo-400 bg-[#71717a] dark:bg-[#71717a]" id="oscillator2"
+                    @mousedown="muteSecondOsc();">OSC 2</button>
+            <div class="volume-slider-container">
+              <section>
+                <form>
+                  <button type="button" class="button-81" name="triangle1" id="triangle1" @mousedown="changeWave('triangle', 1)">Triangle</button>
+                  <button type="button" class="button-80" name="sine1" id="sine1" @mousedown="changeWave('sine', 1)">Sine</button>
+                  <button type="button" class="button-80" name="square1" id="square1" @mousedown="changeWave('square', 1)">Square</button>
+                  <button type="button" class="button-80" name="sawtooth1" id="sawtooth1" @mousedown="changeWave('sawtooth', 1)">Sawtooth</button>
+                </form>
+              </section>
+            </div>
             <section>
             </section>
           </div>
