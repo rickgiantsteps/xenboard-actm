@@ -64,7 +64,9 @@ export default {
             avgdiss: 0,
             meldiss: 0,
             harmdiss: 0,
-            muteOsc2: true
+            muteOsc2: true,
+            synthType: ["",""],
+            partials: ["0","0"]
         };
     },
 
@@ -209,8 +211,8 @@ export default {
                     }
                 }
 
-                synth[n].oscillator.type = waveform[0];
-                osc2[n].oscillator.type = waveform[1];
+                synth[n].oscillator.type = this.synthType[0]+waveform[0]+this.partials[0].replace('0','');
+                osc2[n].oscillator.type = this.synthType[1]+waveform[1]+this.partials[1].replace('0','');
                 synth[n].triggerAttack(this.notes[n], this.$tone.now(), document.getElementById('volume').value);
                 osc2[n].triggerAttack(this.notes[n], this.$tone.now(), document.getElementById('volume').value*!this.muteOsc2);
                 this.update_harmonic_dissonance();
@@ -545,8 +547,8 @@ export default {
                         }
                     }
                 }
-                synth[index].oscillator.type = waveform[0];
-                osc2[index].oscillator.type = waveform[1];
+                synth[index].oscillator.type = this.synthType[0]+waveform[0]+this.partials[0].replace('0','');
+                osc2[index].oscillator.type = this.synthType[1]+waveform[1]+this.partials[1].replace('0','');
                 synth[index].triggerAttack(this.notes[index], this.$tone.now(), document.getElementById('volume').value);
                 osc2[index].triggerAttack(this.notes[index], this.$tone.now(), document.getElementById('volume').value*!this.muteOsc2);
                 this.update_harmonic_dissonance();

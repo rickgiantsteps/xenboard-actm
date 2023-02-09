@@ -159,11 +159,11 @@
       <div class="effects-choice-container bg-[#ffd085] dark:bg-slate-600 shadow shadow-amber-500 dark:shadow-indigo-500">
         <label class="text-3xl px-0.5 pl-5 dark:text-slate-200">Synth</label>
 
-        <section class="synth-type">
+        <section class="synth-type flex-1">
 
           <div class="synth-selections shadow shadow-amber-500 dark:shadow-indigo-400">
-            <button type="button" class="button-81 shadow shadow-amber-500 dark:shadow-indigo-400">OSC 1</button>
-            <div class="volume-slider-container">
+            <button type="button" class="button-81 shadow shadow-amber-500 dark:shadow-indigo-400" disabled>OSC 1</button>
+            <div class="chorus-slider-container dark:text-white">
               <section>
                 <form>
                   <button type="button" class="button-81" name="triangle0" id="triangle0" @mousedown="changeWave('triangle', 0)">Triangle</button>
@@ -172,13 +172,31 @@
                   <button type="button" class="button-80" name="sawtooth0" id="sawtooth0" @mousedown="changeWave('sawtooth', 0)">Sawtooth</button>
                 </form>
               </section>
+              <section>
+                <form>
+                  <input v-model="synthType[0]" type="radio" name="foo" class="mt-3 shadow shadow-amber-500 dark:shadow-indigo-400" v-bind:value="''" checked/> <span>Normal</span>
+                  <input v-model="synthType[0]" type="radio" name="foo" class="mt-1 shadow shadow-amber-500 dark:shadow-indigo-400" v-bind:value="'am'"/> <span>AM</span>
+                  <input v-model="synthType[0]" type="radio" name="foo" class="mt-1 shadow shadow-amber-500 dark:shadow-indigo-400" v-bind:value="'fm'"/> <span>FM</span>
+                  <input v-model="synthType[0]" type="radio" name="foo" class="mt-1 shadow shadow-amber-500 dark:shadow-indigo-400" v-bind:value="'fat'"/> <span>Fat</span>
+                </form>
+              </section>
+              <section>
+                <input type="range"
+                       v-model="partials[0]"
+                       min="0"
+                       max="5"
+                       step="1"
+                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       id="partials1">
+                <span>Partials</span>
+              </section>
             </div>
           </div>
 
           <div class="synth-selections shadow shadow-amber-500 dark:shadow-indigo-400">
             <button type="button" class="button-81 shadow shadow-amber-500 dark:shadow-indigo-400 bg-[#71717a] dark:bg-[#71717a]" id="oscillator2"
                     @mousedown="muteSecondOsc();">OSC 2</button>
-            <div class="volume-slider-container">
+            <div class="chorus-slider-container dark:text-white">
               <section>
                 <form>
                   <button type="button" class="button-81" name="triangle1" id="triangle1" @mousedown="changeWave('triangle', 1)">Triangle</button>
@@ -186,6 +204,24 @@
                   <button type="button" class="button-80" name="square1" id="square1" @mousedown="changeWave('square', 1)">Square</button>
                   <button type="button" class="button-80" name="sawtooth1" id="sawtooth1" @mousedown="changeWave('sawtooth', 1)">Sawtooth</button>
                 </form>
+              </section>
+              <section>
+                <form>
+                  <input v-model="synthType[1]" type="radio" name="foo" class="mt-3 shadow shadow-amber-500 dark:shadow-indigo-400" v-bind:value="''" checked/> <span>Normal</span>
+                  <input v-model="synthType[1]" type="radio" name="foo" class="mt-1 shadow shadow-amber-500 dark:shadow-indigo-400" v-bind:value="'am'"/> <span>AM</span>
+                  <input v-model="synthType[1]" type="radio" name="foo" class="mt-1 shadow shadow-amber-500 dark:shadow-indigo-400" v-bind:value="'fm'"/> <span>FM</span>
+                  <input v-model="synthType[1]" type="radio" name="foo" class="mt-1 shadow shadow-amber-500 dark:shadow-indigo-400" v-bind:value="'fat'"/> <span>Fat</span>
+                </form>
+              </section>
+              <section>
+                <input type="range"
+                       v-model="partials[1]"
+                       min="0"
+                       max="5"
+                       step="1"
+                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       id="partials2">
+                <span>Partials</span>
               </section>
             </div>
             <section>
