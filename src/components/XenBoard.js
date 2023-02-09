@@ -8,6 +8,7 @@ let tune = new Tune();
 tune.mode.output = "frequency";
 
 let synth = new Array(12)
+let osc2 = new Array(12)
 let ageofsynth = new Array(12).fill(0);
 let keymouseon = new Array(12).fill(false);
 let keyboardon = new Array(12).fill(false);
@@ -29,7 +30,7 @@ let tremolo = new Tone.Tremolo(0, 0).connect(compressor).start();
 let distortion = new Tone.Distortion(0).connect(compressor);
 let chorus = new Tone.Chorus(0,0,0).connect(compressor).start();
 let reverb = new Tone.JCReverb(0).connect(compressor);
-let waveform = "triangle";
+let waveform = ["triangle", "triangle"];
 let lastVol = 0;
 let mute = false;
 
@@ -62,7 +63,8 @@ export default {
             innerDarkOn: this.darkOn,
             avgdiss: 0,
             meldiss: 0,
-            harmdiss: 0
+            harmdiss: 0,
+            muteOsc2: true
         };
     },
 
@@ -174,13 +176,16 @@ export default {
             for (let i = 0; i < synth.length; i++) {
                 if (synth[i] !== null) {
                     synth[i].dispose()
+                    osc2[i].dispose()
                 }
             }
             synth.length = this.hexNumber * this.octaves;
+            osc2.length = this.hexNumber * this.octaves;
             ageofsynth.length = this.hexNumber * this.octaves;
             ageofsynth.fill(0);
             this.played = 0;
             synth.fill(null)
+            osc2.fill(null)
         },
 
         playOscillator(n) {
@@ -195,15 +200,19 @@ export default {
 
                 if (synth[n]===null) {
                   synth[n] = new this.$tone.Synth().connect(compressor);
+                  osc2[n] = new this.$tone.Synth().connect(compressor);
                     if (effectsAddedList != []) {
                         for (let i = 0; i < effectsAddedList.length; i++) {
                             synth[n].chain(eval(effectsAddedList[i])).connect(compressor);
+                            osc2[n].chain(eval(effectsAddedList[i])).connect(compressor);
                         }
                     }
                 }
 
-                synth[n].oscillator.type = waveform;
+                synth[n].oscillator.type = waveform[0];
+                osc2[n].oscillator.type = waveform[1];
                 synth[n].triggerAttack(this.notes[n], this.$tone.now(), document.getElementById('volume').value);
+                osc2[n].triggerAttack(this.notes[n], this.$tone.now(), document.getElementById('volume').value*!this.muteOsc2);
                 this.update_harmonic_dissonance();
           }
         },
@@ -212,6 +221,7 @@ export default {
             if (keymouseon[n] === true && keyboardon[n] !== true) {
                 keymouseon[n] = false
                 synth[n].triggerRelease(this.$tone.now());
+                osc2[n].triggerRelease(this.$tone.now());
             }
         },
 
@@ -225,6 +235,7 @@ export default {
                 min = Math.min.apply(null, ageofsynth.filter(Boolean))
                 num = ageofsynth.indexOf(min)
                 synth[num].triggerRelease(this.$tone.now());
+                osc2[num].triggerRelease(this.$tone.now());
                 ageofsynth[num] = 0;
 
                 if (keymouseon[num] === true) {
@@ -287,11 +298,11 @@ export default {
             anchor.click();
         },
 
-        changeWave(wavename) {
-            if(waveform !== wavename) {
-                document.getElementById(waveform).style.backgroundColor = "#71717a";
-                document.getElementById(wavename).style.backgroundColor = "#3cb371";
-                waveform = wavename;
+        changeWave(wavename, osc) {
+            if(waveform[osc] !== wavename) {
+                document.getElementById(waveform[osc]+osc).style.backgroundColor = "#71717a";
+                document.getElementById(wavename+osc).style.backgroundColor = "#3cb371";
+                waveform[osc] = wavename;
             }
         },
 
@@ -315,8 +326,10 @@ export default {
                     if (synth[i] != null) {
                         if (effectsAddedList.includes("reverb")) {
                             synth[i].chain(reverb).connect(compressor);
+                            osc2[i].chain(reverb).connect(compressor);
                         } else {
                             synth[i].disconnect(reverb);
+                            osc2[i].disconnect(reverb);
                         }
                     }
                 }
@@ -339,11 +352,22 @@ export default {
                 if (synth[i] != null) {
                     if (effectsAddedList.includes((effect.toString()).toLowerCase())) {
                         synth[i].chain(effect).connect(compressor);
+                        osc2[i].chain(effect).connect(compressor);
                     } else {
                         synth[i].disconnect(effect);
+                        osc2[i].disconnect(effect);
                     }
                 }
             }
+        },
+
+        muteSecondOsc() {
+            this.muteOsc2=!this.muteOsc2;
+            if (this.muteOsc2) {
+                document.getElementById("oscillator2").style.backgroundColor = "#71717a";
+                return
+            }
+            document.getElementById("oscillator2").style.backgroundColor = "#3cb371";
         },
 
         averagediss_change($event) {
@@ -466,6 +490,7 @@ export default {
 
         for (let i=0; i<12; i++) {
             synth[i] = new Tone.Synth().connect(compressor);
+            osc2[i] = new Tone.Synth().connect(compressor);
             this.notes[i] = 440 * 2 ** (i / 12)
         }
 
@@ -512,14 +537,18 @@ export default {
                 this.pauseOldOscillator()
                 if (synth[index]===null) {
                     synth[index] = new this.$tone.Synth().connect(compressor);
+                    osc2[index] = new this.$tone.Synth().connect(compressor);
                     if (effectsAddedList != []) {
                         for (let i = 0; i < effectsAddedList.length; i++) {
                             synth[index].chain(eval(effectsAddedList[i])).connect(compressor);
+                            osc2[index].chain(eval(effectsAddedList[i])).connect(compressor);
                         }
                     }
                 }
-                synth[index].oscillator.type = waveform;
+                synth[index].oscillator.type = waveform[0];
+                osc2[index].oscillator.type = waveform[1];
                 synth[index].triggerAttack(this.notes[index], this.$tone.now(), document.getElementById('volume').value);
+                osc2[index].triggerAttack(this.notes[index], this.$tone.now(), document.getElementById('volume').value*!this.muteOsc2);
                 this.update_harmonic_dissonance();
             }
         });
@@ -539,6 +568,7 @@ export default {
 
                 keyboardon[index] = false
                 synth[index].triggerRelease(this.$tone.now());
+                osc2[index].triggerRelease(this.$tone.now());
             }
         });
     },
