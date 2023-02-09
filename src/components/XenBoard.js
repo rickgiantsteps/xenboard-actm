@@ -188,21 +188,23 @@ export default {
 
                 this.update_melodic_dissonance(this.notes[n]);
 
-            keymouseon[n] = true
-            this.played++
-            ageofsynth[n] = this.played
-            this.pauseOldOscillator()
-            if (synth[n]===null) {
-              synth[n] = new this.$tone.Synth().connect(compressor);
-                if (effectsAddedList != []) {
-                    for (let i = 0; i < effectsAddedList.length; i++) {
-                        synth[n].chain(eval(effectsAddedList[i])).connect(compressor);
+                keymouseon[n] = true
+                this.played++
+                ageofsynth[n] = this.played
+                this.pauseOldOscillator()
+
+                if (synth[n]===null) {
+                  synth[n] = new this.$tone.Synth().connect(compressor);
+                    if (effectsAddedList != []) {
+                        for (let i = 0; i < effectsAddedList.length; i++) {
+                            synth[n].chain(eval(effectsAddedList[i])).connect(compressor);
+                        }
                     }
                 }
-            }
-              synth[n].oscillator.type = waveform;
-              synth[n].triggerAttack(this.notes[n], this.$tone.now(), document.getElementById('volume').value);
-              this.update_harmonic_dissonance();
+
+                synth[n].oscillator.type = waveform;
+                synth[n].triggerAttack(this.notes[n], this.$tone.now(), document.getElementById('volume').value);
+                this.update_harmonic_dissonance();
           }
         },
 
@@ -268,6 +270,7 @@ export default {
                 console.log("Recording has started");
             });
         },
+
         async stopRecording() {
             this.hasRecorded = true;
             this.isRecording = !this.isRecording;
@@ -276,6 +279,7 @@ export default {
             url = URL.createObjectURL(recording);
             document.getElementById("audio").src = url;
         },
+
         downloadMp3() {
             const anchor = document.createElement("a");
             anchor.download = "recording.mp3";
@@ -283,35 +287,11 @@ export default {
             anchor.click();
         },
 
-        changeTriangle() {
-            if(waveform !== "triangle") {
+        changeWave(wavename) {
+            if(waveform !== wavename) {
                 document.getElementById(waveform).style.backgroundColor = "#71717a";
-                document.getElementById("triangle").style.backgroundColor = "#3cb371";
-                waveform = "triangle";
-            }
-        },
-
-        changeSine() {
-            if(waveform !== "sine") {
-                document.getElementById(waveform).style.backgroundColor = "#71717a";
-                document.getElementById("sine").style.backgroundColor = "#3cb371";
-                waveform = "sine";
-            }
-        },
-
-        changeSquare() {
-            if(waveform !== "square") {
-                document.getElementById(waveform).style.backgroundColor = "#71717a";
-                document.getElementById("square").style.backgroundColor = "#3cb371";
-                waveform = "square";
-            }
-        },
-
-        changeSawtooth() {
-            if(waveform !== "sawtooth") {
-                document.getElementById(waveform).style.backgroundColor = "#71717a";
-                document.getElementById("sawtooth").style.backgroundColor = "#3cb371";
-                waveform = "sawtooth";
+                document.getElementById(wavename).style.backgroundColor = "#3cb371";
+                waveform = wavename;
             }
         },
 
@@ -321,47 +301,27 @@ export default {
                 lastVol = document.getElementById("volume").value;
                 document.getElementById("volume").value = 0;
                 document.getElementById("volume-button").style.backgroundColor = "#71717a";
-            }else{
+            } else {
                 document.getElementById("volume").value = lastVol;
                 document.getElementById("volume-button").style.backgroundColor = "#3cb371";
             }
         },
 
-        vibratoEffectToggle() {
-            this.addRemoveEffects("vibrato");
-            document.getElementById("vibrato-button").style.backgroundColor = effectsAddedList.includes("vibrato") ? "#3cb371" : "#71717a";
-            this.muteEffect(vibrato);
-        },
-
-        tremoloEffectToggle() {
-            this.addRemoveEffects("tremolo");
-            document.getElementById("tremolo-button").style.backgroundColor = effectsAddedList.includes("tremolo") ? "#3cb371" : "#71717a";
-            this.muteEffect(tremolo);
-        },
-
-        distortionEffectToggle() {
-            this.addRemoveEffects("distortion");
-            document.getElementById("distortion-button").style.backgroundColor = effectsAddedList.includes("distortion") ? "#3cb371" : "#71717a";
-            this.muteEffect(distortion);
-        },
-
-        chorusEffectToggle() {
-            this.addRemoveEffects("chorus");
-            document.getElementById("chorus-button").style.backgroundColor = effectsAddedList.includes("chorus") ? "#3cb371" : "#71717a";
-            this.muteEffect(chorus);
-        },
-
-        reverbEffectToggle() {
-            this.addRemoveEffects("reverb");
-            document.getElementById("reverb-button").style.backgroundColor = effectsAddedList.includes("reverb") ? "#3cb371" : "#71717a";
-            for (let i=0; i<synth.length; i++) {
-                if (synth[i] != null) {
-                    if (effectsAddedList.includes("reverb")) {
-                        synth[i].chain(reverb).connect(compressor);
-                    } else {
-                        synth[i].disconnect(reverb);
+        effectToggle(effect) {
+            this.addRemoveEffects(effect);
+            document.getElementById(effect+"-button").style.backgroundColor = effectsAddedList.includes(effect) ? "#3cb371" : "#71717a";
+            if (effect==="reverb") {
+                for (let i=0; i<synth.length; i++) {
+                    if (synth[i] != null) {
+                        if (effectsAddedList.includes("reverb")) {
+                            synth[i].chain(reverb).connect(compressor);
+                        } else {
+                            synth[i].disconnect(reverb);
+                        }
                     }
                 }
+            } else {
+                this.muteEffect(eval(effect));
             }
         },
 
@@ -420,10 +380,7 @@ export default {
             let z1 = Math.exp(-b1 * s * (f2 - f1));
             let z2 = Math.exp(-b2 * s * (f2 - f1));
 
-            let z = z1 - z2;
-
-
-            return z;
+            return z1 - z2;
         },
 
         setharesFormula(tones){
@@ -431,7 +388,6 @@ export default {
             for (let a = 0; a < tones.length; a++) {
                 for (let i = 1; i < tones.length; i++) {
                     dissonance = dissonance + this.setharesFormula_helper(tones[a], tones[i]);
-                    console.log(dissonance);
                 }
             }
 
@@ -503,7 +459,6 @@ export default {
                 }
             }
             this.harmdiss = parseFloat(this.setharesFormula(tones).toFixed(6));
-            //console.log(this.harmdiss);
         }
     },
 
@@ -519,11 +474,7 @@ export default {
                 return;
             }
 
-            if (document.getElementById("volume").value === 0) {
-                mute = true;
-            } else {
-                mute = false;
-            }
+            mute = document.getElementById("volume").value === 0;
             document.getElementById("volume-button").style.backgroundColor = document.getElementById('volume').value != 0 ? "#3cb371" : "#8b0000";
 
             vibrato.frequency.value = document.getElementById('vibrato-frequency').value;

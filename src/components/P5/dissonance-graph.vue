@@ -176,8 +176,6 @@ export default {
       dissonanceValues[i-1] = this.freqs[0] / this.freqs[i]
       gradusValues[i-1] = this.eulerGradus(dissonanceValues[i-1])
     }
-    console.log(this.hexNumber)
-    console.log(gradusValues)
     averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/(this.hexNumber-1)
     this.$emit("averagediss_change", parseFloat(averagediss.toFixed(6)))
     this.testingDark = this.darkOn;

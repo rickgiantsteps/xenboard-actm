@@ -160,14 +160,25 @@
         <label class="text-3xl px-0.5 pl-5 dark:text-slate-200">Synth</label>
         <section class="effect-type">
           <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400">
-            <form>
-              <button type="button" class="button-81" @mousedown="console.log()">OSC 1</button>
-            </form>
+            <section>
+              <div>
+                <button type="button" class="button-81 shadow shadow-amber-500 dark:shadow-indigo-400" @mousedown="console.log()">OSC 1</button>
+              </div>
+              <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400"
+                   id="waveform">
+                <form>
+                  <button type="button" class="button-81" name="triangle" id="triangle" @mousedown="changeWave('triangle')">Triangle</button>
+                  <button type="button" class="button-80" name="sine" id="sine" @mousedown="changeWave('sine')">Sine</button>
+                  <button type="button" class="button-80" name="square" id="square" @mousedown="changeWave('square')">Square</button>
+                  <button type="button" class="button-80" name="sawtooth" id="sawtooth" @mousedown="changeWave('sawtooth')">Sawtooth</button>
+                </form>
+              </div>
+            </section>
           </div>
           <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400">
-            <form>
+            <section>
               <button type="button" class="button-81" @mousedown="console.log()">OSC 2</button>
-            </form>
+            </section>
           </div>
         </section>
       </div>
@@ -178,16 +189,6 @@
         <label class="text-3xl px-0.5 pl-5 dark:text-slate-200">Effects</label>
 
         <section class="effect-type">
-          <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400"
-               id="waveform">
-            <form>
-              <button type="button" class="button-81" name="triangle" id="triangle" @mousedown="changeTriangle()">Triangle</button>
-              <button type="button" class="button-80" name="sine" id="sine" @mousedown="changeSine()">Sine</button>
-              <button type="button" class="button-80" name="square" id="square" @mousedown="changeSquare()">Square</button>
-              <button type="button" class="button-80" name="sawtooth" id="sawtooth" @mousedown="changeSawtooth()">Sawtooth</button>
-            </form>
-          </div>
-
           <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400">
             <button type="button" class="button-81" id="volume-button" @mousedown="volumeToggle()">Volume</button>
             <div class="volume-slider-container">
@@ -208,7 +209,7 @@
 
           <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400"
                id="Vibrato">
-            <button type="button" class="button-80" id="vibrato-button" @mousedown="vibratoEffectToggle()">Vibrato</button>
+            <button type="button" class="button-80" id="vibrato-button" @mousedown="effectToggle('vibrato')">Vibrato</button>
             <div class="vibrato-slider-container">
               <section>
                 <input type="range"
@@ -238,7 +239,7 @@
           </div>
 
           <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400" id="Tremolo">
-            <button type="button" class="button-80" id="tremolo-button" @mousedown="tremoloEffectToggle()">Tremolo</button>
+            <button type="button" class="button-80" id="tremolo-button" @mousedown="effectToggle('tremolo')">Tremolo</button>
             <div class="tremolo-slider-container">
               <section class="two-sliders">
                 <input type="range"
@@ -269,7 +270,7 @@
 
           <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400"
                id="Distortion">
-            <button type="button" class="button-80" id="distortion-button" @mousedown="distortionEffectToggle()">Distortion</button>
+            <button type="button" class="button-80" id="distortion-button" @mousedown="effectToggle('distortion')">Distortion</button>
             <div class="distortion-slider-container">
               <section>
                 <input type="range"
@@ -286,9 +287,8 @@
             </div>
           </div>
 
-          <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400"
-               id="Chorus">
-            <button type="button" class="button-80" id="chorus-button" @mousedown="chorusEffectToggle()">Chorus</button>
+          <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400" id="Chorus">
+            <button type="button" class="button-80" id="chorus-button" @mousedown="effectToggle('chorus')">Chorus</button>
             <div class="chorus-slider-container">
               <section>
                 <input type="range"
@@ -329,9 +329,8 @@
             </div>
           </div>
 
-          <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400"
-               id="Reverb">
-            <button type="button" class="button-80" id="reverb-button" @mousedown="reverbEffectToggle()">Reverb</button>
+          <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400" id="Reverb">
+            <button type="button" class="button-80" id="reverb-button" @mousedown="effectToggle('reverb')">Reverb</button>
             <div class="distortion-slider-container">
               <section>
                 <input type="range"
