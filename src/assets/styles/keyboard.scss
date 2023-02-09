@@ -29,7 +29,6 @@ body.dark::-webkit-scrollbar-thumb {
   box-shadow: inset 0 0 100px 50px #748BA7;
 }
 
-
 .grid {
   padding-top: 7px;
   display: grid;
@@ -130,6 +129,7 @@ body {
   grid-template-columns: 1fr;
 }
 
+
 .effects-board {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -141,7 +141,7 @@ body {
 
 
 .effects-choice-container {
-  height: auto;
+  height: fit-content;
   border-radius: 5px;
   margin: 0 auto;
   text-align: center;
@@ -149,17 +149,32 @@ body {
   grid-column: 1/4;
 }
 
+.synth-type {
+  color: white;
+  height: fit-content;
+  font-size: 14px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+
 .effect-type {
   color: white;
   font-size: 14px;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(6, 1fr);
 }
 
-.canvas {
-  width: 100%;
-  height:75px;
-  fill: none;
+.synth-selections {
+  border-radius: 5px;
+  height: fit-content;
+  width: auto;
+  margin: 5px;
+  justify-items: center;
+  align-items: center;
+  padding: 8px;
+  display: grid;
+  grid-template-rows: 2em 2em 10em;
 }
 
 .effect-selections {
@@ -433,9 +448,9 @@ body {
 
 form {
   display: flex;
+  height: fit-content;
   justify-content: center;
   flex-direction: column;
-  padding-top: 120px;
 }
 
 form button {

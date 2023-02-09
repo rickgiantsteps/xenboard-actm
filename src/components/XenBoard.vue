@@ -158,26 +158,26 @@
     <div class="effects-board">
       <div class="effects-choice-container bg-[#ffd085] dark:bg-slate-600 shadow shadow-amber-500 dark:shadow-indigo-500">
         <label class="text-3xl px-0.5 pl-5 dark:text-slate-200">Synth</label>
-        <section class="effect-type">
-          <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400">
-            <section>
-              <div>
-                <button type="button" class="button-81 shadow shadow-amber-500 dark:shadow-indigo-400" @mousedown="console.log()">OSC 1</button>
-              </div>
-              <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400"
-                   id="waveform">
+
+        <section class="synth-type">
+
+          <div class="synth-selections shadow shadow-amber-500 dark:shadow-indigo-400">
+            <button type="button" class="button-81 shadow shadow-amber-500 dark:shadow-indigo-400" @mousedown="console.log()">OSC 1</button>
+            <div class="volume-slider-container">
+              <section>
                 <form>
                   <button type="button" class="button-81" name="triangle" id="triangle" @mousedown="changeWave('triangle')">Triangle</button>
                   <button type="button" class="button-80" name="sine" id="sine" @mousedown="changeWave('sine')">Sine</button>
                   <button type="button" class="button-80" name="square" id="square" @mousedown="changeWave('square')">Square</button>
                   <button type="button" class="button-80" name="sawtooth" id="sawtooth" @mousedown="changeWave('sawtooth')">Sawtooth</button>
                 </form>
-              </div>
             </section>
+      </div>
           </div>
-          <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400">
-            <section>
+
+          <div class="synth-selections shadow shadow-amber-500 dark:shadow-indigo-400">
               <button type="button" class="button-81" @mousedown="console.log()">OSC 2</button>
+            <section>
             </section>
           </div>
         </section>
