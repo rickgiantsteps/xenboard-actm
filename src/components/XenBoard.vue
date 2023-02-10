@@ -102,7 +102,7 @@
 
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Polyphony: </label>
     <input type="number" id="root" name="root" class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
-           v-model.number = "poly" min="1" max="50" v-on:change="createOsc()"/>
+           v-model.number = "poly" min="1" max="20" v-on:change="createOsc()"/>
   </div>
 
   <div class="p-3" v-else>
@@ -144,7 +144,7 @@
 
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Polyphony: </label>
     <input type="number" id="root" name="root" class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
-           v-model.number = "poly" min="1" max="50" v-on:change="createOsc()"/>
+           v-model.number = "poly" min="1" max="20" v-on:change="createOsc()"/>
   </div>
 
   <div class="grid" id='hexgrid'>
