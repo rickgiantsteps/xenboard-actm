@@ -205,6 +205,22 @@ body {
   margin-top: 130px;
 }
 
+.synth-slider-container2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  font-size: 15px;
+  grid-gap: 15px;
+  margin-top: 130px;
+}
+
+.synth-slider-container3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  font-size: 15px;
+  grid-gap: 10px;
+  margin-top: 130px;
+}
+
 .tremolo-slider-container, .vibrato-slider-container {
   display: grid;
   grid-template-columns: 1fr 1fr;

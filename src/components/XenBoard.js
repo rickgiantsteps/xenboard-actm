@@ -69,7 +69,10 @@ export default {
             attack: ['0.05','0.05'],
             decay: ['0.2','0.2'],
             sustain: ['0.2','0.2'],
-            release: ['1.5','1.5']
+            release: ['1.5','1.5'],
+            harmonicity: ['0.5', '0.5'],
+            fatcount: ['3','3'],
+            modulationIndex: ['2','2']
         };
     },
 
@@ -218,6 +221,19 @@ export default {
                     synth[k][n].envelope.sustain = this.sustain[k]
                     synth[k][n].envelope.release = this.release[k]
                     synth[k][n].oscillator.type = this.synthType[k]+waveform[k]+this.partials[k].replace(/^0/,'');
+
+                    switch (this.synthType[k]) {
+                        case 'am':
+                            synth[k][n].oscillator.harmonicity.value = this.harmonicity[k]
+                            break;
+                        case 'fm':
+                            synth[k][n].oscillator.harmonicity.value = this.harmonicity[k]
+                            synth[k][n].oscillator.modulationIndex.value = this.modulationIndex[k]
+                            break;
+                        case 'fat':
+                            synth[k][n].oscillator.count = parseInt(this.fatcount[k])
+                            break;
+                    }
 
                     synth[k][n].triggerAttack(this.notes[n], this.$tone.now(),
                         document.getElementById('volume').value*!this.muteOsc[k]);
@@ -557,6 +573,19 @@ export default {
                     synth[k][index].envelope.sustain = this.sustain[k]
                     synth[k][index].envelope.release = this.release[k]
                     synth[k][index].oscillator.type = this.synthType[k]+waveform[k]+this.partials[k].replace(/^0/,'');
+
+                    switch (this.synthType[k]) {
+                        case 'am':
+                            synth[k][index].oscillator.harmonicity.value = this.harmonicity[k]
+                            break;
+                        case 'fm':
+                            synth[k][index].oscillator.harmonicity.value = this.harmonicity[k]
+                            synth[k][index].oscillator.modulationIndex.value = this.modulationIndex[k]
+                            break;
+                        case 'fat':
+                            synth[k][index].oscillator.count = parseInt(this.fatcount[k])
+                            break;
+                    }
 
                     synth[k][index].triggerAttack(this.notes[index], this.$tone.now(),
                         document.getElementById('volume').value*!this.muteOsc[k]);

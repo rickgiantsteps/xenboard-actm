@@ -68,7 +68,7 @@ const sketch = function(p) {
         if(darkOnP5 !== true){
           p.fill('#001133');
         }
-        p.text(Math.max(...gradusValues), 5, 15)
+        p.text(isNaN(parseInt(Math.max(...gradusValues))) ? 0 : parseInt(Math.max(...gradusValues)), 5, 15)
       }
 
 

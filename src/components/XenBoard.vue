@@ -163,7 +163,7 @@
 
           <div class="synth-selections shadow shadow-amber-500 dark:shadow-indigo-400">
             <button type="button" class="button-81 shadow shadow-amber-500 dark:shadow-indigo-400" disabled>OSC 1</button>
-            <div class="synth-slider-container dark:text-white">
+            <div class="synth-slider-container dark:text-white" v-bind:class="{'synth-slider-container2': synthType[0]==='am'|| synthType[0]==='fat', 'synth-slider-container3': synthType[0]==='fm'}">
               <section>
                 <form>
                   <button type="button" class="button-81" name="triangle0" id="triangle0" @mousedown="changeWave('triangle', 0)">Triangle</button>
@@ -187,10 +187,54 @@
                        max="20"
                        step="1"
                        class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
-                       id="partials1"
-                       oninput="valuePartial1.innerText = this.value">
+                       id="partials1">
                 <label class="text-base text-slate-700 dark:text-slate-200">Partials</label>
-                <p id="valuePartial1" class="text-base text-slate-700 dark:text-slate-200">0</p>
+                <p id="valuePar1" class="text-base text-slate-700 dark:text-slate-200" v-if="partials[0]==='0'">ALL</p>
+                <p id="valuePartial1" class="text-base text-slate-700 dark:text-slate-200" v-else>{{ partials[0] }}</p>
+              </section>
+              <section v-if="synthType[0]==='am'">
+                <input type="range"
+                       v-model="harmonicity[0]"
+                       min="0"
+                       max="5"
+                       step="0.5"
+                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       id="am1">
+                <label class="text-base text-slate-700 dark:text-slate-200">Harmonicity</label>
+                <p id="valueam1" class="text-base text-slate-700 dark:text-slate-200">{{ harmonicity[0] }}</p>
+              </section>
+              <section v-if="synthType[0]==='fm'">
+                <input type="range"
+                       v-model="harmonicity[0]"
+                       min="0"
+                       max="5"
+                       step="0.5"
+                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       id="fmh1">
+                <label class="text-base text-slate-700 dark:text-slate-200">Harmonicity</label>
+                <p id="valuefmh1" class="text-base text-slate-700 dark:text-slate-200">{{ harmonicity[0] }}</p>
+              </section>
+              <section v-if="synthType[0]==='fm'">
+                <input type="range"
+                       v-model="modulationIndex[0]"
+                       min="0"
+                       max="5"
+                       step="0.5"
+                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       id="fmi1">
+                <label class="text-base text-slate-700 dark:text-slate-200">Modulation</label>
+                <p id="valuefmi1" class="text-base text-slate-700 dark:text-slate-200">{{ modulationIndex[0] }}</p>
+              </section>
+              <section v-if="synthType[0]==='fat'">
+                <input type="range"
+                       v-model="fatcount[0]"
+                       min="1"
+                       max="5"
+                       step="1"
+                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       id="fat1">
+                <label class="text-base text-slate-700 dark:text-slate-200">Count</label>
+                <p id="valuefat1" class="text-base text-slate-700 dark:text-slate-200">{{ fatcount[0] }}</p>
               </section>
               <section>
                 <input type="range"
@@ -199,10 +243,9 @@
                        max="20"
                        step="0.05"
                        class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
-                       id="att1"
-                       oninput="valueatt1.innerText = this.value">
+                       id="att1">
                 <label class="text-base text-slate-700 dark:text-slate-200">A</label>
-                <p id="valueatt1" class="text-base text-slate-700 dark:text-slate-200">0.05</p>
+                <p id="valueatt1" class="text-base text-slate-700 dark:text-slate-200">{{ attack[0] }}</p>
               </section>
               <section>
                 <input type="range"
@@ -211,10 +254,9 @@
                        max="20"
                        step="0.1"
                        class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
-                       id="dec1"
-                       oninput="valuedec1.innerText = this.value">
+                       id="dec1">
                 <label class="text-base text-slate-700 dark:text-slate-200">D</label>
-                <p id="valuedec1" class="text-base text-slate-700 dark:text-slate-200">0.2</p>
+                <p id="valuedec1" class="text-base text-slate-700 dark:text-slate-200">{{ decay[0] }}</p>
               </section>
               <section>
                 <input type="range"
@@ -223,10 +265,9 @@
                        max="1"
                        step="0.1"
                        class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
-                       id="sus1"
-                       oninput="valuesus1.innerText = this.value">
+                       id="sus1">
                 <label class="text-base text-slate-700 dark:text-slate-200">S</label>
-                <p id="valuesus1" class="text-base text-slate-700 dark:text-slate-200">0.2</p>
+                <p id="valuesus1" class="text-base text-slate-700 dark:text-slate-200">{{ sustain[0] }}</p>
               </section>
               <section>
                 <input type="range"
@@ -235,10 +276,9 @@
                        max="20"
                        step="0.1"
                        class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
-                       id="rel1"
-                       oninput="valuerel1.innerText = this.value">
+                       id="rel1">
                 <label class="text-base text-slate-700 dark:text-slate-200">R</label>
-                <p id="valuerel1" class="text-base text-slate-700 dark:text-slate-200">1.5</p>
+                <p id="valuerel1" class="text-base text-slate-700 dark:text-slate-200">{{ release[0] }}</p>
               </section>
             </div>
           </div>
@@ -246,7 +286,7 @@
           <div class="synth-selections shadow shadow-amber-500 dark:shadow-indigo-400">
             <button type="button" class="button-81 shadow shadow-amber-500 dark:shadow-indigo-400 bg-[#71717a] dark:bg-[#71717a]" id="oscillator2"
                     @mousedown="muteSecondOsc();">OSC 2</button>
-            <div class="synth-slider-container dark:text-white">
+            <div class="synth-slider-container dark:text-white" v-bind:class="{'synth-slider-container2': synthType[1]==='am'|| synthType[1]==='fat', 'synth-slider-container3': synthType[1]==='fm'}">
               <section>
                 <form>
                   <button type="button" class="button-81" name="triangle1" id="triangle1" @mousedown="changeWave('triangle', 1)">Triangle</button>
@@ -270,10 +310,54 @@
                        max="20"
                        step="1"
                        class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
-                       id="partials2"
-                       oninput="valuePartial2.innerText = this.value">
+                       id="partials2">
                 <label class="text-base text-slate-700 dark:text-slate-200">Partials</label>
-                <p id="valuePartial2" class="text-base text-slate-700 dark:text-slate-200">0</p>
+                <p id="valuePar2" class="text-base text-slate-700 dark:text-slate-200" v-if="partials[1]==='0'">ALL</p>
+                <p id="valuePartial2" class="text-base text-slate-700 dark:text-slate-200" v-else>{{ partials[1] }}</p>
+              </section>
+              <section v-if="synthType[1]==='am'">
+                <input type="range"
+                       v-model="harmonicity[1]"
+                       min="0"
+                       max="5"
+                       step="0.5"
+                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       id="am2">
+                <label class="text-base text-slate-700 dark:text-slate-200">Harmonicity</label>
+                <p id="valueam2" class="text-base text-slate-700 dark:text-slate-200">{{ harmonicity[1] }}</p>
+              </section>
+              <section v-if="synthType[1]==='fm'">
+                <input type="range"
+                       v-model="harmonicity[1]"
+                       min="0"
+                       max="5"
+                       step="0.5"
+                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       id="fmh2">
+                <label class="text-base text-slate-700 dark:text-slate-200">Harmonicity</label>
+                <p id="valuefmh2" class="text-base text-slate-700 dark:text-slate-200">{{ harmonicity[1] }}</p>
+              </section>
+              <section v-if="synthType[1]==='fm'">
+                <input type="range"
+                       v-model="modulationIndex[1]"
+                       min="0"
+                       max="5"
+                       step="0.5"
+                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       id="fmi2">
+                <label class="text-base text-slate-700 dark:text-slate-200">Modulation</label>
+                <p id="valuefmi2" class="text-base text-slate-700 dark:text-slate-200">{{ modulationIndex[1] }}</p>
+              </section>
+              <section v-if="synthType[1]==='fat'">
+                <input type="range"
+                       v-model="fatcount[1]"
+                       min="1"
+                       max="5"
+                       step="1"
+                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       id="fat2">
+                <label class="text-base text-slate-700 dark:text-slate-200">Count</label>
+                <p id="valuefat2" class="text-base text-slate-700 dark:text-slate-200">{{ fatcount[1] }}</p>
               </section>
               <section>
                 <input type="range"
@@ -282,10 +366,9 @@
                        max="20"
                        step="0.05"
                        class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
-                       id="att2"
-                       oninput="valueatt2.innerText = this.value">
+                       id="att2">
                 <label class="text-base text-slate-700 dark:text-slate-200">A</label>
-                <p id="valueatt2" class="text-base text-slate-700 dark:text-slate-200">0.05</p>
+                <p id="valueatt2" class="text-base text-slate-700 dark:text-slate-200">{{ attack[1] }}</p>
               </section>
               <section>
                 <input type="range"
@@ -294,10 +377,9 @@
                        max="20"
                        step="0.1"
                        class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
-                       id="dec2"
-                       oninput="valuedec2.innerText = this.value">
+                       id="dec2">
                 <label class="text-base text-slate-700 dark:text-slate-200">D</label>
-                <p id="valuedec2" class="text-base text-slate-700 dark:text-slate-200">0.2</p>
+                <p id="valuedec2" class="text-base text-slate-700 dark:text-slate-200">{{ decay[1] }}</p>
               </section>
               <section>
                 <input type="range"
@@ -306,10 +388,9 @@
                        max="1"
                        step="0.1"
                        class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
-                       id="sus2"
-                       oninput="valuesus2.innerText = this.value">
+                       id="sus2">
                 <label class="text-base text-slate-700 dark:text-slate-200">S</label>
-                <p id="valuesus2" class="text-base text-slate-700 dark:text-slate-200">0.2</p>
+                <p id="valuesus2" class="text-base text-slate-700 dark:text-slate-200">{{ sustain[1] }}</p>
               </section>
               <section>
                 <input type="range"
@@ -318,10 +399,9 @@
                        max="20"
                        step="0.1"
                        class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
-                       id="rel2"
-                       oninput="valuerel2.innerText = this.value">
+                       id="rel2">
                 <label class="text-base text-slate-700 dark:text-slate-200">R</label>
-                <p id="valuerel2" class="text-base text-slate-700 dark:text-slate-200">1.5</p>
+                <p id="valuerel2" class="text-base text-slate-700 dark:text-slate-200">{{ release[1] }}</p>
               </section>
             </div>
             <section>
