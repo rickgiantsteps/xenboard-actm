@@ -7,8 +7,7 @@ import DissonanceGraph from "./P5/dissonance-graph.vue";
 let tune = new Tune();
 tune.mode.output = "frequency";
 
-let synth = new Array(12)
-let osc2 = new Array(12)
+let synth =  [new Array(12), new Array(12)]
 let ageofsynth = new Array(12).fill(0);
 let keymouseon = new Array(12).fill(false);
 let keyboardon = new Array(12).fill(false);
@@ -64,7 +63,7 @@ export default {
             avgdiss: 0,
             meldiss: 0,
             harmdiss: 0,
-            muteOsc2: true,
+            muteOsc: [false, true],
             synthType: ["",""],
             partials: ["0","0"]
         };
@@ -175,19 +174,19 @@ export default {
         },
 
         createOsc() {
-            for (let i = 0; i < synth.length; i++) {
-                if (synth[i] !== null) {
-                    synth[i].dispose()
-                    osc2[i].dispose()
+            for (let i = 0; i < synth[0].length; i++) {
+                if (synth[0][i] !== null) {
+                    synth[0][i].dispose()
+                    synth[1][i].dispose()
                 }
             }
-            synth.length = this.hexNumber * this.octaves;
-            osc2.length = this.hexNumber * this.octaves;
+            synth[0].length = this.hexNumber * this.octaves;
+            synth[1].length = this.hexNumber * this.octaves;
             ageofsynth.length = this.hexNumber * this.octaves;
             ageofsynth.fill(0);
             this.played = 0;
-            synth.fill(null)
-            osc2.fill(null)
+            synth[0].fill(null)
+            synth[1].fill(null)
         },
 
         playOscillator(n) {
@@ -200,21 +199,21 @@ export default {
                 ageofsynth[n] = this.played
                 this.pauseOldOscillator()
 
-                if (synth[n]===null) {
-                  synth[n] = new this.$tone.Synth().connect(compressor);
-                  osc2[n] = new this.$tone.Synth().connect(compressor);
-                    if (effectsAddedList != []) {
-                        for (let i = 0; i < effectsAddedList.length; i++) {
-                            synth[n].chain(eval(effectsAddedList[i])).connect(compressor);
-                            osc2[n].chain(eval(effectsAddedList[i])).connect(compressor);
+                for (let k = 0; k < 2; k++) {
+                    if (synth[k][n]===null) {
+                        synth[k][n] = new this.$tone.Synth().connect(compressor);
+                        if (effectsAddedList != []) {
+                            for (let i = 0; i < effectsAddedList.length; i++) {
+                                synth[k][n].chain(eval(effectsAddedList[i])).connect(compressor);
+                            }
                         }
                     }
+
+                    synth[k][n].oscillator.type = this.synthType[k]+waveform[k]+this.partials[k].replace('0','');
+                    synth[k][n].triggerAttack(this.notes[n], this.$tone.now(),
+                        document.getElementById('volume').value*!this.muteOsc[k]);
                 }
 
-                synth[n].oscillator.type = this.synthType[0]+waveform[0]+this.partials[0].replace('0','');
-                osc2[n].oscillator.type = this.synthType[1]+waveform[1]+this.partials[1].replace('0','');
-                synth[n].triggerAttack(this.notes[n], this.$tone.now(), document.getElementById('volume').value);
-                osc2[n].triggerAttack(this.notes[n], this.$tone.now(), document.getElementById('volume').value*!this.muteOsc2);
                 this.update_harmonic_dissonance();
           }
         },
@@ -222,8 +221,8 @@ export default {
         stopOscillator(n) {
             if (keymouseon[n] === true && keyboardon[n] !== true) {
                 keymouseon[n] = false
-                synth[n].triggerRelease(this.$tone.now());
-                osc2[n].triggerRelease(this.$tone.now());
+                synth[0][n].triggerRelease(this.$tone.now());
+                synth[1][n].triggerRelease(this.$tone.now());
             }
         },
 
@@ -236,8 +235,8 @@ export default {
                 let min, num;
                 min = Math.min.apply(null, ageofsynth.filter(Boolean))
                 num = ageofsynth.indexOf(min)
-                synth[num].triggerRelease(this.$tone.now());
-                osc2[num].triggerRelease(this.$tone.now());
+                synth[0][num].triggerRelease(this.$tone.now());
+                synth[1][num].triggerRelease(this.$tone.now());
                 ageofsynth[num] = 0;
 
                 if (keymouseon[num] === true) {
@@ -251,10 +250,6 @@ export default {
         },
 
         keyColorOnOff(index) {
-            /*document.getElementById((index).toString()).classList.toggle("bg-[#ffd085]");
-            document.getElementById((index).toString()).classList.toggle(this.colorOn);*/
-            /*document.getElementById((index).toString()).classList.toggle("dark:bg-slate-500");
-            document.getElementById((index).toString()).classList.toggle(this.darkColorOn);*/
             let idx_col = 0;
             let idx_col_dark = 0;
             for (let j = 0; j < octave_colors.length; j++) {
@@ -324,14 +319,14 @@ export default {
             this.addRemoveEffects(effect);
             document.getElementById(effect+"-button").style.backgroundColor = effectsAddedList.includes(effect) ? "#3cb371" : "#71717a";
             if (effect==="reverb") {
-                for (let i=0; i<synth.length; i++) {
-                    if (synth[i] != null) {
+                for (let i=0; i<synth[0].length; i++) {
+                    if (synth[0][i] != null) {
                         if (effectsAddedList.includes("reverb")) {
-                            synth[i].chain(reverb).connect(compressor);
-                            osc2[i].chain(reverb).connect(compressor);
+                            synth[0][i].chain(reverb).connect(compressor);
+                            synth[1][i].chain(reverb).connect(compressor);
                         } else {
-                            synth[i].disconnect(reverb);
-                            osc2[i].disconnect(reverb);
+                            synth[0][i].disconnect(reverb);
+                            synth[1][i].disconnect(reverb);
                         }
                     }
                 }
@@ -350,22 +345,22 @@ export default {
         },
 
         muteEffect(effect){
-            for (let i=0; i<synth.length; i++) {
-                if (synth[i] != null) {
+            for (let i=0; i<synth[0].length; i++) {
+                if (synth[0][i] != null) {
                     if (effectsAddedList.includes((effect.toString()).toLowerCase())) {
-                        synth[i].chain(effect).connect(compressor);
-                        osc2[i].chain(effect).connect(compressor);
+                        synth[0][i].chain(effect).connect(compressor);
+                        synth[1][i].chain(effect).connect(compressor);
                     } else {
-                        synth[i].disconnect(effect);
-                        osc2[i].disconnect(effect);
+                        synth[0][i].disconnect(effect);
+                        synth[1][i].disconnect(effect);
                     }
                 }
             }
         },
 
         muteSecondOsc() {
-            this.muteOsc2=!this.muteOsc2;
-            if (this.muteOsc2) {
+            this.muteOsc[1]=!this.muteOsc[1];
+            if (this.muteOsc[1]) {
                 document.getElementById("oscillator2").style.backgroundColor = "#71717a";
                 return
             }
@@ -491,8 +486,8 @@ export default {
     created() {
 
         for (let i=0; i<12; i++) {
-            synth[i] = new Tone.Synth().connect(compressor);
-            osc2[i] = new Tone.Synth().connect(compressor);
+            synth[0][i] = new Tone.Synth().connect(compressor);
+            synth[1][i] = new Tone.Synth().connect(compressor);
             this.notes[i] = 440 * 2 ** (i / 12)
         }
 
@@ -537,20 +532,22 @@ export default {
                 this.played++
                 ageofsynth[index] = this.played
                 this.pauseOldOscillator()
-                if (synth[index]===null) {
-                    synth[index] = new this.$tone.Synth().connect(compressor);
-                    osc2[index] = new this.$tone.Synth().connect(compressor);
-                    if (effectsAddedList != []) {
-                        for (let i = 0; i < effectsAddedList.length; i++) {
-                            synth[index].chain(eval(effectsAddedList[i])).connect(compressor);
-                            osc2[index].chain(eval(effectsAddedList[i])).connect(compressor);
+
+                for (let k = 0; k < 2; k++) {
+                    if (synth[k][index]===null) {
+                        synth[k][index] = new this.$tone.Synth().connect(compressor);
+                        if (effectsAddedList != []) {
+                            for (let i = 0; i < effectsAddedList.length; i++) {
+                                synth[k][index].chain(eval(effectsAddedList[i])).connect(compressor);
+                            }
                         }
                     }
+
+                    synth[k][index].oscillator.type = this.synthType[k]+waveform[k]+this.partials[k].replace('0','');
+                    synth[k][index].triggerAttack(this.notes[index], this.$tone.now(),
+                        document.getElementById('volume').value*!this.muteOsc[k]);
                 }
-                synth[index].oscillator.type = this.synthType[0]+waveform[0]+this.partials[0].replace('0','');
-                osc2[index].oscillator.type = this.synthType[1]+waveform[1]+this.partials[1].replace('0','');
-                synth[index].triggerAttack(this.notes[index], this.$tone.now(), document.getElementById('volume').value);
-                osc2[index].triggerAttack(this.notes[index], this.$tone.now(), document.getElementById('volume').value*!this.muteOsc2);
+
                 this.update_harmonic_dissonance();
             }
         });
@@ -569,8 +566,8 @@ export default {
                 this.keyColorOnOff(index+1)
 
                 keyboardon[index] = false
-                synth[index].triggerRelease(this.$tone.now());
-                osc2[index].triggerRelease(this.$tone.now());
+                synth[0][index].triggerRelease(this.$tone.now());
+                synth[1][index].triggerRelease(this.$tone.now());
             }
         });
     },
