@@ -65,7 +65,11 @@ export default {
             harmdiss: 0,
             muteOsc: [false, true],
             synthType: ["",""],
-            partials: ["0","0"]
+            partials: ["0","0"],
+            attack: ['0.05','0.05'],
+            decay: ['0.2','0.2'],
+            sustain: ['0.2','0.2'],
+            release: ['1.5','1.5']
         };
     },
 
@@ -209,7 +213,12 @@ export default {
                         }
                     }
 
-                    synth[k][n].oscillator.type = this.synthType[k]+waveform[k]+this.partials[k].replace('0','');
+                    synth[k][n].envelope.attack = this.attack[k]
+                    synth[k][n].envelope.decay = this.decay[k]
+                    synth[k][n].envelope.sustain = this.sustain[k]
+                    synth[k][n].envelope.release = this.release[k]
+                    synth[k][n].oscillator.type = this.synthType[k]+waveform[k]+this.partials[k].replace(/^0/,'');
+
                     synth[k][n].triggerAttack(this.notes[n], this.$tone.now(),
                         document.getElementById('volume').value*!this.muteOsc[k]);
                 }
@@ -543,7 +552,12 @@ export default {
                         }
                     }
 
-                    synth[k][index].oscillator.type = this.synthType[k]+waveform[k]+this.partials[k].replace('0','');
+                    synth[k][index].envelope.attack = this.attack[k]
+                    synth[k][index].envelope.decay = this.decay[k]
+                    synth[k][index].envelope.sustain = this.sustain[k]
+                    synth[k][index].envelope.release = this.release[k]
+                    synth[k][index].oscillator.type = this.synthType[k]+waveform[k]+this.partials[k].replace(/^0/,'');
+
                     synth[k][index].triggerAttack(this.notes[index], this.$tone.now(),
                         document.getElementById('volume').value*!this.muteOsc[k]);
                 }

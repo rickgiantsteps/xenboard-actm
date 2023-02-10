@@ -163,7 +163,7 @@
 
           <div class="synth-selections shadow shadow-amber-500 dark:shadow-indigo-400">
             <button type="button" class="button-81 shadow shadow-amber-500 dark:shadow-indigo-400" disabled>OSC 1</button>
-            <div class="chorus-slider-container dark:text-white">
+            <div class="synth-slider-container dark:text-white">
               <section>
                 <form>
                   <button type="button" class="button-81" name="triangle0" id="triangle0" @mousedown="changeWave('triangle', 0)">Triangle</button>
@@ -174,21 +174,71 @@
               </section>
               <section>
                 <form>
-                  <input v-model="synthType[0]" type="radio" name="foo" class="mt-3 shadow shadow-amber-500 dark:shadow-indigo-400" v-bind:value="''" checked/> <span>Normal</span>
-                  <input v-model="synthType[0]" type="radio" name="foo" class="mt-1 shadow shadow-amber-500 dark:shadow-indigo-400" v-bind:value="'am'"/> <span>AM</span>
-                  <input v-model="synthType[0]" type="radio" name="foo" class="mt-1 shadow shadow-amber-500 dark:shadow-indigo-400" v-bind:value="'fm'"/> <span>FM</span>
-                  <input v-model="synthType[0]" type="radio" name="foo" class="mt-1 shadow shadow-amber-500 dark:shadow-indigo-400" v-bind:value="'fat'"/> <span>Fat</span>
+                  <input v-model="synthType[0]" type="radio" name="foo" class="mt-3 shadow shadow-amber-500 dark:shadow-indigo-400" v-bind:value="''" checked/> <label class="text-slate-700 dark:text-slate-200">Normal</label>
+                  <input v-model="synthType[0]" type="radio" name="foo" class="mt-1 shadow shadow-amber-500 dark:shadow-indigo-400" v-bind:value="'am'"/> <label class="text-slate-700 dark:text-slate-200">AM</label>
+                  <input v-model="synthType[0]" type="radio" name="foo" class="mt-1 shadow shadow-amber-500 dark:shadow-indigo-400" v-bind:value="'fm'"/> <label class="text-slate-700 dark:text-slate-200">FM</label>
+                  <input v-model="synthType[0]" type="radio" name="foo" class="mt-1 shadow shadow-amber-500 dark:shadow-indigo-400" v-bind:value="'fat'"/> <label class="text-slate-700 dark:text-slate-200">Fat</label>
                 </form>
               </section>
               <section>
                 <input type="range"
                        v-model="partials[0]"
                        min="0"
-                       max="5"
+                       max="20"
                        step="1"
                        class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
-                       id="partials1">
-                <span>Partials</span>
+                       id="partials1"
+                       oninput="valuePartial1.innerText = this.value">
+                <label class="text-base text-slate-700 dark:text-slate-200">Partials</label>
+                <p id="valuePartial1" class="text-base text-slate-700 dark:text-slate-200">0</p>
+              </section>
+              <section>
+                <input type="range"
+                       v-model="attack[0]"
+                       min="0"
+                       max="20"
+                       step="0.05"
+                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       id="att1"
+                       oninput="valueatt1.innerText = this.value">
+                <label class="text-base text-slate-700 dark:text-slate-200">A</label>
+                <p id="valueatt1" class="text-base text-slate-700 dark:text-slate-200">0.05</p>
+              </section>
+              <section>
+                <input type="range"
+                       v-model="decay[0]"
+                       min="0"
+                       max="20"
+                       step="0.1"
+                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       id="dec1"
+                       oninput="valuedec1.innerText = this.value">
+                <label class="text-base text-slate-700 dark:text-slate-200">D</label>
+                <p id="valuedec1" class="text-base text-slate-700 dark:text-slate-200">0.2</p>
+              </section>
+              <section>
+                <input type="range"
+                       v-model="sustain[0]"
+                       min="0"
+                       max="1"
+                       step="0.1"
+                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       id="sus1"
+                       oninput="valuesus1.innerText = this.value">
+                <label class="text-base text-slate-700 dark:text-slate-200">S</label>
+                <p id="valuesus1" class="text-base text-slate-700 dark:text-slate-200">0.2</p>
+              </section>
+              <section>
+                <input type="range"
+                       v-model="release[0]"
+                       min="0"
+                       max="20"
+                       step="0.1"
+                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       id="rel1"
+                       oninput="valuerel1.innerText = this.value">
+                <label class="text-base text-slate-700 dark:text-slate-200">R</label>
+                <p id="valuerel1" class="text-base text-slate-700 dark:text-slate-200">1.5</p>
               </section>
             </div>
           </div>
@@ -196,7 +246,7 @@
           <div class="synth-selections shadow shadow-amber-500 dark:shadow-indigo-400">
             <button type="button" class="button-81 shadow shadow-amber-500 dark:shadow-indigo-400 bg-[#71717a] dark:bg-[#71717a]" id="oscillator2"
                     @mousedown="muteSecondOsc();">OSC 2</button>
-            <div class="chorus-slider-container dark:text-white">
+            <div class="synth-slider-container dark:text-white">
               <section>
                 <form>
                   <button type="button" class="button-81" name="triangle1" id="triangle1" @mousedown="changeWave('triangle', 1)">Triangle</button>
@@ -207,21 +257,71 @@
               </section>
               <section>
                 <form>
-                  <input v-model="synthType[1]" type="radio" name="foo" class="mt-3 shadow shadow-amber-500 dark:shadow-indigo-400" v-bind:value="''" checked/> <span>Normal</span>
-                  <input v-model="synthType[1]" type="radio" name="foo" class="mt-1 shadow shadow-amber-500 dark:shadow-indigo-400" v-bind:value="'am'"/> <span>AM</span>
-                  <input v-model="synthType[1]" type="radio" name="foo" class="mt-1 shadow shadow-amber-500 dark:shadow-indigo-400" v-bind:value="'fm'"/> <span>FM</span>
-                  <input v-model="synthType[1]" type="radio" name="foo" class="mt-1 shadow shadow-amber-500 dark:shadow-indigo-400" v-bind:value="'fat'"/> <span>Fat</span>
+                  <input v-model="synthType[1]" type="radio" name="foo" class="mt-3 shadow shadow-amber-500 dark:shadow-indigo-400" v-bind:value="''" checked/> <label class="text-slate-700 dark:text-slate-200">Normal</label>
+                  <input v-model="synthType[1]" type="radio" name="foo" class="mt-1 shadow shadow-amber-500 dark:shadow-indigo-400" v-bind:value="'am'"/> <label class="text-slate-700 dark:text-slate-200">AM</label>
+                  <input v-model="synthType[1]" type="radio" name="foo" class="mt-1 shadow shadow-amber-500 dark:shadow-indigo-400" v-bind:value="'fm'"/> <label class="text-slate-700 dark:text-slate-200">FM</label>
+                  <input v-model="synthType[1]" type="radio" name="foo" class="mt-1 shadow shadow-amber-500 dark:shadow-indigo-400" v-bind:value="'fat'"/> <label class="text-slate-700 dark:text-slate-200">Fat</label>
                 </form>
               </section>
               <section>
                 <input type="range"
                        v-model="partials[1]"
                        min="0"
-                       max="5"
+                       max="20"
                        step="1"
                        class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
-                       id="partials2">
-                <span>Partials</span>
+                       id="partials2"
+                       oninput="valuePartial2.innerText = this.value">
+                <label class="text-base text-slate-700 dark:text-slate-200">Partials</label>
+                <p id="valuePartial2" class="text-base text-slate-700 dark:text-slate-200">0</p>
+              </section>
+              <section>
+                <input type="range"
+                       v-model="attack[1]"
+                       min="0"
+                       max="20"
+                       step="0.05"
+                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       id="att2"
+                       oninput="valueatt2.innerText = this.value">
+                <label class="text-base text-slate-700 dark:text-slate-200">A</label>
+                <p id="valueatt2" class="text-base text-slate-700 dark:text-slate-200">0.05</p>
+              </section>
+              <section>
+                <input type="range"
+                       v-model="decay[1]"
+                       min="0"
+                       max="20"
+                       step="0.1"
+                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       id="dec2"
+                       oninput="valuedec2.innerText = this.value">
+                <label class="text-base text-slate-700 dark:text-slate-200">D</label>
+                <p id="valuedec2" class="text-base text-slate-700 dark:text-slate-200">0.2</p>
+              </section>
+              <section>
+                <input type="range"
+                       v-model="sustain[1]"
+                       min="0"
+                       max="1"
+                       step="0.1"
+                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       id="sus2"
+                       oninput="valuesus2.innerText = this.value">
+                <label class="text-base text-slate-700 dark:text-slate-200">S</label>
+                <p id="valuesus2" class="text-base text-slate-700 dark:text-slate-200">0.2</p>
+              </section>
+              <section>
+                <input type="range"
+                       v-model="release[1]"
+                       min="0"
+                       max="20"
+                       step="0.1"
+                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       id="rel2"
+                       oninput="valuerel2.innerText = this.value">
+                <label class="text-base text-slate-700 dark:text-slate-200">R</label>
+                <p id="valuerel2" class="text-base text-slate-700 dark:text-slate-200">1.5</p>
               </section>
             </div>
             <section>

@@ -197,6 +197,14 @@ body {
   margin-top: 130px;
 }
 
+.synth-slider-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  font-size: 15px;
+  grid-gap: 25px;
+  margin-top: 130px;
+}
+
 .tremolo-slider-container, .vibrato-slider-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
