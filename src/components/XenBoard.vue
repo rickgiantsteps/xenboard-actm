@@ -186,7 +186,7 @@
                        min="0"
                        max="20"
                        step="1"
-                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       class="input2 w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
                        id="partials1">
                 <label class="text-base text-slate-700 dark:text-slate-200">Partials</label>
                 <p id="valuePar1" class="text-base text-slate-700 dark:text-slate-200" v-if="partials[0]==='0'">ALL</p>
@@ -198,7 +198,7 @@
                        min="0"
                        max="5"
                        step="0.5"
-                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       class="input2 w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
                        id="am1">
                 <label class="text-base text-slate-700 dark:text-slate-200">Harmonicity</label>
                 <p id="valueam1" class="text-base text-slate-700 dark:text-slate-200">{{ harmonicity[0] }}</p>
@@ -209,7 +209,7 @@
                        min="0"
                        max="5"
                        step="0.5"
-                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       class="input2 w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
                        id="fmh1">
                 <label class="text-base text-slate-700 dark:text-slate-200">Harmonicity</label>
                 <p id="valuefmh1" class="text-base text-slate-700 dark:text-slate-200">{{ harmonicity[0] }}</p>
@@ -220,7 +220,7 @@
                        min="0"
                        max="5"
                        step="0.5"
-                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       class="input2 w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
                        id="fmi1">
                 <label class="text-base text-slate-700 dark:text-slate-200">Modulation</label>
                 <p id="valuefmi1" class="text-base text-slate-700 dark:text-slate-200">{{ modulationIndex[0] }}</p>
@@ -231,7 +231,7 @@
                        min="1"
                        max="5"
                        step="1"
-                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       class="input2 w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
                        id="fat1">
                 <label class="text-base text-slate-700 dark:text-slate-200">Count</label>
                 <p id="valuefat1" class="text-base text-slate-700 dark:text-slate-200">{{ fatcount[0] }}</p>
@@ -242,9 +242,9 @@
                        min="0"
                        max="20"
                        step="0.05"
-                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       class="input2 w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
                        id="att1">
-                <label class="text-base text-slate-700 dark:text-slate-200">A</label>
+                <p class="text-base text-slate-700 dark:text-slate-200">A</p>
                 <p id="valueatt1" class="text-base text-slate-700 dark:text-slate-200">{{ attack[0] }}</p>
               </section>
               <section>
@@ -253,9 +253,9 @@
                        min="0"
                        max="20"
                        step="0.1"
-                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       class="input2 w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
                        id="dec1">
-                <label class="text-base text-slate-700 dark:text-slate-200">D</label>
+                <p class="text-base text-slate-700 dark:text-slate-200">D</p>
                 <p id="valuedec1" class="text-base text-slate-700 dark:text-slate-200">{{ decay[0] }}</p>
               </section>
               <section>
@@ -264,9 +264,9 @@
                        min="0"
                        max="1"
                        step="0.1"
-                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       class="input2 w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
                        id="sus1">
-                <label class="text-base text-slate-700 dark:text-slate-200">S</label>
+                <p class="text-base text-slate-700 dark:text-slate-200">S</p>
                 <p id="valuesus1" class="text-base text-slate-700 dark:text-slate-200">{{ sustain[0] }}</p>
               </section>
               <section>
@@ -275,9 +275,9 @@
                        min="0"
                        max="20"
                        step="0.1"
-                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       class="input2 w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
                        id="rel1">
-                <label class="text-base text-slate-700 dark:text-slate-200">R</label>
+                <p class="text-base text-slate-700 dark:text-slate-200">R</p>
                 <p id="valuerel1" class="text-base text-slate-700 dark:text-slate-200">{{ release[0] }}</p>
               </section>
             </div>
@@ -309,7 +309,7 @@
                        min="0"
                        max="20"
                        step="1"
-                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       class="input2 w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
                        id="partials2">
                 <label class="text-base text-slate-700 dark:text-slate-200">Partials</label>
                 <p id="valuePar2" class="text-base text-slate-700 dark:text-slate-200" v-if="partials[1]==='0'">ALL</p>
@@ -321,7 +321,7 @@
                        min="0"
                        max="5"
                        step="0.5"
-                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       class="input2 w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
                        id="am2">
                 <label class="text-base text-slate-700 dark:text-slate-200">Harmonicity</label>
                 <p id="valueam2" class="text-base text-slate-700 dark:text-slate-200">{{ harmonicity[1] }}</p>
@@ -332,7 +332,7 @@
                        min="0"
                        max="5"
                        step="0.5"
-                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       class="input2 w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
                        id="fmh2">
                 <label class="text-base text-slate-700 dark:text-slate-200">Harmonicity</label>
                 <p id="valuefmh2" class="text-base text-slate-700 dark:text-slate-200">{{ harmonicity[1] }}</p>
@@ -343,7 +343,7 @@
                        min="0"
                        max="5"
                        step="0.5"
-                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       class="input2 w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
                        id="fmi2">
                 <label class="text-base text-slate-700 dark:text-slate-200">Modulation</label>
                 <p id="valuefmi2" class="text-base text-slate-700 dark:text-slate-200">{{ modulationIndex[1] }}</p>
@@ -354,7 +354,7 @@
                        min="1"
                        max="5"
                        step="1"
-                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       class="input2 w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
                        id="fat2">
                 <label class="text-base text-slate-700 dark:text-slate-200">Count</label>
                 <p id="valuefat2" class="text-base text-slate-700 dark:text-slate-200">{{ fatcount[1] }}</p>
@@ -365,9 +365,9 @@
                        min="0"
                        max="20"
                        step="0.05"
-                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       class="input2 w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
                        id="att2">
-                <label class="text-base text-slate-700 dark:text-slate-200">A</label>
+                <p class="text-base text-slate-700 dark:text-slate-200">A</p>
                 <p id="valueatt2" class="text-base text-slate-700 dark:text-slate-200">{{ attack[1] }}</p>
               </section>
               <section>
@@ -376,9 +376,9 @@
                        min="0"
                        max="20"
                        step="0.1"
-                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       class="input2 w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
                        id="dec2">
-                <label class="text-base text-slate-700 dark:text-slate-200">D</label>
+                <p class="text-base text-slate-700 dark:text-slate-200">D</p>
                 <p id="valuedec2" class="text-base text-slate-700 dark:text-slate-200">{{ decay[1] }}</p>
               </section>
               <section>
@@ -387,9 +387,9 @@
                        min="0"
                        max="1"
                        step="0.1"
-                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       class="input2 w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
                        id="sus2">
-                <label class="text-base text-slate-700 dark:text-slate-200">S</label>
+                <p class="text-base text-slate-700 dark:text-slate-200">S</p>
                 <p id="valuesus2" class="text-base text-slate-700 dark:text-slate-200">{{ sustain[1] }}</p>
               </section>
               <section>
@@ -398,9 +398,9 @@
                        min="0"
                        max="20"
                        step="0.1"
-                       class="input w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
+                       class="input2 w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
                        id="rel2">
-                <label class="text-base text-slate-700 dark:text-slate-200">R</label>
+                <p class="text-base text-slate-700 dark:text-slate-200">R</p>
                 <p id="valuerel2" class="text-base text-slate-700 dark:text-slate-200">{{ release[1] }}</p>
               </section>
             </div>
@@ -417,7 +417,7 @@
 
         <section class="effect-type">
           <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400">
-            <button type="button" class="button-81" id="volume-button" @mousedown="volumeToggle()">Volume</button>
+            <button type="button" class="button-81 shadow shadow-amber-500 dark:shadow-indigo-400" id="volume-button" @mousedown="volumeToggle()">Volume</button>
             <div class="volume-slider-container">
               <section>
                 <input type="range"
@@ -436,7 +436,7 @@
 
           <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400"
                id="Vibrato">
-            <button type="button" class="button-80" id="vibrato-button" @mousedown="effectToggle('vibrato')">Vibrato</button>
+            <button type="button" class="button-80 shadow shadow-amber-500 dark:shadow-indigo-400" id="vibrato-button" @mousedown="effectToggle('vibrato')">Vibrato</button>
             <div class="vibrato-slider-container">
               <section>
                 <input type="range"
@@ -466,7 +466,7 @@
           </div>
 
           <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400" id="Tremolo">
-            <button type="button" class="button-80" id="tremolo-button" @mousedown="effectToggle('tremolo')">Tremolo</button>
+            <button type="button" class="button-80 shadow shadow-amber-500 dark:shadow-indigo-400" id="tremolo-button" @mousedown="effectToggle('tremolo')">Tremolo</button>
             <div class="tremolo-slider-container">
               <section class="two-sliders">
                 <input type="range"
@@ -497,7 +497,7 @@
 
           <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400"
                id="Distortion">
-            <button type="button" class="button-80" id="distortion-button" @mousedown="effectToggle('distortion')">Distortion</button>
+            <button type="button" class="button-80 shadow shadow-amber-500 dark:shadow-indigo-400" id="distortion-button" @mousedown="effectToggle('distortion')">Distortion</button>
             <div class="distortion-slider-container">
               <section>
                 <input type="range"
@@ -515,7 +515,7 @@
           </div>
 
           <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400" id="Chorus">
-            <button type="button" class="button-80" id="chorus-button" @mousedown="effectToggle('chorus')">Chorus</button>
+            <button type="button" class="button-80 shadow shadow-amber-500 dark:shadow-indigo-400" id="chorus-button" @mousedown="effectToggle('chorus')">Chorus</button>
             <div class="chorus-slider-container">
               <section>
                 <input type="range"
@@ -557,7 +557,7 @@
           </div>
 
           <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400" id="Reverb">
-            <button type="button" class="button-80" id="reverb-button" @mousedown="effectToggle('reverb')">Reverb</button>
+            <button type="button" class="button-80 shadow shadow-amber-500 dark:shadow-indigo-400" id="reverb-button" @mousedown="effectToggle('reverb')">Reverb</button>
             <div class="distortion-slider-container">
               <section>
                 <input type="range"
