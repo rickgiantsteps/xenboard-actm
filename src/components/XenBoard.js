@@ -496,15 +496,66 @@ export default {
         },
 
         update_harmonic_dissonance(){
+            let part = [];
             let tones = [];
             let cont = 0;
+            let waveforms = [];
+            let part_synth = [];
+
             for (let i = 0; i < keymouseon.length; i++) {
                 if (keymouseon[i] === true || keyboardon[i] === true){
-                    tones[cont] = this.notes[i];
-                    cont++;
+                    if (synth[0][i].oscillator.partials.length === 0) {
+                        part_synth[cont] = synth[0][i].oscillator;
+                        part_synth[cont].partialCount = 20;
+                        part[cont] = part_synth[cont].partials;
+                        waveforms[cont] = synth[0][i].oscillator.type;
+                        tones[cont] = this.notes[i];
+                        cont++;
+
+                    }
+                    else {
+                        tones[cont] = this.notes[i];
+                        part[cont] = synth[0][i].oscillator.partials;
+                        waveforms[cont] = synth[0][i].oscillator.type;
+                        cont++;
+                    }
                 }
             }
-            this.harmdiss = parseFloat(this.setharesFormula(tones).toFixed(6));
+
+            for (let ii = 0; ii < part.length; ii++) {
+                for (let jj = 0; jj < part[ii].length; jj++) {
+                    part[ii][jj] = tones[ii] * (jj + 1);
+                    if (waveforms[ii] === ('square') + part[ii].length.toString()) {
+                        part[ii][jj] = tones[ii] * (1 + jj % 2);
+                    }
+                    if (waveforms[ii] === ('triangle') + part[ii].length.toString()) {
+                        part[ii][jj] = tones[ii] * (1 + jj % 2);
+                    }
+                    if (waveforms[ii] === 'sine' + part[ii].length.toString()) {
+                        part[ii][jj] = tones[ii] * (jj + 1);
+                    }
+                    if (waveforms[ii] === 'sawtooth' + part[ii].length.toString()) {
+                        part[ii][jj] = tones[ii] * (jj + 1);
+                    }
+                }
+            }
+
+            if (part[0].length === 1){
+                this.harmdiss = parseFloat(this.setharesFormula(tones).toFixed(6));
+            }
+            if (part[0].length > 1 ){
+                let dissonance = 0;
+                for (let i = 0; i < part.length; i++) {
+                    for (let j = 1; j < part.length; j++) {
+                        for (let k = 0; k < part[i].length; k++) {
+                            for (let l = 0; l < part[i].length; l++) {
+                                dissonance = dissonance + this.setharesFormula_helper(part[i][k], part[j][l]);
+                            }
+                        }
+                    }
+                }
+                this.harmdiss = parseFloat(dissonance.toFixed(6));
+            }
         }
     },
 
