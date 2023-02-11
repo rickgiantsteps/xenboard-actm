@@ -4,102 +4,30 @@
 
 <script>
 
-function gcd(a, b) {
-  return (b) ? gcd(b, a % b) : a;
-}
-
-function decimalToFraction(_decimal) {
-
-  if (_decimal == 1){
-    return {
-      top		: 1,
-      bottom	: 1,
-      display	: 1 + ':' + 1
-    };
-  }  else {
-
-    let top		= _decimal.toString().replace(/\d+[.]/, '');
-    let bottom	= Math.pow(10, top.length);
-    if (_decimal > 1) {
-      top	= +top + Math.floor(_decimal) * bottom;
-    }
-    let x = gcd(top, bottom);
-    return {
-      top		: (top / x),
-      bottom	: (bottom / x),
-      display	: (top / x) + ':' + (bottom / x)
-    };
-  }
-}
 const sketch = function(p) {
 
-  let scale = [];
-  let keyOnP5 = [];
-  let mouseOnP5 = [];
-  let darkOnP5;
-  //let octave;
-
-  //------------------------------------------------------------
   p.setup = function() {
-    //let canvas_horizontal_offset = p.windowWidth;
-    /*let canvas = p.createCanvas(p.windowWidth/1.25, 500);
-    canvas.center();
-    canvas.position(p.x, p.windowHeight/1.7);*/
 
     let canvas = p.createCanvas(p.windowWidth/4 + 200, p.windowHeight/2);
-    //let canvas_horizontal_offset = (p.windowWidth - p.width) / 2;
-    //let elem = document.getElementsByClassName("posSketch")[0];
-    //canvas.position(canvas_horizontal_offset, elem.getBoundingClientRect().y + 90);
-
-
-    //console.log(p.hexNumberID);
 
     canvas.parent('sketch-holder-3');
     canvas.style("display", "block");
 
+    p.frameRate(30)
 
-
-    /*        p.createCanvas(p.windowWidth, p.windowHeight);
-
-            scale = Tonal.Scale.get("C4 major").notes;
-
-            /*for (let i = 0; i < scale.length; i++) {
-                randomColor[i] = "#" + ((1<<24)*Math.random() | 0).toString(16);
-            }*/
-    /*
-            document.getElementById("ButtonTest").onclick = function(){
-                scale[scale.length] = Tonal.transpose(scale[scale.length-1], "2M");
-            };
-
-            document.getElementById("ButtonRandom").onclick = function (){
-                const rndInt = Math.floor(Math.random() * scale.length-1) + 1;
-                randomNote = scale[rndInt];
-            }
-    */
   }
 
-  //------------------------------------------------------------
+
   p.windowResized = function () {
     p.resizeCanvas(p.windowWidth/4 + 200, p.windowHeight/2);
   }
 
-  //------------------------------------------------------------
+
   p.draw = function() {
-
-    scale = [];
-    keyOnP5 = p.keyOnID;
-    mouseOnP5 = p.mouseOnID;
-    darkOnP5 = p.darkOnID;
-
-    for (let i = 0; i < p.hexNumberID; i++) {
-      scale[i] = decimalToFraction((p.root ** (i/p.hexNumberID)).toFixed(2));
-    }
-
-    // octave = keyOnP5.length / scale.length;
 
     p.background('#fff4db');
 
-    if(darkOnP5 === true){
+    if(p.darkOnP5 === true){
       p.background('#0f172a');
     }
 
@@ -117,7 +45,7 @@ const sketch = function(p) {
 
     p.textSize(tSize);
     p.fill('#001133');
-    if(darkOnP5 === true){
+    if(p.darkOnP5 === true){
       p.fill('white');
     }
     p.textAlign(p.CENTER, p.CENTER);
@@ -138,7 +66,7 @@ const sketch = function(p) {
 
       p.text(noteName[i], x, y);
 
-      if (i > 0 && darkOnP5 === true){
+      if (i > 0 && p.darkOnP5 === true){
         p.push();
         p.fill('white');
         p.stroke('white');
@@ -147,7 +75,7 @@ const sketch = function(p) {
         p.pop();
       }
 
-      if (i > 0 && darkOnP5 === false){
+      if (i > 0 && p.darkOnP5 === false){
         p.push();
         p.fill('#303c54')
         p.stroke('#303c54');
@@ -156,7 +84,7 @@ const sketch = function(p) {
         p.pop();
       }
 
-      if (i === scale.length-1 && darkOnP5 === true){
+      if (i === scale.length-1 && p.darkOnP5 === true){
         p.push();
         p.fill('white');
         p.stroke('white');
@@ -165,7 +93,7 @@ const sketch = function(p) {
         p.pop();
       }
 
-      if (i === scale.length-1 && darkOnP5 === false){
+      if (i === scale.length-1 && p.darkOnP5 === false){
         p.push();
         p.fill('#303c54');
         p.stroke('#303c54');
@@ -174,27 +102,15 @@ const sketch = function(p) {
         p.pop();
       }
     }
-    for (let ii = 0; ii < mouseOnP5.length; ii++){
+    for (let ii = 0; ii < p.mouseOnP5.length; ii++){
       let octave_colors_On = ["#ffd700", "#ab76ab", "#bd1d00"];
       let octave_pos = Math.floor(ii / scale.length) % octave_colors_On.length;
 
-      if (keyOnP5[ii] === true || mouseOnP5[ii] === true) {
-        /*p.push(); // Start another new drawing state
-
-        p.fill('#001133');
-        if(darkOnP5 === true){
-            p.fill('white');
-        }
-        p.stroke('#001133');
-        if(darkOnP5 === true){
-            p.stroke('white');
-        }
-        p.text(noteName[ii-scale.length*octave_pos], x_coordinate[ii-scale.length*octave_pos], y_coordinate[ii-scale.length*octave_pos]);
-        p.pop();*/
+      if (p.keyOnP5[ii] === true || p.mouseOnP5[ii] === true) {
 
         p.push(); // Start another new drawing state
         p.stroke(octave_colors_On[octave_pos]);
-        if(darkOnP5 === true && octave_pos === 0){
+        if(p.darkOnP5 === true && octave_pos === 0){
           p.stroke("#0EA5E9");
         }
         p.strokeWeight(2);
@@ -206,6 +122,8 @@ const sketch = function(p) {
   }
 
 }
+
+let scale = []
 
 export default {
   name: "NotesPolygon",
@@ -244,63 +162,84 @@ export default {
     setTimeout(()=> {
 
       this.mySketch = new this.$p5(sketch, this.$refs.canvasOutlet);
-      this.mySketch.hexNumberID = this.testingVar;
-      this.mySketch.root = this.rootValue;
-      this.mySketch.keyOnID = this.testingKey;
-      this.mySketch.mouseOnID = this.testingMouse;
-      this.mySketch.darkOnID = this.testingDark;
+      this.mySketch.hexNumberP5 = this.hexNumber;
+      this.mySketch.root = this.squareRoot;
+      this.mySketch.keyOnP5 = this.keyOn;
+      this.mySketch.mouseOnP5 = this.mouseOn;
+      this.mySketch.darkOnP5 = this.darkOn;
     });
   },
 
   created() {
-    this.testingVar = this.hexNumber;
-    this.rootValue = this.squareRoot;
-    this.testingKey = this.keyOn;
-    this.testingMouse = this.mouseOn;
-    this.testingDark = this.darkOn;
+    this.updateFractions()
   },
 
-  computed: {
-    keysLength() {
-      return this.keyOn.length;
+  methods: {
+    updateFractions() {
+      scale = []
+      for (let i = 0; i < this.hexNumber; i++) {
+        scale[i] = this.decimalToFraction((this.squareRoot ** (i/this.hexNumber)).toFixed(2));
+      }
     },
-    mouseLength() {
-      return this.mouseOn.length;
+
+    gcd(a, b) {
+      return (b) ? this.gcd(b, a % b) : a;
+    },
+
+    decimalToFraction(_decimal) {
+
+      if (_decimal == 1){
+        return {
+          top		: 1,
+          bottom	: 1,
+          display	: 1 + ':' + 1
+        };
+      }  else {
+
+        let top		= _decimal.toString().replace(/\d+[.]/, '');
+        let bottom	= Math.pow(10, top.length);
+        if (_decimal > 1) {
+          top	= +top + Math.floor(_decimal) * bottom;
+        }
+        let x = this.gcd(top, bottom);
+        return {
+          top		: (top / x),
+          bottom	: (bottom / x),
+          display	: (top / x) + ':' + (bottom / x)
+        };
+      }
     }
+
   },
 
   watch:{
 
     hexNumber(newValue) {
-      this.testingVar = newValue;
-      this.mySketch.hexNumberID = this.testingVar;//this.hexNumberNew;
+      this.mySketch.hexNumberP5 = newValue;
+      this.updateFractions()
     },
 
     squareRoot(sr) {
       this.mySketch.root = sr;
+      this.updateFractions()
     },
 
     keyOn: {
       handler(newValue) {
-        this.testingKey = newValue;//newValue;
-        this.mySketch.keyOnID = this.testingKey;
-
+        this.mySketch.keyOnP5 = newValue;
       },
       deep: true
     },
 
     mouseOn: {
       handler(newValue) {
-        this.testingMouse = newValue;//newValue;
-        this.mySketch.mouseOnID = this.testingMouse;
-
+        this.mySketch.mouseOnP5 = newValue;
       },
       deep: true
     },
 
     darkOn(newValue) {
-      this.testingDark = newValue;
-      this.mySketch.darkOnID = this.testingDark;
+      this.mySketch.darkOnP5 = newValue;
     },
 
   }

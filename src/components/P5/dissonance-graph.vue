@@ -21,6 +21,8 @@ const sketch = function(p) {
       p.resizeCanvas(p.windowWidth / 4, (p.windowHeight / 2)+20);
     }
 
+    p.frameRate(10)
+
   }
 
 
@@ -40,8 +42,7 @@ const sketch = function(p) {
       for (let i = 0; i < numPts-1; i++) {
         //makes values fit in range of the canvas
         // (https://stackoverflow.com/questions/11607228/how-can-i-make-an-array-of-integers-fit-within-a-range)
-        valueY.push(((p.windowHeight / 2)+10)-((p.windowHeight / 2))*(gradusValues[i]-Math.min(...gradusValues))
-                      /(Math.max(...gradusValues)-Math.min(...gradusValues)))
+        valueY.push(((p.windowHeight / 2)+10)-((p.windowHeight / 2))*(gradusValues[i]) / (Math.max(...gradusValues)))
       }
 
 
@@ -56,7 +57,6 @@ const sketch = function(p) {
 
       for (let i = 0; i < valueY.length; i++) {
         //x axis text
-        //if (i+1===1 || (i+1)%5===0 || (i+1)===valueY.length) {
         if (i + 1 === 1 || (i + 1) % 5 === 0) {
           p.text(i + 1, (((p.windowWidth / 4) / valueY.length) * i) + 5, p.windowHeight / 2 + 15)
         }
@@ -254,7 +254,7 @@ export default {
           gradusValues[i - 1] = this.eulerGradus(dissonanceValues[i - 1])
         }
 
-        if (this.hexNumber!=1) {
+        if (this.hexNumber!==1) {
           averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/(this.hexNumber-1)
         } else {
           averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/(this.hexNumber)
@@ -273,7 +273,7 @@ export default {
         gradusValues[i - 1] = this.eulerGradus(dissonanceValues[i - 1])
       }
 
-      if (this.hexNumber!=1) {
+      if (this.hexNumber!==1) {
         averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/(this.hexNumber-1)
       } else {
         averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/(this.hexNumber)
