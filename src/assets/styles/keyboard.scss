@@ -133,19 +133,21 @@ body {
 .effects-board {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  width: 80%;
+  width: 80vw;
+  margin: auto;
   border-radius: 5px;
-  padding: 10px;
-  margin: 0 auto;
+  padding: 5px;
 }
 
 
 .effects-choice-container {
   height: fit-content;
   border-radius: 5px;
-  margin: 0 auto;
+  margin: auto;
+  float: right;;
+  max-width: 1500px;
   text-align: center;
-  padding: 15px;
+  padding: 10px;
   grid-column: 1/4;
 }
 
@@ -199,7 +201,7 @@ body {
 
 .synth-slider-container {
   display: grid;
-  grid-template-columns: 70px 70px repeat(5, 1fr);
+  grid-template-columns: 4.5em 2.5em repeat(5, 3.7em);
   font-size: 15px;
   grid-gap: 25px;
   margin-top: 130px;
@@ -207,7 +209,7 @@ body {
 
 .synth-slider-container2 {
   display: grid;
-  grid-template-columns: 70px 70px repeat(6, 1fr);
+  grid-template-columns: 4.5em 2.5em repeat(6, 3.7em);
   font-size: 15px;
   grid-gap: 15px;
   margin-top: 130px;
@@ -215,7 +217,7 @@ body {
 
 .synth-slider-container3 {
   display: grid;
-  grid-template-columns: 70px 70px repeat(7, 1fr);
+  grid-template-columns: 4.5em 2.5em repeat(7, 3.7em);
   font-size: 15px;
   grid-gap: 10px;
   margin-top: 130px;
@@ -239,6 +241,62 @@ body {
   font-size: 15px;
   color: #DA22FF;
   margin-top: 130px;
+}
+
+@media screen and (max-width: 1535px) {
+  .p {
+    font-size: 12px;
+  }
+  .synth-slider-container {
+    display: grid;
+    grid-template-columns: 1fr 2em repeat(5, 3.5em);
+    font-size: 12px;
+    grid-gap: 20px;
+    margin-top: 130px;
+  }
+
+  .synth-slider-container2 {
+    display: grid;
+    grid-template-columns: 1fr 2em repeat(6, 3.5em);
+    font-size: 12px;
+    grid-gap: 15px;
+    margin-top: 130px;
+  }
+
+  .synth-slider-container3 {
+    display: grid;
+    grid-template-columns: 1fr 2em repeat(7, 3.5em);
+    font-size: 12px;
+    grid-gap: 10px;
+    margin-top: 130px;
+  }
+
+  .chorus-slider-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    font-size: 15px;
+    grid-gap: 15px;
+    margin-top: 130px;
+  }
+
+  .tremolo-slider-container, .vibrato-slider-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    font-size: 15px;
+    color: #DA22FF;
+    grid-gap: 20px;
+    margin-top: 130px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .volume-slider-container, .distortion-slider-container {
+    display: grid;
+    grid-template-columns: min-content;
+    font-size: 15px;
+    color: #DA22FF;
+    margin-top: 130px;
+  }
 }
 
 .input[type="range"] {

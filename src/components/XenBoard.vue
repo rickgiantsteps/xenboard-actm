@@ -200,7 +200,7 @@
                        step="0.5"
                        class="input2 w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
                        id="am1">
-                <label class="text-base text-slate-700 dark:text-slate-200">Harmonicity</label>
+                <label class="text-base text-slate-700 dark:text-slate-200">Harm</label>
                 <p id="valueam1" class="text-base text-slate-700 dark:text-slate-200">{{ harmonicity[0] }}</p>
               </section>
               <section v-if="synthType[0]==='fm'">
@@ -211,7 +211,7 @@
                        step="0.5"
                        class="input2 w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
                        id="fmh1">
-                <label class="text-base text-slate-700 dark:text-slate-200">Harmonicity</label>
+                <label class="text-base text-slate-700 dark:text-slate-200">Harm</label>
                 <p id="valuefmh1" class="text-base text-slate-700 dark:text-slate-200">{{ harmonicity[0] }}</p>
               </section>
               <section v-if="synthType[0]==='fm'">
@@ -222,7 +222,7 @@
                        step="0.5"
                        class="input2 w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
                        id="fmi1">
-                <label class="text-base text-slate-700 dark:text-slate-200">Modulation</label>
+                <label class="text-base text-slate-700 dark:text-slate-200">Mod</label>
                 <p id="valuefmi1" class="text-base text-slate-700 dark:text-slate-200">{{ modulationIndex[0] }}</p>
               </section>
               <section v-if="synthType[0]==='fat'">
@@ -323,7 +323,7 @@
                        step="0.5"
                        class="input2 w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
                        id="am2">
-                <label class="text-base text-slate-700 dark:text-slate-200">Harmonicity</label>
+                <label class="text-base text-slate-700 dark:text-slate-200">Harm</label>
                 <p id="valueam2" class="text-base text-slate-700 dark:text-slate-200">{{ harmonicity[1] }}</p>
               </section>
               <section v-if="synthType[1]==='fm'">
@@ -334,7 +334,7 @@
                        step="0.5"
                        class="input2 w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
                        id="fmh2">
-                <label class="text-base text-slate-700 dark:text-slate-200">Harmonicity</label>
+                <label class="text-base text-slate-700 dark:text-slate-200">Harm</label>
                 <p id="valuefmh2" class="text-base text-slate-700 dark:text-slate-200">{{ harmonicity[1] }}</p>
               </section>
               <section v-if="synthType[1]==='fm'">
@@ -345,7 +345,7 @@
                        step="0.5"
                        class="input2 w-10 mt-14 shadow shadow-amber-500 dark:shadow-indigo-400"
                        id="fmi2">
-                <label class="text-base text-slate-700 dark:text-slate-200">Modulation</label>
+                <label class="text-base text-slate-700 dark:text-slate-200">Mod</label>
                 <p id="valuefmi2" class="text-base text-slate-700 dark:text-slate-200">{{ modulationIndex[1] }}</p>
               </section>
               <section v-if="synthType[1]==='fat'">
