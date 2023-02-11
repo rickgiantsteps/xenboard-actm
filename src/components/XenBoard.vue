@@ -126,6 +126,16 @@
       <option style="text-align: center;" value="bohlen-eg">Bohlen-Pierce</option>
     </select>
 
+    <label class="text-base px-0.5 pl-5 dark:text-slate-200">Search for other tunings: </label>
+    <input type="text" id="txttune" name="txttune" class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
+            v-model="textArea" v-on:input="searchForTune()"/>
+    <div class="list-container">
+        <div type="button" v-for="t in list" :key="t" class="tune-list click-button shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded
+                                                bg-[#ffd085] hover:bg-[#ffbe5b] active:bg-[#ffd700] dark:text-slate-50 dark:bg-slate-500
+                                                dark:hover:bg-sky-700 dark:active:bg-sky-500 "
+        v-on:click="this.hystTune = t;createNotesFromTune();this.list = [];"> {{t}} </div>
+    </div>
+
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Central frequency (Hz): </label>
     <input type="number" id="freqhz" name="freqhz" class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
            v-model.number = "centerfreq" min="1" v-on:change="createNotesFromTune()"/>
