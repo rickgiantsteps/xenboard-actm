@@ -421,7 +421,7 @@ export default {
             return gradus
         },
 
-        setharesFormula_helper(f11, f22){
+        /*setharesFormula_helper(f11, f22){
             let f1 = Math.min(f11, f22);
             let f2 = Math.max(f11, f22);
 
@@ -437,13 +437,38 @@ export default {
             let z2 = Math.exp(-b2 * s * (f2 - f1));
 
             return z1 - z2;
+        },*/
+
+        setharesFormula_helper(f11, f22, a11, a22){
+            let f1 = Math.min(f11, f22);
+            let f2 = Math.max(f11, f22);
+
+            let b1 = 3.5;
+            let b2 = 5.75;
+            let s1 = 0.0207;
+            let s2 = 18.96;
+            let x = 0.24;
+            //let x = Math.abs(f1 - f2) / Math.min((f1, f2));
+
+            let s = x / ((s1 * f1) + s2);
+            let z1 = Math.exp(-b1 * s * (f2 - f1));
+            let z2 = Math.exp(-b2 * s * (f2 - f1));
+
+            let amp = Math.min(a11, a22);
+            amp = Math.pow(10, ((amp - 28) / 33.22));
+
+            if(a11 === 1 && a22 === 1){
+                amp = 1;
+            }
+
+            return amp * (z1 - z2);
         },
 
         setharesFormula(tones){
             let dissonance = 0;
             for (let a = 0; a < tones.length; a++) {
                 for (let i = 1; i < tones.length; i++) {
-                    dissonance = dissonance + this.setharesFormula_helper(tones[a], tones[i]);
+                    dissonance = dissonance + this.setharesFormula_helper(tones[a], tones[i], 1, 1);
                 }
             }
 
@@ -510,29 +535,59 @@ export default {
             let tones = [];
             let cont = 0;
             let waveforms = [];
+
             let part_synth = [];
+            let partial_amp = [];
 
             for (let i = 0; i < keymouseon.length; i++) {
                 if (keymouseon[i] === true || keyboardon[i] === true){
-                    if (synth[0][i].oscillator.partials.length === 0) {
+                    /*if (synth[0][i].oscillator.partials.length === 0) {
                         part_synth[cont] = synth[0][i].oscillator;
                         part_synth[cont].partialCount = 20;
                         part[cont] = part_synth[cont].partials;
                         waveforms[cont] = synth[0][i].oscillator.type;
                         tones[cont] = this.notes[i];
                         cont++;
-
                     }
                     else {
                         tones[cont] = this.notes[i];
                         part[cont] = synth[0][i].oscillator.partials;
                         waveforms[cont] = synth[0][i].oscillator.type;
                         cont++;
+                    }*/
+
+                    /*tones[cont] = this.notes[i];
+                    part[cont] = synth[0][i].oscillator.partials;
+                    console.log(synth[0][i].oscillator.partials);
+                    waveforms[cont] = synth[0][i].oscillator.type;
+                    cont++;*/
+
+                    tones[cont] = this.notes[i];
+                    if (synth[0][i].oscillator.partials.length === 0) {
+                        waveforms[cont] = synth[0][i].oscillator.type;
+                        if(waveforms[cont] === 'sine'){
+                            part_synth[cont] = 1;
+                        }
+                        else {
+                            part_synth[cont] = 25;
+                        }
+                        part[cont] = [];
+                        partial_amp[cont] = [];//synth[0][i].oscillator.partials;
+                        cont++;
                     }
+                    else {
+                        part[cont] = [];//synth[0][i].oscillator.partials;
+                        partial_amp[cont] = [];//synth[0][i].oscillator.partials;
+                        part_synth[cont] = synth[0][i].oscillator.partials.length;
+                        waveforms[cont] = synth[0][i].oscillator.type;
+                        cont++;
+                    }
+
+
                 }
             }
 
-            for (let ii = 0; ii < part.length; ii++) {
+            /*for (let ii = 0; ii < part.length; ii++) {
                 for (let jj = 0; jj < part[ii].length; jj++) {
                     part[ii][jj] = tones[ii] * (jj + 1);
                     if (waveforms[ii] === ('square') + part[ii].length.toString()) {
@@ -548,9 +603,42 @@ export default {
                         part[ii][jj] = tones[ii] * (jj + 1);
                     }
                 }
+            }*/
+
+            let odd = true;
+            for (let ii = 0; ii < tones.length; ii++) {
+                for (let jj = 0; jj < part_synth[ii]; jj++) {
+                    part[ii][jj] = tones[ii] * (1 + jj);
+                    if ((waveforms[ii] === ('square') + part_synth[ii].toString()) || waveforms[ii] === ('square')) {
+                        if(odd === true){
+                            partial_amp[ii][jj] = 1 / (jj+1);
+                            odd = false;
+                        }
+                        else {
+                            partial_amp[ii][jj] = 0;
+                            odd = true;
+                        }
+                    }
+                    if ((waveforms[ii] === ('triangle') + part_synth[ii].toString()) || waveforms[ii] === ('triangle')) {
+                        if(odd === true){
+                            partial_amp[ii][jj] = 1 / Math.pow((jj+1), 2);
+                            odd = false;
+                        }
+                        else {
+                            partial_amp[ii][jj] = 0;
+                            odd = true;
+                        }
+                    }
+                    if (waveforms[ii] === 'sine' + part_synth[ii].toString()) {
+                        partial_amp[ii][jj] = 1;
+                    }
+                    if ((waveforms[ii] === 'sawtooth' + part_synth[ii].toString()) || waveforms[ii] === ('sawtooth')) {
+                        partial_amp[ii][jj] = 1 / (jj+1);
+                    }
+                }
             }
 
-            if (part[0].length === 1){
+/*            if (part[0].length === 1){
                 this.harmdiss = parseFloat(this.setharesFormula(tones).toFixed(6));
             }
             if (part[0].length > 1 ){
@@ -565,7 +653,25 @@ export default {
                     }
                 }
                 this.harmdiss = parseFloat(dissonance.toFixed(6));
+            }*/
+
+            if (part_synth[0] === 1){
+                this.harmdiss = parseFloat(this.setharesFormula(tones).toFixed(6));
             }
+            if (part_synth[0] > 1){
+                let dissonance = 0;
+                for (let i = 0; i < part.length; i++) {
+                    for (let j = 1; j < part.length; j++) {
+                        for (let k = 0; k < part[i].length; k++) {
+                            for (let l = 0; l < part[i].length; l++) {
+                                dissonance = dissonance + this.setharesFormula_helper(part[i][k], part[j][l], partial_amp[i][k], partial_amp[j][l]);
+                            }
+                        }
+                    }
+                }
+                this.harmdiss = parseFloat(dissonance.toFixed(6));
+            }
+
         }
     },
 
