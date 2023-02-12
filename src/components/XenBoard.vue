@@ -169,7 +169,7 @@
                   <button type="button" class="button-81" name="triangle0" id="triangle0" @mousedown="changeWave('triangle', 0)">Triangle</button>
                   <button type="button" class="button-80" name="sine0" id="sine0" @mousedown="changeWave('sine', 0)">Sine</button>
                   <button type="button" class="button-80" name="square0" id="square0" @mousedown="changeWave('square', 0)">Square</button>
-                  <button type="button" class="button-80" name="sawtooth0" id="sawtooth0" @mousedown="changeWave('sawtooth', 0)">Sawtooth</button>
+                  <button type="button" class="button-80" name="sawtooth0" id="sawtooth0" @mousedown="changeWave('sawtooth', 0)">Saw</button>
                 </form>
               </section>
               <section>
@@ -292,7 +292,7 @@
                   <button type="button" class="button-81" name="triangle1" id="triangle1" @mousedown="changeWave('triangle', 1)">Triangle</button>
                   <button type="button" class="button-80" name="sine1" id="sine1" @mousedown="changeWave('sine', 1)">Sine</button>
                   <button type="button" class="button-80" name="square1" id="square1" @mousedown="changeWave('square', 1)">Square</button>
-                  <button type="button" class="button-80" name="sawtooth1" id="sawtooth1" @mousedown="changeWave('sawtooth', 1)">Sawtooth</button>
+                  <button type="button" class="button-80" name="sawtooth1" id="sawtooth1" @mousedown="changeWave('sawtooth', 1)">Saw</button>
                 </form>
               </section>
               <section>
