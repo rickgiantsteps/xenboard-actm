@@ -402,10 +402,20 @@ export default {
             let d = fraction[1]
             let gradus = 1
             let count = 1
+            let factor = [0, 0]
 
             for (let i in this.primeFactors(d*n)) {
+                factor [0] = i
                 gradus += count*(i-1)
-                count++
+
+                if (factor[1] === factor[0]) {
+                    factor[1] = i
+                    count++
+                } else  {
+                    factor[1] = i
+                    count = 1
+                }
+
             }
 
             return gradus

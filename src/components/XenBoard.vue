@@ -44,12 +44,12 @@
     <div id="dissonance-boxes" class="grid-cols-2 place-content-center">
       <div id="average-temperament-dissonance">
         <p class="underline text-lg dark:text-slate-200">Average Scale Dissonance</p>
-        <p class="dark:text-slate-200">(Euler's Gradus)</p>
+        <p class="dark:text-slate-200">(Euler's Gradus Suavitatis)</p>
         <p class="text-xl py-5 pb-11 dark:text-slate-200">{{avgdiss}}</p>
       </div>
       <div id="mel-dissonance">
         <p class="underline text-lg dark:text-slate-200">Melodic Dissonance</p>
-        <p class="dark:text-slate-200">(Euler's Gradus)</p>
+        <p class="dark:text-slate-200">(Euler's Gradus Suavitatis)</p>
         <p class="text-xl py-5 pb-11 dark:text-slate-200">{{meldiss}}</p>
       </div>
       <div id="harm-dissonance">
