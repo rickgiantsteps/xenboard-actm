@@ -11,8 +11,11 @@ let synth =  [new Array(12), new Array(12)]
 let ageofsynth = new Array(12).fill(0);
 let keymouseon = new Array(12).fill(false);
 let keyboardon = new Array(12).fill(false);
+
 let keyboard = ["q","w","e","r","t","y","u","i","o","p","è","+","ù","a","s","d","f","g","h","j","k","l","ò","à",
-    "z","x","c","v","b","n","m",",",".","-","1","2","3","4","5","6","7","8","9","0"]
+    "z","x","c","v","b","n","m",",",".","-","1","2","3","4","5","6","7","8","9","0","ì"]
+let keyboardshift = ["q","w","e","r","t","y","u","i","o","p","é","*","§","a","s","d","f","g","h","j","k","l","ò","à",
+    "z","x","c","v","b","n","m",";",":","_","!",'"',"£","$","%","&","/","(",")","=","^"]
 
 let octave_colors = ["bg-[#ffd085]", "bg-[#D8BFD8]", "bg-[#FF6347]"];
 let octave_colors_On = ["bg-[#ffd700]", "bg-[#ab76ab]", "bg-[#bd1d00]"];
@@ -706,13 +709,19 @@ export default {
             reverb.roomSize.value = document.getElementById('reverb').value;
         });
 
+
         window.addEventListener("keydown", e => {
             if(e.target.type === 'number') {
                 return;
             }
 
             const key = e.key.toLowerCase();
-            const index = keyboard.indexOf(key);
+            let index = keyboard.indexOf(key);
+
+            if (e.shiftKey) {
+                index = keyboardshift.indexOf(key);
+            }
+
 
             if (!isNaN(index) && (index+1) <= this.hexNumber*this.octaves && (isNaN(keyboardon[index])||keyboardon[index]===false)
                 && keymouseon[index] !== true) {
@@ -768,7 +777,11 @@ export default {
             }
 
             const key = e.key.toLowerCase();
-            const index = keyboard.indexOf(key);
+            let index = keyboard.indexOf(key);
+
+            if (e.shiftKey) {
+                index = keyboardshift.indexOf(key);
+            }
 
             if (!isNaN(index) && index <= this.hexNumber*this.octaves
                 && keymouseon[index] !== true && keyboardon[index] === true) {
