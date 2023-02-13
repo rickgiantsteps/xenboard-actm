@@ -42,20 +42,23 @@
     </div>
 
     <div id="dissonance-boxes" class="grid-cols-2 place-content-center">
-      <div id="average-temperament-dissonance">
-        <p class="underline text-lg dark:text-slate-200">Average Scale Dissonance</p>
-        <p class="dark:text-slate-200">(Euler's Gradus Suavitatis)</p>
-        <p class="text-xl py-5 pb-11 dark:text-slate-200">{{avgdiss}}</p>
+      <div id="average-temperament-dissonance flex-row">
+        <p class="underline text-lg dark:text-slate-200">Scale Dissonance</p>
+        <p class="dark:text-slate-200 pb-1">(Euler's Gradus Suavitatis)</p>
+        <label class="text-sm dark:text-slate-200">Total:</label>
+        <p class="text-xl pb-2 dark:text-slate-200">{{totaldiss}}</p>
+        <label class="text-sm -pt-8 dark:text-slate-200">Average:</label>
+        <p class="text-xl pb-6 dark:text-slate-200">{{avgdiss}}</p>
       </div>
       <div id="mel-dissonance">
         <p class="underline text-lg dark:text-slate-200">Melodic Dissonance</p>
         <p class="dark:text-slate-200">(Euler's Gradus Suavitatis)</p>
-        <p class="text-xl py-5 pb-11 dark:text-slate-200">{{meldiss}}</p>
+        <p class="text-xl pt-2 pb-6 dark:text-slate-200">{{meldiss}}</p>
       </div>
       <div id="harm-dissonance">
         <p class="underline text-lg dark:text-slate-200">Harmonic Dissonance</p>
         <p class="dark:text-slate-200">(Sethares' Algorithm)</p>
-        <p class="text-xl py-5 dark:text-slate-200">{{harmdiss}}</p>
+        <p class="text-xl pt-2 dark:text-slate-200">{{harmdiss}}</p>
       </div>
     </div>
   </div>

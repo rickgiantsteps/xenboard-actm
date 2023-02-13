@@ -64,6 +64,7 @@ export default {
             mouseOn: keymouseon,
             innerDarkOn: this.darkOn,
             avgdiss: 0,
+            totaldiss: 0,
             meldiss: 0,
             harmdiss: 0,
             muteOsc: [false, true],
@@ -396,7 +397,15 @@ export default {
         },
 
         averagediss_change($event) {
-            this.avgdiss = $event
+
+            this.totaldiss = $event.reduce((partialSum, a) => partialSum + a, 0)
+
+            if (this.hexNumber!==1) {
+                this.avgdiss =  parseFloat((this.totaldiss/(this.hexNumber-1)).toFixed(2))
+            } else {
+                this.avgdiss =  parseFloat((this.totaldiss/(this.hexNumber)).toFixed(2))
+            }
+
         },
 
         eulerGradus(decimalRatio) {

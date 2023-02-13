@@ -141,7 +141,6 @@ const sketch = function(p) {
   }
 }
 
-let averagediss = 0
 let dissonanceValues = []
 let gradusValues = []
 export default {
@@ -184,9 +183,7 @@ export default {
       gradusValues[i-1] = this.eulerGradus(dissonanceValues[i-1])
     }
 
-    console.log("gradus"+ gradusValues)
-    averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/(this.hexNumber-1)
-    this.$emit("averagediss_change", parseFloat(averagediss.toFixed(6)))
+    this.$emit("averagediss_change", gradusValues)
     this.testingDark = this.darkOn;
   },
 
@@ -267,12 +264,8 @@ export default {
           gradusValues[i - 1] = this.eulerGradus(dissonanceValues[i - 1])
         }
 
-        if (this.hexNumber!==1) {
-          averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/(this.hexNumber-1)
-        } else {
-          averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/(this.hexNumber)
-        }
-        this.$emit("averagediss_change", parseFloat(averagediss.toFixed(6)))
+
+        this.$emit("averagediss_change", gradusValues)
       },
       deep: true
     },
@@ -286,12 +279,7 @@ export default {
         gradusValues[i - 1] = this.eulerGradus(dissonanceValues[i - 1])
       }
 
-      if (this.hexNumber!==1) {
-        averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/(this.hexNumber-1)
-      } else {
-        averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/(this.hexNumber)
-      }
-      this.$emit("averagediss_change", parseFloat(averagediss.toFixed(6)))
+      this.$emit("averagediss_change", gradusValues)
     },
 
     darkOn(newValue) {
