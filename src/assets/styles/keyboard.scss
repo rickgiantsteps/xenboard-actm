@@ -7,12 +7,13 @@ body {
   font-family: Inconsolata, monospace;
 }
 
-body.ligh::-webkit-scrollbar {
+
+body::-webkit-scrollbar {
   width: $scrollbar-size + px;
   background: #ffb30024;
 }
 
-body.ligh::-webkit-scrollbar-thumb {
+body::-webkit-scrollbar-thumb {
   background-color: gold;
   border-radius: 10px;
   box-shadow: inset 0 0 100px 50px #ff9a00;
