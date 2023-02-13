@@ -65,11 +65,14 @@
 
   <div class="pt-6 pb-2">
     <button class="click-button bg-white gap-x-10 w-44 shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded dark:bg-slate-200 dark:text-slate-900"
-        @click="tune = !tune; this.hexNumber=0;">Toggle tunings creation</button>
+      @click="tune = !tune; this.hexNumber=0;">Toggle tuning mode</button>
   </div>
 
+  <label class="text-base dark:text-slate-200 underline bold my-0.5" v-if="tune">Creation mode</label>
+  <label class="text-base dark:text-slate-200 underline bold my-0.5" v-else>Exploration mode</label>
+
   <div class="p-3" v-if="tune">
-    <label class="text-base px-0.5 pl-5 dark:text-slate-200">Main Tunings: </label>
+    <label class="text-base px-0.5 pl-5 dark:text-slate-200">Main tunings: </label>
     <select class="bg-white h-6 shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
         v-model.number = "hexNumber" v-on:change="this.rootn=2; createNotes()">
       <option style="text-align: center;" disabled value="">Please select one</option>
@@ -113,9 +116,9 @@
   </div>
 
   <div class="p-3" v-else>
-    <label class="text-base px-0.5 pl-5 dark:text-slate-200">Main Tunings: </label>
+    <label class="text-base px-0.5 pl-5 dark:text-slate-200">Main tunings: </label>
     <select class="h-6 bg-white shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
-    v-model="hystTune" @change="createNotesFromTune()">
+    v-model="hystTune" @change="createNotesFromTune(); textArea=''">
       <option style="text-align: center;" disabled value="">Select...</option>
       <option style="text-align: center;" value="ji_12">Basic just intonation</option>
       <option style="text-align: center;" value="pyth_31">31-tone Pythagorean</option>
@@ -132,19 +135,10 @@
       <option style="text-align: center;" value="bohlen-eg">Bohlen-Pierce</option>
     </select>
 
-    <label class="text-base px-0.5 pl-5 dark:text-slate-200">Search for <a href="http://abbernie.github.io/tune/scales.html"
+    <label class="text-base px-0.5 pl-5 dark:text-slate-200">Explore <a class="underline" href="http://abbernie.github.io/tune/scales.html"
     target="_blank" rel="noopener">other tunings:</a></label>
-    <input type="text" id="txttune" name="txttune" class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
-            v-model="textArea" v-on:input="searchForTune()"/>
-    <button title="clear" v-on:click="this.list=[]; this.textArea = ''" class="mr-0.5 click-button bg-white shadow shadow-neutral-900/50 dark:shadow-md
-dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900">Clear</button>
-    <div class="list-container">
-        <div type="button" v-for="t in list" :key="t" class="tune-list click-button shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded
-                                                bg-[#ffd085] hover:bg-[#ffbe5b] active:bg-[#ffd700] dark:text-slate-50 dark:bg-slate-500
-                                                dark:hover:bg-sky-700 dark:active:bg-sky-500 "
-        v-on:click="this.hystTune = t;createNotesFromTune();this.list = [];"
-        :title="displayDescription(t)"> {{t}} </div>
-    </div>
+    <input type="text" id="txttune" name="txtune" class="shadow shadow-neutral-900/50 ml-1 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
+            v-model="textArea" v-on:input="searchForTune()" v-on:click="hexNumber=0"/>
 
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Central frequency (Hz): </label>
     <input type="number" id="freqhz" name="freqhz" class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
@@ -165,6 +159,14 @@ dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900">Clear
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Polyphony: </label>
     <input type="number" id="root" name="root" class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
            v-model.number = "poly" min="1" max="20" v-on:change="createOsc()"/>
+
+    <div class="list-container">
+      <div type="button" v-for="t in list" :key="t" class="click-button shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded
+                                                bg-[#ffd085] hover:bg-[#ffbe5b] active:bg-[#ffd700] dark:text-slate-50 dark:bg-slate-500
+                                                dark:hover:bg-sky-700 dark:active:bg-sky-500 button-81 mt-6 mr-3"
+           v-on:click="this.hystTune = t; createNotesFromTune();this.list = []; textArea = this.hystTune"
+           :title="displayDescription(t)"> {{t}} </div>
+    </div>
   </div>
 
   <div class="grid" id='hexgrid'>
