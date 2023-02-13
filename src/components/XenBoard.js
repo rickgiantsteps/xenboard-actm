@@ -607,7 +607,8 @@ export default {
             for (let ii = 0; ii < tones.length; ii++) {
                 for (let jj = 0; jj < part_synth[ii]; jj++) {
                     part[ii][jj] = tones[ii] * (1 + jj);
-                    if ((waveforms[ii] === ('square') + part_synth[ii].toString()) || waveforms[ii] === ('square')) {
+                    if ((waveforms[ii].substring(6, 0) === ('square')) || waveforms[ii].substring(6, 0) === ('amsqua')
+                        || waveforms[ii].substring(6, 0) === ('fmsqua')|| waveforms[ii].substring(6, 0) === ('fatsqu')) {
                         if(odd === true){
                             partial_amp[ii][jj] = 1 / (jj+1);
                             odd = false;
@@ -617,7 +618,8 @@ export default {
                             odd = true;
                         }
                     }
-                    if ((waveforms[ii] === ('triangle') + part_synth[ii].toString()) || waveforms[ii] === ('triangle')) {
+                    if ((waveforms[ii].substring(8, 0) === ('triangle')) || waveforms[ii].substring(8, 0) === ('amtriang')
+                        || waveforms[ii].substring(8, 0) === ('fmtriang')|| waveforms[ii].substring(8, 0) === ('fattrian')) {
                         if(odd === true){
                             partial_amp[ii][jj] = 1 / Math.pow((jj+1), 2);
                             odd = false;
@@ -627,10 +629,12 @@ export default {
                             odd = true;
                         }
                     }
-                    if (waveforms[ii] === 'sine' + part_synth[ii].toString()) {
+                    if ((waveforms[ii].substring(4, 0) === ('sine')) || waveforms[ii].substring(4, 0) === ('amsi')
+                        || waveforms[ii].substring(4, 0) === ('fmsi')|| waveforms[ii].substring(4, 0) === ('fats')) {
                         partial_amp[ii][jj] = 1;
                     }
-                    if ((waveforms[ii] === 'sawtooth' + part_synth[ii].toString()) || waveforms[ii] === ('sawtooth')) {
+                    if ((waveforms[ii].substring(8, 0) === ('sawtooth')) || waveforms[ii].substring(8, 0) === ('amsawtoo')
+                        || waveforms[ii].substring(8, 0) === ('fmsawtoo')|| waveforms[ii].substring(8, 0) === ('fatsawto')) {
                         partial_amp[ii][jj] = 1 / (jj+1);
                     }
                 }
