@@ -201,16 +201,9 @@ Tune.prototype.search = function(letters) {
     return possible
 }
 
-/* Return a collection of notes as an array */
-
-Tune.prototype.chord = function(midis) {
-    let output = []
-    for (let i=0;i<midis.length;i++) {
-        output.push(this.note(midis[i]))
-    }
-    return output;
+Tune.prototype.fetchDescription = function(name) {
+    return TuningList[name].description;
 }
-
 
 /* The list of tunings */
 

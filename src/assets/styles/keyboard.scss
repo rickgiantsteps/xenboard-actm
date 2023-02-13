@@ -554,3 +554,21 @@ form {
 form button {
   margin-top: 10px;
 }
+
+.tune-list {
+  position: relative;
+  z-index: 1;
+  display: table-row;
+  padding: 5px;
+  margin: 3px;
+}
+
+.list-container {
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 1;
+  width: fit-content;
+  height: fit-content;
+  display: table;
+}

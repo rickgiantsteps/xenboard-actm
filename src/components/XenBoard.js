@@ -58,6 +58,8 @@ export default {
             rootn: 2,
             poly: 12,
             hystTune: "",
+            textArea: "",
+            list: [],
             isRecording: false,
             hasRecorded: false,
             keyOn: keyboardon,
@@ -111,7 +113,16 @@ export default {
 
             this.afterCreatingNotes();
         },
-
+        searchForTune() {
+            if(this.textArea !== "" && this.textArea.length > 1) {
+                this.list = tune.search(this.textArea);
+            } else {
+                this.list = [];
+            }
+        },
+        displayDescription(tuning){
+            return tune.fetchDescription(tuning);
+        },
         createNotesFromTune() {
             this.octaves = this.high + this.low + 1;
             tune.loadScale(this.hystTune);
