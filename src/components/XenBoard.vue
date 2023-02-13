@@ -70,10 +70,14 @@
     <select class="bg-white h-6 shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
         v-model.number = "hexNumber" v-on:change="this.rootn=2; createNotes()">
       <option style="text-align: center;" disabled value="">Please select one</option>
+      <option style="text-align: center;" value="5">5EDO</option>
+      <option style="text-align: center;" value="7">7EDO</option>
       <option style="text-align: center;" value="12">12EDO</option>
       <option style="text-align: center;" value="19">19EDO</option>
+      <option style="text-align: center;" value="22">22EDO</option>
       <option style="text-align: center;" value="24">24EDO</option>
       <option style="text-align: center;" value="31">31EDO</option>
+      <option style="text-align: center;" value="41">41EDO</option>
     </select>
 
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Central freq. (Hz): </label>
@@ -111,7 +115,6 @@
     v-model="hystTune" @change="createNotesFromTune()">
       <option style="text-align: center;" disabled value="">Select...</option>
       <option style="text-align: center;" value="ji_12">Basic just intonation</option>
-      <option style="text-align: center;" value="harm30">First 30 harm.s and subharm.s</option>
       <option style="text-align: center;" value="pyth_31">31-tone Pythagorean</option>
       <option style="text-align: center;" value="ptolemy">Zarlino's scale</option>
       <option style="text-align: center;" value="couperin">Couperin meantone</option>

@@ -32,7 +32,7 @@ const sketch = function(p) {
     }
 
     // define the text size based on the window height
-    let tSize = p.min(p.windowWidth, p.windowHeight) / 50;
+    let tSize = (p.min(p.windowWidth, p.windowHeight) / 50)-(p.hexNumberP5-12)*0.08;
 
     // Array for coordinate x
     let x_coordinate = [];

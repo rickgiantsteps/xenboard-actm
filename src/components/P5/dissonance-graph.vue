@@ -55,29 +55,14 @@ const sketch = function(p) {
         p.ellipse(x, y, 7);
       }
 
-      for (let i = 0; i < valueY.length; i++) {
-        //x axis text
-        if (i + 1 === 1 || (i + 1) % 5 === 0) {
-          p.text(i + 1, (((p.windowWidth / 4) / valueY.length) * i) + 5, p.windowHeight / 2 + 15)
-        }
-
-        //y axis text
-        if(darkOnP5 === true){
-          p.fill('white');
-        }
-        if(darkOnP5 !== true){
-          p.fill('#001133');
-        }
-        p.text(isNaN(parseInt(Math.max(...gradusValues))) ? 0 : parseInt(Math.max(...gradusValues)), 5, 15)
-      }
-
-
         p.strokeWeight(2);
       if(darkOnP5 === true){
         p.stroke('white');
+        p.fill('white')
       }
       if(darkOnP5 !== true){
         p.stroke('#001133');
+        p.fill('#001133')
       }
       p.textStyle("NORMAL");
       // draw lines
@@ -130,6 +115,28 @@ const sketch = function(p) {
       }
       p.line(1, height_Canvas, (p.windowWidth / 4), height_Canvas);
       p.pop();
+
+      for (let i = 0; i < valueY.length; i++) {
+
+        if(darkOnP5 === true){
+          p.fill('white');
+          p.stroke(0)
+          p.strokeWeight(2);
+        }
+        if(darkOnP5 !== true){
+          p.fill('#001133');
+          p.stroke('white')
+          p.strokeWeight(2);
+        }
+
+        //x axis text
+        if (i + 1 === 1 || (i + 1) % 5 === 0) {
+          p.text(i + 1, (((p.windowWidth / 4) / valueY.length) * i) + 5, p.windowHeight / 2 + 15)
+        }
+
+        //y axis text
+        p.text(isNaN(parseInt(Math.max(...gradusValues))) ? 0 : parseInt(Math.max(...gradusValues)), 5, 15)
+      }
 
   }
 }
