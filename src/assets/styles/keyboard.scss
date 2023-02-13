@@ -483,12 +483,13 @@ form button {
   position: relative;
   z-index: 1;
   display: table-row;
+  padding: 5px;
+  margin: 3px;
 }
 
 .list-container {
-  position: absolute;
+  position: relative;
   left: 50%;
-  top: 50%;
   transform: translate(-50%);
   z-index: 1;
   width: fit-content;

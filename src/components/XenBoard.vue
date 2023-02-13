@@ -129,11 +129,14 @@
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Search for other tunings: </label>
     <input type="text" id="txttune" name="txttune" class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
             v-model="textArea" v-on:input="searchForTune()"/>
+    <button title="clear" v-on:click="this.list=[]; this.textArea = ''" class="mr-0.5 click-button bg-white shadow shadow-neutral-900/50 dark:shadow-md
+dark:shadow-sky-400/50 rounded w-10 dark:bg-slate-200 dark:text-slate-900">Clear</button>
     <div class="list-container">
         <div type="button" v-for="t in list" :key="t" class="tune-list click-button shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded
                                                 bg-[#ffd085] hover:bg-[#ffbe5b] active:bg-[#ffd700] dark:text-slate-50 dark:bg-slate-500
                                                 dark:hover:bg-sky-700 dark:active:bg-sky-500 "
-        v-on:click="this.hystTune = t;createNotesFromTune();this.list = [];"> {{t}} </div>
+        v-on:click="this.hystTune = t;createNotesFromTune();this.list = [];"
+        :title="displayDescription(t)"> {{t}} </div>
     </div>
 
     <label class="text-base px-0.5 pl-5 dark:text-slate-200">Central frequency (Hz): </label>
