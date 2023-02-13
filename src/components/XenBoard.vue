@@ -65,7 +65,7 @@
 
   <div class="pt-6 pb-2">
     <button class="click-button bg-white gap-x-10 w-44 shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded dark:bg-slate-200 dark:text-slate-900"
-      @click="tune = !tune; this.hexNumber=0;">Toggle tuning mode</button>
+            @click="tune = !tune; this.hexNumber=0; textArea=''; hystTune=''">Toggle tuning mode</button>
   </div>
 
   <label class="text-base dark:text-slate-200 underline bold my-0.5" v-if="tune">Creation mode</label>
