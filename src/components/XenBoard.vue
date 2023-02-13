@@ -132,7 +132,8 @@
       <option style="text-align: center;" value="bohlen-eg">Bohlen-Pierce</option>
     </select>
 
-    <label class="text-base px-0.5 pl-5 dark:text-slate-200">Search for other tunings: </label>
+    <label class="text-base px-0.5 pl-5 dark:text-slate-200">Search for <a href="http://abbernie.github.io/tune/scales.html"
+    target="_blank" rel="noopener">other tunings:</a></label>
     <input type="text" id="txttune" name="txttune" class="shadow shadow-neutral-900/50 dark:shadow-md dark:shadow-sky-400/50 rounded w-20 dark:bg-slate-200 dark:text-slate-900"
             v-model="textArea" v-on:input="searchForTune()"/>
     <button title="clear" v-on:click="this.list=[]; this.textArea = ''" class="mr-0.5 click-button bg-white shadow shadow-neutral-900/50 dark:shadow-md
