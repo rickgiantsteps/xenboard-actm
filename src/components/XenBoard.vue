@@ -179,7 +179,7 @@
 
     <div class="effects-board">
       <div class="effects-choice-container bg-[#ffd085] dark:bg-slate-600 shadow shadow-amber-500 dark:shadow-indigo-500">
-        <label class="text-3xl px-0.5 pl-5 dark:text-slate-200">Synth</label>
+        <label class="text-3xl dark:text-slate-200">Synth</label>
 
         <section class="synth-type flex-1">
 
@@ -435,7 +435,7 @@
 
     <div class="effects-board">
       <div class="effects-choice-container bg-[#ffd085] dark:bg-slate-600 shadow shadow-amber-500 dark:shadow-indigo-500">
-        <label class="text-3xl px-0.5 pl-5 dark:text-slate-200">Effects</label>
+        <label class="text-3xl dark:text-slate-200">Effects</label>
 
         <section class="effect-type">
           <div class="effect-selections shadow shadow-amber-500 dark:shadow-indigo-400">
