@@ -404,20 +404,13 @@ export default {
             let n = fraction[0]
             let d = fraction[1]
             let gradus = 1
-            let count = 1
-            let factor = [0, 0]
+            let count
+            let factors = this.primeFactors(d*n)
+            let singleFactors = factors.filter((item, index) => factors.indexOf(item) === index);
 
-            for (let i in this.primeFactors(d*n)) {
-                factor [0] = i
-                gradus += count*(i-1)
-
-                if (factor[1] === factor[0]) {
-                    factor[1] = i
-                    count++
-                } else  {
-                    factor[1] = i
-                    count = 1
-                }
+            for (let i in singleFactors) {
+                count = factors.filter(x => x === singleFactors[i]).length
+                gradus += count*(singleFactors[i]-1)
 
             }
 
@@ -491,7 +484,7 @@ export default {
                 }
             }
 
-            return factors;
+            return factors.splice(1);
         },
 
         decimalToFraction(_decimal) {
@@ -525,8 +518,10 @@ export default {
             if(lastnote!=0) {
                 if(lastnote<playedNote) {
                     this.meldiss = this.eulerGradus(lastnote/playedNote)
-                } else {
+                } else if(lastnote>playedNote) {
                     this.meldiss = this.eulerGradus(playedNote/lastnote)
+                } else {
+                    this.meldiss = 0
                 }
             }
 

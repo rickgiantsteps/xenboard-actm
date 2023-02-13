@@ -183,6 +183,8 @@ export default {
       dissonanceValues[i-1] = this.freqs[0] / this.freqs[i]
       gradusValues[i-1] = this.eulerGradus(dissonanceValues[i-1])
     }
+
+    console.log("gradus"+ gradusValues)
     averagediss = gradusValues.reduce((partialSum, a) => partialSum + a, 0)/(this.hexNumber-1)
     this.$emit("averagediss_change", parseFloat(averagediss.toFixed(6)))
     this.testingDark = this.darkOn;
@@ -196,20 +198,13 @@ export default {
       let n = fraction[0]
       let d = fraction[1]
       let gradus = 1
-      let count = 1
-      let factor = [0, 0]
+      let count
+      let factors = this.primeFactors(d*n)
+      let singleFactors = factors.filter((item, index) => factors.indexOf(item) === index);
 
-      for (let i in this.primeFactors(d*n)) {
-        factor [0] = i
-        gradus += count*(i-1)
-
-        if (factor[1] === factor[0]) {
-          factor[1] = i
-          count++
-        } else  {
-          factor[1] = i
-          count = 1
-        }
+      for (let i in singleFactors) {
+        count = factors.filter(x => x === singleFactors[i]).length
+        gradus += count*(singleFactors[i]-1)
 
       }
 
@@ -229,7 +224,7 @@ export default {
         }
       }
 
-      return factors;
+      return factors.splice(1);
     },
 
     decimalToFraction(_decimal) {
