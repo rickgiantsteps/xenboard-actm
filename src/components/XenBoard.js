@@ -400,7 +400,7 @@ export default {
         },
 
         eulerGradus(decimalRatio) {
-            let fraction = this.decimalToFraction(decimalRatio.toFixed(6))
+            let fraction = this.decimalToFraction(decimalRatio.toFixed(2))
             let n = fraction[0]
             let d = fraction[1]
             let gradus = 1
@@ -417,23 +417,6 @@ export default {
             return gradus
         },
 
-        /*setharesFormula_helper(f11, f22){
-            let f1 = Math.min(f11, f22);
-            let f2 = Math.max(f11, f22);
-
-            let b1 = 3.5;
-            let b2 = 5.75;
-            let s1 = 0.0207;
-            let s2 = 18.96;
-            let x = 0.24;
-            //let x = Math.abs(f1 - f2) / Math.min((f1, f2));
-
-            let s = x / ((s1 * f1) + s2);
-            let z1 = Math.exp(-b1 * s * (f2 - f1));
-            let z2 = Math.exp(-b2 * s * (f2 - f1));
-
-            return z1 - z2;
-        },*/
 
         setharesFormula_helper(f11, f22, a11, a22){
             let f1 = Math.min(f11, f22);
@@ -444,7 +427,6 @@ export default {
             let s1 = 0.0207;
             let s2 = 18.96;
             let x = 0.24;
-            //let x = Math.abs(f1 - f2) / Math.min((f1, f2));
 
             let s = x / ((s1 * f1) + s2);
             let z1 = Math.exp(-b1 * s * (f2 - f1));
@@ -468,7 +450,7 @@ export default {
                 }
             }
 
-            return dissonance;//0.5*dissonance;
+            return dissonance;
         },
 
         primeFactors(n) {
@@ -516,12 +498,10 @@ export default {
 
         update_melodic_dissonance(playedNote) {
             if(lastnote!=0) {
-                if(lastnote<playedNote) {
+                if(lastnote>playedNote) {
                     this.meldiss = this.eulerGradus(lastnote/playedNote)
-                } else if(lastnote>playedNote) {
-                    this.meldiss = this.eulerGradus(playedNote/lastnote)
                 } else {
-                    this.meldiss = 0
+                    this.meldiss = this.eulerGradus(playedNote/lastnote)
                 }
             }
 
@@ -539,26 +519,6 @@ export default {
 
             for (let i = 0; i < keymouseon.length; i++) {
                 if (keymouseon[i] === true || keyboardon[i] === true){
-                    /*if (synth[0][i].oscillator.partials.length === 0) {
-                        part_synth[cont] = synth[0][i].oscillator;
-                        part_synth[cont].partialCount = 20;
-                        part[cont] = part_synth[cont].partials;
-                        waveforms[cont] = synth[0][i].oscillator.type;
-                        tones[cont] = this.notes[i];
-                        cont++;
-                    }
-                    else {
-                        tones[cont] = this.notes[i];
-                        part[cont] = synth[0][i].oscillator.partials;
-                        waveforms[cont] = synth[0][i].oscillator.type;
-                        cont++;
-                    }*/
-
-                    /*tones[cont] = this.notes[i];
-                    part[cont] = synth[0][i].oscillator.partials;
-                    console.log(synth[0][i].oscillator.partials);
-                    waveforms[cont] = synth[0][i].oscillator.type;
-                    cont++;*/
 
                     tones[cont] = this.notes[i];
                     if (synth[0][i].oscillator.partials.length === 0) {
@@ -570,12 +530,12 @@ export default {
                             part_synth[cont] = 25;
                         }
                         part[cont] = [];
-                        partial_amp[cont] = [];//synth[0][i].oscillator.partials;
+                        partial_amp[cont] = [];
                         cont++;
                     }
                     else {
-                        part[cont] = [];//synth[0][i].oscillator.partials;
-                        partial_amp[cont] = [];//synth[0][i].oscillator.partials;
+                        part[cont] = [];
+                        partial_amp[cont] = [];
                         part_synth[cont] = synth[0][i].oscillator.partials.length;
                         waveforms[cont] = synth[0][i].oscillator.type;
                         cont++;
@@ -585,23 +545,6 @@ export default {
                 }
             }
 
-            /*for (let ii = 0; ii < part.length; ii++) {
-                for (let jj = 0; jj < part[ii].length; jj++) {
-                    part[ii][jj] = tones[ii] * (jj + 1);
-                    if (waveforms[ii] === ('square') + part[ii].length.toString()) {
-                        part[ii][jj] = tones[ii] * (1 + jj % 2);
-                    }
-                    if (waveforms[ii] === ('triangle') + part[ii].length.toString()) {
-                        part[ii][jj] = tones[ii] * (1 + jj % 2);
-                    }
-                    if (waveforms[ii] === 'sine' + part[ii].length.toString()) {
-                        part[ii][jj] = tones[ii] * (jj + 1);
-                    }
-                    if (waveforms[ii] === 'sawtooth' + part[ii].length.toString()) {
-                        part[ii][jj] = tones[ii] * (jj + 1);
-                    }
-                }
-            }*/
 
             let odd = true;
             for (let ii = 0; ii < tones.length; ii++) {
@@ -640,22 +583,6 @@ export default {
                 }
             }
 
-/*            if (part[0].length === 1){
-                this.harmdiss = parseFloat(this.setharesFormula(tones).toFixed(6));
-            }
-            if (part[0].length > 1 ){
-                let dissonance = 0;
-                for (let i = 0; i < part.length; i++) {
-                    for (let j = 1; j < part.length; j++) {
-                        for (let k = 0; k < part[i].length; k++) {
-                            for (let l = 0; l < part[i].length; l++) {
-                                dissonance = dissonance + this.setharesFormula_helper(part[i][k], part[j][l]);
-                            }
-                        }
-                    }
-                }
-                this.harmdiss = parseFloat(dissonance.toFixed(6));
-            }*/
 
             if (part_synth[0] === 1){
                 this.harmdiss = parseFloat(this.setharesFormula(tones).toFixed(6));

@@ -180,7 +180,7 @@ export default {
 
   created() {
     for (let i = 1; i < this.hexNumber; i++) {
-      dissonanceValues[i-1] = this.freqs[0] / this.freqs[i]
+      dissonanceValues[i-1] = this.freqs[i] / this.freqs[0]
       gradusValues[i-1] = this.eulerGradus(dissonanceValues[i-1])
     }
 
@@ -194,7 +194,7 @@ export default {
 
     //calculates dissonance with Euler's gradus function E(n) = ∑ p|n e(p)(p−1)
     eulerGradus(decimalRatio) {
-      let fraction = this.decimalToFraction(decimalRatio.toFixed(6))
+      let fraction = this.decimalToFraction(decimalRatio.toFixed(2))
       let n = fraction[0]
       let d = fraction[1]
       let gradus = 1
@@ -263,7 +263,7 @@ export default {
         this.mySketch.p5notes = this.freqs;
         gradusValues = []
         for (let i = 1; i < this.hexNumber; i++) {
-          dissonanceValues[i - 1] = this.freqs[0] / this.freqs[i]
+          dissonanceValues[i - 1] = this.freqs[i] / this.freqs[0]
           gradusValues[i - 1] = this.eulerGradus(dissonanceValues[i - 1])
         }
 
@@ -282,7 +282,7 @@ export default {
       this.mySketch.p5notes = this.freqs;
       gradusValues = []
       for (let i = 1; i < this.hexNumber; i++) {
-        dissonanceValues[i - 1] = this.freqs[0] / this.freqs[i]
+        dissonanceValues[i - 1] = this.freqs[i] / this.freqs[0]
         gradusValues[i - 1] = this.eulerGradus(dissonanceValues[i - 1])
       }
 
