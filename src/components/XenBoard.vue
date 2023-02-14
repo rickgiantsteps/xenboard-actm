@@ -18,7 +18,7 @@
           Download MP3
       </div>
       <div class="ml-2">
-        <audio controls v-if="hasRecorded && !isRecording" id="audio" class="ml-2 mt-2 mb-1 place-items-center w-56"></audio>
+        <audio controls v-if="hasRecorded && !isRecording" id="audio" class="mt-2 mb-1 place-items-center w-36"></audio>
       </div>
       <div class="bg-[#ffd085] dark:bg-slate-500 text-slate-700 dark:text-slate-200
         shadow shadow-amber-500 dark:shadow-indigo-500 click-button rec-button place-items-center col-start-2"
