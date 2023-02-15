@@ -413,6 +413,11 @@ export default {
 
             this.avgdiss =  parseFloat((this.totaldiss/(this.hexNumber)).toFixed(2))
 
+            if(this.hexNumber===0) {
+                this.totaldiss = 0
+                this.avgdiss = 0
+            }
+
         },
 
         eulerGradus(decimalRatio) {
