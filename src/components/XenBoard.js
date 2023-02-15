@@ -409,13 +409,9 @@ export default {
 
         averagediss_change($event) {
 
-            this.totaldiss = $event.reduce((partialSum, a) => partialSum + a, 0)
+            this.totaldiss = $event.reduce((partialSum, a) => partialSum + a, 0) + 1
 
-            if (this.hexNumber!==1) {
-                this.avgdiss =  parseFloat((this.totaldiss/(this.hexNumber-1)).toFixed(2))
-            } else {
-                this.avgdiss =  parseFloat((this.totaldiss/(this.hexNumber)).toFixed(2))
-            }
+            this.avgdiss =  parseFloat((this.totaldiss/(this.hexNumber)).toFixed(2))
 
         },
 

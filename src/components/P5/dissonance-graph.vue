@@ -37,7 +37,7 @@ const sketch = function(p) {
       }
 
       numPts = p.p5numbernotes;
-      valueY=[(p.windowHeight / 2)+20]
+      valueY=[(p.windowHeight / 2)+19]
 
       for (let i = 0; i < numPts-1; i++) {
         //makes values fit in range of the canvas
