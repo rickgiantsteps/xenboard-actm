@@ -35,14 +35,14 @@
   
     <h1 class="font-bold text-6xl py-3 dark:text-slate-200">XenBoard</h1>
 
-    <p class="underline text-lg py-3 dark:text-slate-200">Interactive Microtonal Synth</p>
+    <p class="underline text-lg py-3 dark:text-slate-200">Interactive Microtonal Keyboard</p>
     
   </header>
 
   <XenBoard v-model:darkOn="darkOn"/>
 
   <footer>
-    <p class="text-base p-6 dark:text-slate-200">ACTM Project - a.a. 2022/2023</p>
+    <p class="text-base p-6 dark:text-slate-200">ACTM Project - AY 2022/2023</p>
   </footer>
 
 </template>
