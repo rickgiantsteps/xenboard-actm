@@ -8,6 +8,11 @@ have as much control as possible on the resulting scale.
 It also provides the possibility to play with and explore a variety of historical and non equally tempered tunings
 from a vast and detailed database.
 
+Libraries used: 
++ Tone.js (https://tonejs.github.io/),
++ Tune.js (https://github.com/abbernie/tune)
++ p5.js (https://github.com/processing/p5.js)
+
 ![screenshot of the startup of the keyboard](/images/xenboard%20screenshot.png)
 
 The use of tunings that divide the octave into intervals other than those prescribed by European classical tonality
@@ -20,16 +25,13 @@ It offers a wider spectrum of dissonances and makes it possible to create novel 
 Our objective with this project was to create an easy-to-use and intuitive tool that could bring musicians closer
 to understanding this often overlooked field of music.
 
-Technologies used: Vue.js (https://vuejs.org/), Tone.js (https://tonejs.github.io/),
-Tune.js (https://github.com/abbernie/tune)
-
 ### General Introduction
 
 On startup, the user is greeted with the classic 12EDO (12 Equal Divisions of the Octave, the usual 12 tone
 equal temperament used in the vast majority of western music) system.
 
 <p>
-  <img align="left" src="images/dark-light%20mode.png"  width = 400px height = 300px object-fit = cover>
+  <img align="left" src="images/dark-light%20mode.png"  width = 300px height = 300px object-fit = cover>
   <br/>
   <br/>
   <br/>
@@ -47,7 +49,7 @@ with an alternating three-colour pattern, this was implemented in order to make 
 
 ![keyboard screenshot](/images/keyboard.png)
 
-On top of the keyboard there are a few parameters available that the user can interact with, some are only visible depending on the
+Above the keyboard there are a few parameters available that the user can interact with, some are only visible depending on the
 current mode that has been selected (explained below in the *Keyboard Modes* section of the README) while some are always present and can be interacted with.
 
 These are:
@@ -60,10 +62,11 @@ The "**Main Tunings**" dropdown menus is always present, but its contents vary (
 
 A polygon is present above these parameters, showing an alternative visual representation of the scale. The polygon's number of sides is automatically
 updated to be equal to the number of notes of the current scale. On each vertex the ratio between the first note of the octave and the others frequencies
-of the scale is displayed (clockwise, starting from the top vertex corresponding to the unison).
+of the scale is displayed (clockwise, starting from the top vertex corresponding to the unison). It's implemented using the p5.js library.
 
 <p>
-  <img align="right" src="images/notes%20polygon.png">
+  <img align="right" src="images/notes%20polygon.png" width = 400px height = 400px object-fit = cover>
+  <br/>
   <br/>
   <br/>
   <br/>
@@ -71,6 +74,9 @@ of the scale is displayed (clockwise, starting from the top vertex corresponding
   depending on which octave is being played (the color corresponds to the one the key has on the keyboard). This allows the user to better understand which 
   notes are being played, even if the melody or harmony spans multiple octaves.
 </p>
+
+<br clear="right"/>
+<br clear="right"/>
 
 There's also the possibility to record what is played on the keyboard, listen to the recording once it's stopped and the chance to
 eventually download it. The *toggle recording* button is present on the top left of the instrument and, once pressed, it sticks itself to the corner
@@ -85,21 +91,31 @@ To switch from one mode to the other all that is required is to press the **Togg
 
 ### Creation Mode
 
-explanation of creation mode (parameters, ecc . . . )
+In this mode the user can customize their own equally tempered tuning, meaning that every note is equally spaced in the selected interval (depends on the value
+of the "**root**" parameter). 
 
-explain . . .
+The parameters that can only be interacted with exclusively in this mode are:
++ **Note Number**: the number of notes in which the selected interval (determined by the value of the "**Root**" parameter) will be divided into
++ **Root**: the interval used in the calculation of the scale, it indicates the range of frequencies that will be used in the creation of the scale. By default this value is equal to two, in this case the range is equal to the "octave" (interval 1:2), there's also the option to use the "tritave" (1:3) and the intervals 1:4 and 1:5
+
+These two values are used in the computation of the scale: each consecutive note, starting from the central frequency, will be multiplied by the nth root of the value selected in the parameter **Root**, creating the desired equally tempered scale.
+
+In this mode the **Main Tunings** dropdown contains the most known and commonly used EDO (Equal Division of the Octave) systems, in order to give quick access to some useful tunings with no experimentation needed.
 
 ### Exploration Mode
 
-explanation of exploration mode (tune.js, search, ecc . . . )
+In this second mode there's less control regarding the customization of the temperament in favor of a wider choice of predefined historical tunings and other systems used in other musical cultures around the globe. <br/> The user will not be able to adjust the number of notes or the ratio used to create the scale, they will have the possibility though to search for and choose from the numerous scales present in the database provided by **tune.js**.
 
 ![exploration mode screenshot](/images/exploration-mode.png)
 
-explain . . .
+In the **Main Tunings** dropdown in this mode there are some of the more popular and known non equally tempered scales, these are both historical european tunings that are seldom used nowadays and tunings that are used to this days in other parts of the world.
+
+To not limit the user to these few predefined tunings, **tune.js**' database of over 3000 tunings was integrated into the project. This DB is accessible by using the appropriate input search field present in this mode. The tunings that are available to be selected can be viewed by clicking on the green highlighted text next to the search field (https://abbernie.github.io/tune/scales.html). <br/> In this webpage provided by tune.js all the descriptions of the tuning systems can be read and the corresponding value copied and then pasted into the instrument, which then allows to click on and load the chosen temperament. <br/> There's also the possibility to search for the desired tuning within XenBoard itself, since the app automatically filters the database to provide options matching the input of the search, allowing to choose from a range of tunings (as is shown in the previous screenshot). 
 
 ## Dissonance Visualization
 
-We analyze . . .
+Since microtonality is often a foreign concept to many musicians and users, further visualisations of the qualities of the temperaments that can be selected or created using XenBoard
+are implemented. <br/> A graph, implemented with **p5.js**, displays the pleasantness (calculated using Euler's Gradus, explained in the next section) of each interval present in the scale along with value of its average and total Gradus. <br/> In addition the same method is used to calculate the melodic dissonance of what the user is playing, along with the harmonic dissonance (this last one uses a different algorithm, explained in its section of the README). Both of these two values are updated in real time as they follow the performance.
 
 ![dissonance graph and values](/images/dissonances.png)
 
@@ -112,7 +128,7 @@ Both of these values are calculated using Euler's Gradus Function. explain . . .
 
 ### Harmonic Dissonance (Sethares' algorithm)
 
-In this particular section, we've also implemented a value, which updates in real time, that indicates the current harmonic
+In this particular section, a value was also implemented, which updates in real time, that indicates the current harmonic
 dissonance of what's being played.
 
 short alg introduction . . .
@@ -122,6 +138,8 @@ short alg introduction . . .
 alg details . . .
 
 ## Synth and Effects
+
+explain how it was implemented with tone.js
 
 ![synth and effects screenshot](/images/synth-effects.png)
 
