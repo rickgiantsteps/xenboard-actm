@@ -9,9 +9,9 @@ It also provides the possibility to play with and explore a variety of historica
 from a vast and detailed database.
 
 Libraries used: 
-+ Tone.js (https://tonejs.github.io/),
-+ Tune.js (https://github.com/abbernie/tune)
-+ p5.js (https://github.com/processing/p5.js)
++ **Tone.js** (https://tonejs.github.io/),
++ **Tune.js** (https://github.com/abbernie/tune)
++ **p5.js** (https://github.com/processing/p5.js)
 
 ![screenshot of the startup of the keyboard](/images/xenboard%20screenshot.png)
 
@@ -122,74 +122,88 @@ are implemented. <br/> A graph, implemented with **p5.js**, displays the pleasan
 ### Scale and Melodic Dissonance (Gradus Suavitatis)
 
 On the right-hand side of the instrument the dissonance of the scale is displayed, along with the melodic dissonance.
-Both of these values are calculated using Euler's Gradus Function.
+Both of these values are calculated using **Euler's Gradus Function**.
 
-According to Euler the degree of melodiousness is related to the complexity of mental calculation performed by a listener which is inversely proportional to his pleasant experience.
+According to Euler the degree of melodiousness is related to the complexity of mental calculation required by the listener, which is inversely proportional to how pleasant their experience is.
 
-Euler’s formula takes into consideration the ratios of natural numbers, reflecting frequency ratio of intervals and map them onto a consonance degree value: f(n1:n2) = d. Where f is the function, n1 and n2 are integers and d the consonance degree.
+Euler’s formula takes into consideration the ratios of natural numbers, reflecting the frequency ratio of the two notes, it uses this ratio to assign a consonance value to the interval in question: f(n1:n2) = d. Where "f" is the Gradus function, "n1" and "n2" are the interval's ratio integers and "d" the **Gradus Suavitatis** (consonance degree). <br/><br/>
 Let n be a positive integer which consists of the nominator times the denominator of the interval.
-Let suppose its prime factorization is:
+Suppose its prime factorization is:
 
 ![euler's gradus function](/images/euler-gradus.png)
 
-The degree of melodiousness is low if the decomposition contains number primes with low values. 
-On the other hand, it is high if it has number primes with high values and/or it has a lot of prime numbers. 
+The degree of melodiousness is high if the decomposition contains number primes with low values, resulting in a low gradus suavitatis (for example, the unison 1:1 has the lowest possible gradus of 1, resulting in high melodiousness).
+On the other hand, it is low if it has primes that appear multiple times and/or it has a lot of prime numbers in the decomposition. 
 Therefore the smaller the value the more pleasing the interval.
 
-A graph is built in order to visualize the dissonance in the octave.
-The x-axis of the graph represents the number of notes per octave while the y-axis represents the dissonance value.
+A graph is built in order to visualize the **scale dissonance** in the selected temperament.<br/>
+The x-axis of the graph represents the number of notes present, while the y-axis represents the gradus suavitatis for that particular interval.
 
+The **melodic dissonance** value, that is updated in real time, uses the same function used in the graph, assigning a gradus suavitatis value to two notes played consecutively by the user as they perform on the instrument.
 
 ### Harmonic Dissonance (Sethares' algorithm)
 
 In this particular section, a value was also implemented, which updates in real time, that indicates the current harmonic
-dissonance of what's being played.
+dissonance of the notes that are being played.
 
-Sethares' algorithm computes a curve of perceptual dissonance from a sound signal. 
+**Sethares' algorithm** computes a curve of perceptual dissonance from a sound signal. 
 
-Sethares takes into consideration common perceptual dissonance curves with the difference that the minima points of the curve that indicate ratios of frequencies are known.
+The code takes into consideration common perceptual dissonance curves, with the difference that the minima points of the curve that indicate ratios of frequencies are known.
 
 ![equations used in sethares' algorithm](/images/sethares.jpg)
 
-In order to take into account also complex sounds, Sethares explains that the total dissonance for complex sounds it’s composed by the sum of the dissonances between all simultaneously sounding partials. 
+In order to take into account the different harmonic components of more complex sounds (non-sinusoidal waves), Sethares explains that the total dissonance for complex sounds is composed by the sum of the dissonances between all simultaneously sounding partials. We've taken this into consideration when calculating the value, giving different results depending on the waveform selected for the oscillator in the Synth section of XenBoard.
 
 Furthermore, the contribution of the partials in the dissonance calculation is determined by their amplitudes.
 
 ## Synth and Effects
 
-A synth and an effects section have been added so that users can customize the sound of their keyboard.
-Different classes of Tone.js have been used since it is a Web Audio framework for creating interactive music in the browser.
+A synth and effects section was added so that users could have the option to customize the sound of the microtonal keyboard. <br/>
+The javascript library **Tone.js**, a useful Web Audio framework for creating interactive music in the browser, was used to implement the wave generation and processing in both sections.
 
 ![synth and effects screenshot](/images/synth-effects.png)
 
-The synth section gives users the possibility of using one or teo oscillators.
-Each oscillator has these features:
-- waveform: triangular, sine, square, sawtooth
-- type of oscillator:
-  - normal (Tone.synth): basic synthesizer with a single oscillator
-    - number of used partials
-    - ADSR envelope
-  - AM (Tone.AMOscillator): controls the amplitude of the carrier signal
-    - number of used partials
-    - harmonicity, ratio between the carrier and the modulator oscillator
-    - ADSR envelope
-  - FM (Tone.FMOscillator): controls the frequency of the carrier signal
-    - number of used partials
-    - harmonicity
-    - modulation, amount of the modulation
-    - ADSR envelope
-  - Fat (Tone.FatOscillator): produces multiple oscillators and detunes them slightly from each other to thicken the sound
-    - number of used partials
-    - count, sets the number of oscillator
-    - harmonicity
-    - ADSR envelope
+The synth section gives users the possibility of using one or two oscillators.
+Each oscillator can be customized by modifying these paramaters:
++ **Waveform**: shape of the wave played by the synth
+  - *Triangular*
+  - *Sine*
+  - *Square*
+  - *Sawtooth*
++ **Oscillator type**: the synth implements an "OmniOscillator", the user can choose between the different types of oscillators implemented by Tone.js. These are:
+  - **Normal** (*Tone.synth*): basic synthesizer with a single oscillator
+    - *Number of used partials*
+    - *ADSR envelope*
+  - **AM** (*Tone.AMOscillator*): controls the amplitude of the carrier signal
+    - *Number of used partials*
+    - *Harmonicity*: ratio between the carrier and the modulating oscillator
+    - *ADSR envelope*
+  - **FM** (*Tone.FMOscillator*): controls the frequency of the carrier signal
+    - *Number of used partials*
+    - *Harmonicity*: ratio between the carrier and the modulating oscillator
+    - *Modulation*: amount of frequency modulation
+    - *ADSR envelope*
+  - **Fat** (*Tone.FatOscillator*): provides multiple oscillators and detunes them slightly from each other to thicken the sound
+    - *Number of used partials*
+    - *Count*: sets the number of oscillators
+    - *Harmonicity*: ratio between the carrier and the modulating oscillators
+    - *ADSR envelope*
 
-Thanks to Tone.js the output of the synth can be routed through one (or more) effects before going to the speakers.
-In addition to the effects, the synth was also passed through a compressor in order to reduce the volume of loud sounds or amplifies quiet sounds.
+Thanks to Tone.js the output of the synth can be routed through one (or more) effects before being played.
+
 Different features can be selected for each effect:
-- volume
-- vibrato: frequency and depth
-- tremolo: frequency and depth
-- distortion: depth
-- chorus: frequency, delay and depth
-- reverb: depth
++ **Volume**: controls the amplitude of the output signal
++ **Vibrato**: frequency of the signal modulated by an LFO
+  - *Frequency*: frequency of the LFO
+  - *Depth*: amplitude of the LFO
++ **Tremolo**: amplitude of the signal modulated by an LFO
+  - *Frequency*: frequency of the LFO
+  - *Depth*: amplitude of the LFO
++ **Distortion**: controls the amount of distortion applied to the signal
++ **Chorus**: left and right channel delay controlled by an LFO
+  - *Frequency*: frequency of the LFO
+  - *Delay*: amount of delay applied to both channels
+  - *Depth*: amplitude of the LFO
++ **Reverb**: controls the reverb's size applied to the signal
+
+In addition to the effects, the synth is also passed through a compressor in order to reduce the volume of loud sounds and amplifies particularly quiet sounds.
