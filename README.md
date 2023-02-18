@@ -139,8 +139,39 @@ alg details . . .
 
 ## Synth and Effects
 
-explain how it was implemented with tone.js
+A synth and an effects section have been added so that users can customize the sound of their keyboard.
+Different classes of Tone.js have been used since it is a Web Audio framework for creating interactive music in the browser.
 
 ![synth and effects screenshot](/images/synth-effects.png)
 
-explain . . .
+The synth section gives users the possibility of using one or teo oscillators.
+Each oscillator has these features:
+- waveform: triangular, sine, square, sawtooth
+- type of oscillator:
+  - normal (Tone.synth): basic synthesizer with a single oscillator
+    - number of used partials
+    - ADSR envelope
+  - AM (Tone.AMOscillator): controls the amplitude of the carrier signal
+    - number of used partials
+    - harmonicity, ratio between the carrier and the modulator oscillator
+    - ADSR envelope
+  - FM (Tone.FMOscillator): controls the frequency of the carrier signal
+    - number of used partials
+    - harmonicity
+    - modulation, amount of the modulation
+    - ADSR envelope
+  - Fat (Tone.FatOscillator): produces multiple oscillators and detunes them slightly from each other to thicken the sound
+    - number of used partials
+    - count, sets the number of oscillator
+    - harmonicity
+    - ADSR envelope
+
+Thanks to Tone.js the output of the synth can be routed through one (or more) effects before going to the speakers.
+In addition to the effects, the synth was also passed through a compressor in order to reduce the volume of loud sounds or amplifies quiet sounds.
+Different features can be selected for each effect:
+- volume
+- vibrato: frequency and depth
+- tremolo: frequency and depth
+- distortion: depth
+- chorus: frequency, delay and depth
+- reverb: depth
