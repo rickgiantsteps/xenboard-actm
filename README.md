@@ -122,9 +122,23 @@ are implemented. <br/> A graph, implemented with **p5.js**, displays the pleasan
 ### Scale and Melodic Dissonance (Gradus Suavitatis)
 
 On the right-hand side of the instrument the dissonance of the scale is displayed, along with the melodic dissonance.
-Both of these values are calculated using Euler's Gradus Function. explain . . .
+Both of these values are calculated using Euler's Gradus Function.
+
+According to Euler the degree of melodiousness is related to the complexity of mental calculation performed by a listener which is inversely proportional to his pleasant experience.
+
+Euler’s formula takes into consideration the ratios of natural numbers, reflecting frequency ratio of intervals and map them onto a consonance degree value: f(n1:n2) = d. Where f is the function, n1 and n2 are integers and d the consonance degree.
+Let n be a positive integer which consists of the nominator times the denominator of the interval.
+Let suppose its prime factorization is:
 
 ![euler's gradus function](/images/euler-gradus.png)
+
+The degree of melodiousness is low if the decomposition contains number primes with low values. 
+On the other hand, it is high if it has number primes with high values and/or it has a lot of prime numbers. 
+Therefore the smaller the value the more pleasing the interval.
+
+A graph is built in order to visualize the dissonance in the octave.
+The x-axis of the graph represents the number of notes per octave while the y-axis represents the dissonance value.
+
 
 ### Harmonic Dissonance (Sethares' algorithm)
 
