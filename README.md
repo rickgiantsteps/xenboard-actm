@@ -145,11 +145,15 @@ The x-axis of the graph represents the number of notes per octave while the y-ax
 In this particular section, a value was also implemented, which updates in real time, that indicates the current harmonic
 dissonance of what's being played.
 
-short alg introduction . . .
+Sethares' algorithm computes a curve of perceptual dissonance from a sound signal. 
+
+Sethares takes into consideration common perceptual dissonance curves with the difference that the minima points of the curve that indicate ratios of frequencies are known.
 
 ![equations used in sethares' algorithm](/images/sethares.jpg)
 
-alg details . . .
+In order to take into account also complex sounds, Sethares explains that the total dissonance for complex sounds it’s composed by the sum of the dissonances between all simultaneously sounding partials. 
+
+Furthermore, the contribution of the partials in the dissonance calculation is determined by their amplitudes.
 
 ## Synth and Effects
 
