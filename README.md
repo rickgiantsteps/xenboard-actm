@@ -152,9 +152,12 @@ The code takes into consideration common perceptual dissonance curves, with the 
 
 ![equations used in sethares' algorithm](/images/sethares.jpg)
 
-In order to take into account the different harmonic components of more complex sounds (non-sinusoidal waves), Sethares explains that the total dissonance for complex sounds is composed by the sum of the dissonances between all simultaneously sounding partials. We've taken this into consideration when calculating the value, giving different results depending on the waveform selected for the oscillator in the Synth section of XenBoard.
+In order to take into account the different harmonic components of more complex sounds (non-sinusoidal waves), Sethares explains that the total dissonance for complex sounds is composed by the sum of the dissonances between all simultaneously sounding partials, with a contribution that is determined by their amplitudes.
 
-Furthermore, the contribution of the partials in the dissonance calculation is determined by their amplitudes.
+Those concepts allow the user to have a unique value which represents the level of roughness for a chord that is been played on the keyboard. 
+For example, chords played in the low register, with small intervals and a lot of notes will have an higher value of dissonance than ones in  the high register with just few distant notes.
+
+Moreover, depending on which waveform the user selects for the oscillator in the Synth section of XenBoard, the sound spectrum complexity will change and so the dissonance level.
 
 ## Synth and Effects
 
